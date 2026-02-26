@@ -165,6 +165,12 @@
   .char-count { font-size:.77rem; color:var(--xfaint); }
   .kb-toggle { background:none; border:1px solid var(--border); border-radius:8px; padding:4px 10px; font-size:.77rem; color:var(--faint); cursor:pointer; transition:all .2s; }
   .kb-toggle:hover,.kb-toggle.on { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  .kb-buttons { display:flex; gap:6px; }
+  .phrase-card-footer { display:flex; justify-content:flex-end; margin-top:7px; }
+  .phrase-copy-btn { background:none; border:1px solid var(--border); border-radius:7px; padding:3px 9px; font-size:.75rem; color:var(--faint); cursor:pointer; transition:all .2s; }
+  .phrase-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  .howto-copy-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-size:.73rem; color:var(--faint); cursor:pointer; transition:all .2s; flex-shrink:0; }
+  .howto-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
 
   /* ═══ VIRTUAL KEYBOARD ═══ */
   .vkeyboard { display:none; background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:12px; margin-top:10px; }
@@ -368,7 +374,10 @@
         <textarea id="inputText" placeholder="✍️  Type or paste your text here..." oninput="onInput()"></textarea>
         <div class="input-footer">
           <div class="char-count"><span id="charNum">0</span> <span id="charsLabel">characters</span></div>
-          <button class="kb-toggle" id="kbToggle" onclick="toggleKB()">⌨️ Russian keyboard</button>
+          <div class="kb-buttons">
+            <button class="kb-toggle" id="kbToggle" onclick="toggleKB()">⌨️ RU keyboard</button>
+            <button class="kb-toggle" id="enKbToggle" onclick="toggleENKB()">⌨️ EN keyboard</button>
+          </div>
         </div>
       </div>
 
@@ -382,6 +391,27 @@
         </div>
         <div class="vk-row">
           <button class="vk-key" onclick="vk('я')">я</button><button class="vk-key" onclick="vk('ч')">ч</button><button class="vk-key" onclick="vk('с')">с</button><button class="vk-key" onclick="vk('м')">м</button><button class="vk-key" onclick="vk('и')">и</button><button class="vk-key" onclick="vk('т')">т</button><button class="vk-key" onclick="vk('ь')">ь</button><button class="vk-key" onclick="vk('б')">б</button><button class="vk-key" onclick="vk('ю')">ю</button><button class="vk-key" onclick="vk('ё')">ё</button>
+        </div>
+        <div class="vk-row">
+          <button class="vk-key vk-wide" onclick="vk(' ')">Space</button>
+          <button class="vk-key vk-space" onclick="vkBs()">⌫ Del</button>
+          <button class="vk-key vk-wide" onclick="doTranslate()" style="background:var(--primary);color:#fff;border-color:var(--primary);">↵ Go</button>
+        </div>
+      </div>
+
+      <!-- Virtual English Keyboard -->
+      <div class="vkeyboard" id="enkeyboard">
+        <div class="vk-row">
+          <button class="vk-key" onclick="vk('q')">q</button><button class="vk-key" onclick="vk('w')">w</button><button class="vk-key" onclick="vk('e')">e</button><button class="vk-key" onclick="vk('r')">r</button><button class="vk-key" onclick="vk('t')">t</button><button class="vk-key" onclick="vk('y')">y</button><button class="vk-key" onclick="vk('u')">u</button><button class="vk-key" onclick="vk('i')">i</button><button class="vk-key" onclick="vk('o')">o</button><button class="vk-key" onclick="vk('p')">p</button>
+        </div>
+        <div class="vk-row">
+          <button class="vk-key" onclick="vk('a')">a</button><button class="vk-key" onclick="vk('s')">s</button><button class="vk-key" onclick="vk('d')">d</button><button class="vk-key" onclick="vk('f')">f</button><button class="vk-key" onclick="vk('g')">g</button><button class="vk-key" onclick="vk('h')">h</button><button class="vk-key" onclick="vk('j')">j</button><button class="vk-key" onclick="vk('k')">k</button><button class="vk-key" onclick="vk('l')">l</button>
+        </div>
+        <div class="vk-row">
+          <button class="vk-key" onclick="vk('z')">z</button><button class="vk-key" onclick="vk('x')">x</button><button class="vk-key" onclick="vk('c')">c</button><button class="vk-key" onclick="vk('v')">v</button><button class="vk-key" onclick="vk('b')">b</button><button class="vk-key" onclick="vk('n')">n</button><button class="vk-key" onclick="vk('m')">m</button><button class="vk-key" onclick="vk('\'')">\'</button><button class="vk-key" onclick="vk('.')">.</button><button class="vk-key" onclick="vk(',')">，</button>
+        </div>
+        <div class="vk-row">
+          <button class="vk-key" onclick="vk('1')">1</button><button class="vk-key" onclick="vk('2')">2</button><button class="vk-key" onclick="vk('3')">3</button><button class="vk-key" onclick="vk('4')">4</button><button class="vk-key" onclick="vk('5')">5</button><button class="vk-key" onclick="vk('6')">6</button><button class="vk-key" onclick="vk('7')">7</button><button class="vk-key" onclick="vk('8')">8</button><button class="vk-key" onclick="vk('9')">9</button><button class="vk-key" onclick="vk('0')">0</button>
         </div>
         <div class="vk-row">
           <button class="vk-key vk-wide" onclick="vk(' ')">Space</button>
@@ -753,8 +783,22 @@ function countChars() { onInput(); }
 function toggleKB() {
   const kb = document.getElementById('vkeyboard');
   const btn = document.getElementById('kbToggle');
+  const enKb = document.getElementById('enkeyboard');
+  const enBtn = document.getElementById('enKbToggle');
+  // close english if open
+  enKb.classList.remove('show'); enBtn.classList.remove('on');
   kb.classList.toggle('show');
   btn.classList.toggle('on');
+}
+function toggleENKB() {
+  const enKb = document.getElementById('enkeyboard');
+  const enBtn = document.getElementById('enKbToggle');
+  const ruKb = document.getElementById('vkeyboard');
+  const ruBtn = document.getElementById('kbToggle');
+  // close russian if open
+  ruKb.classList.remove('show'); ruBtn.classList.remove('on');
+  enKb.classList.toggle('show');
+  enBtn.classList.toggle('on');
 }
 function vk(char) {
   const ta = document.getElementById('inputText');
@@ -1129,6 +1173,14 @@ const PHRASES = {
     {en:'Someone is unconscious',ru:'Кто-то без сознания'},{en:'I am lost and scared',ru:'Я потерялся и мне страшно'},
   ],
 };
+function copyPhrase(text, e) {
+  e.stopPropagation();
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = Object.assign(document.createElement('textarea'),{value:text});
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  });
+  showToast('📋 Copied: ' + text);
+}
 function renderPhrasebook(tab) {
   const data = PHRASES[tab] || [];
   const html = `<div class="phrase-grid">${data.map(p=>`
@@ -1136,6 +1188,10 @@ function renderPhrasebook(tab) {
       <div class="phrase-en">${p.en}</div>
       <div class="phrase-ru">${p.ru}</div>
       <div class="phrase-tr">${transliterate(p.ru)}</div>
+      <div class="phrase-card-footer">
+        <button class="phrase-copy-btn" onclick="copyPhrase('${p.ru.replace(/'/g,"\\'")}',event)" title="Copy Russian">📋 Copy RU</button>
+        <button class="phrase-copy-btn" onclick="copyPhrase('${p.en.replace(/'/g,"\\'")}',event)" title="Copy English" style="margin-left:4px">📋 Copy EN</button>
+      </div>
     </div>`).join('')}</div>`;
   document.getElementById('phraseContent').innerHTML = html;
 }
@@ -1188,6 +1244,7 @@ function renderHowTo(filter) {
     <div class="howto-row" onclick="loadPhrase('${r.en.replace(/'/g,"\\'")}')">
       <span class="howto-en">${r.en}</span>
       <span class="howto-ru">${r.ru}</span>
+      <button class="howto-copy-btn" onclick="copyPhrase('${r.ru.replace(/'/g,"\\'")}',event)" title="Copy Russian">📋</button>
     </div>`).join('') || `<div style="padding:12px;color:var(--xfaint);font-size:.88rem;">No matches found</div>`;
 }
 function filterHowTo(val) { renderHowTo(val); }
