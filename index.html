@@ -14,19 +14,55 @@
       color: #1a1a2e;
     }
 
-    .app {
-      max-width: 960px;
+    /* ── PAGE LAYOUT (left ad | content | right ad) ── */
+    .page-wrap {
+      display: grid;
+      grid-template-columns: 160px 1fr 160px;
+      gap: 20px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 24px 20px 40px;
+      padding: 0 12px;
+      align-items: start;
     }
 
-    /* ── HEADER ── */
-    header {
+    /* ── AD BANNERS ── */
+    .ad-banner {
+      position: sticky;
+      top: 20px;
+      width: 160px;
+      min-height: 600px;
+      background: #fff;
+      border: 2px dashed #c0d0f0;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #a0b0d0;
+      font-size: 0.78rem;
+      font-weight: 600;
       text-align: center;
-      padding: 28px 0 32px;
+      letter-spacing: 0.5px;
+      padding: 16px;
+      margin-top: 24px;
     }
+    .ad-banner .ad-icon { font-size: 2rem; opacity: 0.5; }
+    .ad-banner .ad-label { text-transform: uppercase; font-size: 0.68rem; letter-spacing: 1px; color: #b0bcd8; }
+    .ad-banner .ad-size { font-size: 0.72rem; color: #c0cce8; }
+
+    @media (max-width: 1000px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .ad-banner { display: none; }
+    }
+
+    /* ── MAIN CONTENT ── */
+    .app { padding: 24px 0 40px; }
+
+    /* ── HEADER ── */
+    header { text-align: center; padding: 20px 0 28px; }
     header h1 {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #2253cb;
       letter-spacing: -0.5px;
@@ -35,22 +71,21 @@
     header p {
       color: #5570a0;
       margin-top: 10px;
-      font-size: 0.97rem;
-      letter-spacing: 0.2px;
-      max-width: 700px;
+      font-size: 0.95rem;
+      max-width: 680px;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     /* ── CARD ── */
     .card {
-      background: #ffffff;
+      background: #fff;
       border: 1px solid #d0dcf5;
       border-radius: 20px;
       padding: 28px;
       margin-bottom: 18px;
-      box-shadow: 0 4px 20px rgba(34, 83, 203, 0.07);
+      box-shadow: 0 4px 20px rgba(34,83,203,0.07);
     }
 
     /* ── DIRECTION TOGGLE ── */
@@ -74,13 +109,9 @@
       min-width: 150px;
       justify-content: center;
       color: #3a4a7a;
-      transition: border-color 0.2s, color 0.2s;
+      transition: all 0.2s;
     }
-    .lang-pill.active-lang {
-      border-color: #2253cb;
-      color: #2253cb;
-      background: #eaf0ff;
-    }
+    .lang-pill.active-lang { border-color: #2253cb; color: #2253cb; background: #eaf0ff; }
     .swap-btn {
       background: #2253cb;
       border: none;
@@ -91,21 +122,12 @@
       color: #fff;
       transition: transform 0.3s, box-shadow 0.2s, background 0.2s;
       flex-shrink: 0;
-      box-shadow: 0 4px 14px rgba(34, 83, 203, 0.3);
+      box-shadow: 0 4px 14px rgba(34,83,203,0.3);
     }
-    .swap-btn:hover {
-      transform: rotate(180deg);
-      box-shadow: 0 6px 20px rgba(34, 83, 203, 0.45);
-      background: #1a40a8;
-    }
+    .swap-btn:hover { transform: rotate(180deg); box-shadow: 0 6px 20px rgba(34,83,203,0.45); background: #1a40a8; }
 
     /* ── GENDER SELECTORS ── */
-    .gender-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
+    .gender-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
     .gender-box label {
       display: block;
       font-size: 0.75rem;
@@ -155,18 +177,9 @@
       transition: border-color 0.2s, box-shadow 0.2s;
       line-height: 1.6;
     }
-    textarea:focus {
-      border-color: #2253cb;
-      box-shadow: 0 0 0 3px rgba(34,83,203,0.1);
-      background: #fff;
-    }
+    textarea:focus { border-color: #2253cb; box-shadow: 0 0 0 3px rgba(34,83,203,0.1); background: #fff; }
     textarea::placeholder { color: #b0bcd8; }
-    .char-count {
-      text-align: right;
-      font-size: 0.78rem;
-      color: #b0bcd8;
-      margin-top: 5px;
-    }
+    .char-count { text-align: right; font-size: 0.78rem; color: #b0bcd8; margin-top: 5px; }
 
     /* ── TRANSLATE BTN ── */
     .translate-btn {
@@ -184,18 +197,9 @@
       transition: all 0.2s;
       box-shadow: 0 4px 16px rgba(34,83,203,0.3);
     }
-    .translate-btn:hover:not(:disabled) {
-      background: #1a40a8;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(34,83,203,0.4);
-    }
+    .translate-btn:hover:not(:disabled) { background: #1a40a8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,83,203,0.4); }
     .translate-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
-    .hint {
-      text-align: center;
-      font-size: 0.75rem;
-      color: #b0bcd8;
-      margin-top: 8px;
-    }
+    .hint { text-align: center; font-size: 0.75rem; color: #b0bcd8; margin-top: 8px; }
     .hint kbd {
       background: #eaf0ff;
       border: 1px solid #d0dcf5;
@@ -221,7 +225,6 @@
     /* ── RESULTS ── */
     .results { display: none; }
     .results.show { display: block; }
-
     .results-header {
       display: flex;
       align-items: center;
@@ -233,48 +236,32 @@
       letter-spacing: 1.2px;
       font-weight: 700;
     }
-    .results-header::before, .results-header::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #d0dcf5;
-    }
+    .results-header::before, .results-header::after { content: ''; flex: 1; height: 1px; background: #d0dcf5; }
 
+    /* ── 2-COLUMN RESULTS ── */
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
       margin-bottom: 18px;
     }
-    @media (max-width: 680px) { .results-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .results-grid { grid-template-columns: 1fr; } }
 
     .result-card {
       border-radius: 16px;
-      padding: 18px;
+      padding: 20px;
       border: 2px solid;
       background: #fff;
       position: relative;
       box-shadow: 0 2px 12px rgba(34,83,203,0.06);
     }
-    .result-card.formal  { border-color: rgba(34,83,203,0.3);  background: #fafcff; }
-    .result-card.casual  { border-color: rgba(251,146,60,0.35); background: #fffaf6; }
-    .result-card.alt     { border-color: rgba(34,180,100,0.3);  background: #f6fdf9; }
+    .result-card.formal { border-color: rgba(34,83,203,0.3);  background: #fafcff; }
+    .result-card.casual { border-color: rgba(251,146,60,0.35); background: #fffaf6; }
 
-    .rc-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .rc-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      font-weight: 700;
-    }
+    .rc-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .rc-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 700; }
     .formal .rc-label { color: #2253cb; }
     .casual .rc-label { color: #ea7000; }
-    .alt    .rc-label { color: #1a9e5c; }
 
     .copy-btn {
       background: none;
@@ -287,18 +274,8 @@
     }
     .copy-btn:hover { opacity: 1; transform: scale(1.2); }
 
-    .rc-text {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: #1a1a2e;
-      min-height: 48px;
-    }
-    .rc-note {
-      font-size: 0.78rem;
-      color: #9aadcc;
-      margin-top: 8px;
-      font-style: italic;
-    }
+    .rc-text { font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; min-height: 52px; }
+    .rc-note { font-size: 0.78rem; color: #9aadcc; margin-top: 8px; font-style: italic; }
 
     /* ── BREAKDOWN ── */
     .breakdown-card {
@@ -332,13 +309,7 @@
     }
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: #f8faff; }
-    tbody td {
-      padding: 11px 18px;
-      border-bottom: 1px solid #f0f4ff;
-      font-size: 0.93rem;
-      vertical-align: middle;
-      color: #1a1a2e;
-    }
+    tbody td { padding: 11px 18px; border-bottom: 1px solid #f0f4ff; font-size: 0.93rem; vertical-align: middle; }
     tbody tr:last-child td { border-bottom: none; }
 
     .tag {
@@ -352,15 +323,63 @@
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
-    .tag-verb   { background: rgba(34,83,203,0.1);   color: #2253cb; }
-    .tag-noun   { background: rgba(234,112,0,0.1);   color: #ea7000; }
-    .tag-phrase { background: rgba(26,158,92,0.1);   color: #1a9e5c; }
-    .tag-adj    { background: rgba(160,50,220,0.1);  color: #a032dc; }
-    .tag-adv    { background: rgba(220,150,0,0.1);   color: #c68800; }
+    .tag-verb   { background: rgba(34,83,203,0.1);  color: #2253cb; }
+    .tag-noun   { background: rgba(234,112,0,0.1);  color: #ea7000; }
+    .tag-phrase { background: rgba(26,158,92,0.1);  color: #1a9e5c; }
+    .tag-adj    { background: rgba(160,50,220,0.1); color: #a032dc; }
+    .tag-adv    { background: rgba(220,150,0,0.1);  color: #c68800; }
 
     .orig-word  { color: #3a4a7a; font-weight: 500; }
     .trans-word { color: #2253cb; font-weight: 700; }
     .note-cell  { color: #9aadcc; font-size: 0.82rem; }
+
+    /* ── FAQ ── */
+    .faq-section { margin: 32px 0 24px; }
+    .faq-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #2253cb;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .faq-item {
+      background: #fff;
+      border: 1px solid #d0dcf5;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(34,83,203,0.05);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: #f0f4ff; }
+    .faq-q.open { color: #2253cb; background: #eaf0ff; }
+    .faq-icon { font-size: 1rem; flex-shrink: 0; transition: transform 0.25s; color: #2253cb; }
+    .faq-q.open .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding: 0 20px 16px;
+      font-size: 0.93rem;
+      color: #5570a0;
+      line-height: 1.7;
+      border-top: 1px solid #eaf0ff;
+      padding-top: 14px;
+    }
+    .faq-a.open { display: block; }
 
     /* ── TOAST ── */
     #toast {
@@ -383,140 +402,224 @@
     /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 28px 0 12px;
+      padding: 24px 0 16px;
       border-top: 1px solid #d0dcf5;
       margin-top: 10px;
     }
-    .footer-brand {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: #2253cb;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    .footer-address {
-      font-size: 0.78rem;
-      color: #9aadcc;
-      margin-top: 4px;
-    }
+    .footer-brand { font-size: 0.88rem; font-weight: 700; color: #2253cb; letter-spacing: 1px; text-transform: uppercase; }
+    .footer-address { font-size: 0.78rem; color: #9aadcc; margin-top: 4px; }
   </style>
 </head>
 <body>
 
-<div class="app">
+<div class="page-wrap">
 
-  <!-- HEADER -->
-  <header>
-    <h1>🇬🇧 ↔ 🇷🇺 Best AI English to Russian Translator</h1>
-    <p id="subheading">✨ Smart English to Russian and Russian to English translations with gender context, formality levels &amp; learning breakdowns ✨</p>
-  </header>
-
-  <!-- INPUT CARD -->
-  <div class="card">
-
-    <!-- Direction toggle -->
-    <div class="direction-row">
-      <div class="lang-pill active-lang" id="srcPill">🇬🇧 English</div>
-      <button class="swap-btn" onclick="swapDirection()" title="Swap languages">⇄</button>
-      <div class="lang-pill" id="tgtPill">🇷🇺 Russian</div>
-    </div>
-
-    <!-- Gender selectors -->
-    <div class="gender-row">
-      <div class="gender-box">
-        <label id="speakerLabel">👤 I am speaking as...</label>
-        <div class="gender-btns">
-          <button class="g-btn on" id="sp-m" onclick="setGender('speaker','male')"><span id="maleLabel1">👨 Male</span></button>
-          <button class="g-btn"    id="sp-f" onclick="setGender('speaker','female')"><span id="femaleLabel1">👩 Female</span></button>
-        </div>
-      </div>
-      <div class="gender-box">
-        <label id="listenerLabel">🗣️ I am talking to...</label>
-        <div class="gender-btns">
-          <button class="g-btn on" id="ls-m" onclick="setGender('listener','male')"><span id="maleLabel2">👨 Male</span></button>
-          <button class="g-btn"    id="ls-f" onclick="setGender('listener','female')"><span id="femaleLabel2">👩 Female</span></button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Textarea -->
-    <div class="input-wrap">
-      <textarea id="inputText" placeholder="✍️  Type or paste your text here..." oninput="countChars()"></textarea>
-      <div class="char-count"><span id="charNum">0</span> <span id="charsLabel">characters</span></div>
-    </div>
-
-    <button class="translate-btn" id="translateBtn" onclick="doTranslate()">
-      🔄 &nbsp;<span id="translateBtnText">Translate</span>
-    </button>
-    <p class="hint" id="hintText">Tip: Press <kbd>Ctrl + Enter</kbd> to translate quickly</p>
-
+  <!-- LEFT AD -->
+  <div class="ad-banner">
+    <div class="ad-icon">📢</div>
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-size">160 × 600</div>
+    <div style="margin-top:8px; font-size:0.7rem; color:#c0cce8;">AdSense / Yandex<br>Banner Here</div>
   </div>
 
-  <!-- LOADING -->
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p style="margin-top:12px; color:#7a8fb5;" id="loadingText">Translating… 🌐</p>
-  </div>
+  <!-- MAIN CONTENT -->
+  <div class="app">
 
-  <!-- RESULTS -->
-  <div class="results" id="results">
+    <header>
+      <h1>🇬🇧 ↔ 🇷🇺 Best AI English to Russian Translator</h1>
+      <p id="subheading">✨ Smart English to Russian and Russian to English translations with gender context, formality levels &amp; learning breakdowns ✨</p>
+    </header>
 
-    <div class="results-header" id="resultsHeader">✨ Translations</div>
+    <!-- INPUT CARD -->
+    <div class="card">
 
-    <div class="results-grid">
-      <div class="result-card formal">
-        <div class="rc-head">
-          <span class="rc-label" id="formalLabel">🎩 Formal</span>
-          <button class="copy-btn" onclick="copyCard('formalText')" title="Copy">📋</button>
-        </div>
-        <div class="rc-text" id="formalText"></div>
-        <div class="rc-note" id="formalNote"></div>
+      <div class="direction-row">
+        <div class="lang-pill active-lang" id="srcPill">🇬🇧 English</div>
+        <button class="swap-btn" onclick="swapDirection()" title="Swap languages">⇄</button>
+        <div class="lang-pill" id="tgtPill">🇷🇺 Russian</div>
       </div>
-      <div class="result-card casual">
-        <div class="rc-head">
-          <span class="rc-label" id="casualLabel">😊 Casual</span>
-          <button class="copy-btn" onclick="copyCard('casualText')" title="Copy">📋</button>
+
+      <div class="gender-row">
+        <div class="gender-box">
+          <label id="speakerLabel">👤 I am speaking as...</label>
+          <div class="gender-btns">
+            <button class="g-btn on" id="sp-m" onclick="setGender('speaker','male')"><span id="maleLabel1">👨 Male</span></button>
+            <button class="g-btn"    id="sp-f" onclick="setGender('speaker','female')"><span id="femaleLabel1">👩 Female</span></button>
+          </div>
         </div>
-        <div class="rc-text" id="casualText"></div>
-        <div class="rc-note" id="casualNote"></div>
-      </div>
-      <div class="result-card alt">
-        <div class="rc-head">
-          <span class="rc-label" id="altLabel">💡 Alternative</span>
-          <button class="copy-btn" onclick="copyCard('altText')" title="Copy">📋</button>
+        <div class="gender-box">
+          <label id="listenerLabel">🗣️ I am talking to...</label>
+          <div class="gender-btns">
+            <button class="g-btn on" id="ls-m" onclick="setGender('listener','male')"><span id="maleLabel2">👨 Male</span></button>
+            <button class="g-btn"    id="ls-f" onclick="setGender('listener','female')"><span id="femaleLabel2">👩 Female</span></button>
+          </div>
         </div>
-        <div class="rc-text" id="altText"></div>
-        <div class="rc-note" id="altNote"></div>
       </div>
+
+      <div class="input-wrap">
+        <textarea id="inputText" placeholder="✍️  Type or paste your text here..." oninput="countChars()"></textarea>
+        <div class="char-count"><span id="charNum">0</span> <span id="charsLabel">characters</span></div>
+      </div>
+
+      <button class="translate-btn" id="translateBtn" onclick="doTranslate()">
+        🔄 &nbsp;<span id="translateBtnText">Translate</span>
+      </button>
+      <p class="hint">Press <kbd>Enter</kbd> or <kbd>Ctrl+Enter</kbd> to translate</p>
+
     </div>
 
-    <!-- WORD BREAKDOWN -->
-    <div class="breakdown-card" id="breakdownCard">
-      <div class="breakdown-title" id="breakdownTitle">📚 Word &amp; Phrase Breakdown — for learning</div>
-      <table>
-        <thead>
-          <tr>
-            <th id="thType">Type</th>
-            <th id="thOrig">Original</th>
-            <th id="thTrans">Translation</th>
-            <th id="thNotes">Notes</th>
-          </tr>
-        </thead>
-        <tbody id="breakdownBody">
-          <tr><td colspan="4" style="padding:14px 18px; color:#b0bcd8;">Loading…</td></tr>
-        </tbody>
-      </table>
+    <!-- LOADING -->
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p style="margin-top:12px; color:#7a8fb5;" id="loadingText">Translating… 🌐</p>
     </div>
 
+    <!-- RESULTS -->
+    <div class="results" id="results">
+
+      <div class="results-header" id="resultsHeader">✨ Translations</div>
+
+      <div class="results-grid">
+        <div class="result-card formal">
+          <div class="rc-head">
+            <span class="rc-label" id="formalLabel">🎩 Formal</span>
+            <button class="copy-btn" onclick="copyCard('formalText')" title="Copy">📋</button>
+          </div>
+          <div class="rc-text" id="formalText"></div>
+          <div class="rc-note" id="formalNote"></div>
+        </div>
+        <div class="result-card casual">
+          <div class="rc-head">
+            <span class="rc-label" id="casualLabel">😊 Casual</span>
+            <button class="copy-btn" onclick="copyCard('casualText')" title="Copy">📋</button>
+          </div>
+          <div class="rc-text" id="casualText"></div>
+          <div class="rc-note" id="casualNote"></div>
+        </div>
+      </div>
+
+      <!-- WORD BREAKDOWN -->
+      <div class="breakdown-card">
+        <div class="breakdown-title" id="breakdownTitle">📚 Word &amp; Phrase Breakdown — for learning</div>
+        <table>
+          <thead>
+            <tr>
+              <th id="thType">Type</th>
+              <th id="thOrig">Original</th>
+              <th id="thTrans">Translation</th>
+              <th id="thNotes">Notes</th>
+            </tr>
+          </thead>
+          <tbody id="breakdownBody">
+            <tr><td colspan="4" style="padding:14px 18px; color:#b0bcd8;">Ready…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /results -->
+
+    <!-- FAQ -->
+    <div class="faq-section">
+      <div class="faq-title" id="faqTitle">❓ Frequently Asked Questions</div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🌍 How accurate is this English to Russian translator?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">This translator uses Google's translation engine to deliver high-quality, context-aware results. It handles everyday language, business phrases, and conversational text well. For highly specialised legal or medical content, we always recommend a professional review.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🎩 What is the difference between formal and casual Russian?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Formal Russian uses <strong>Вы</strong> (capitalised "you") when addressing someone with respect — in business, with strangers, or elders. Casual Russian uses <strong>ты</strong> with friends, family, and peers. Choosing the wrong form can come across as rude or overly stiff, which is why this translator gives you both options.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>👩 Why does gender matter in Russian translation?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Russian grammar assigns grammatical gender to nouns, and past-tense verbs must agree with the speaker's gender. For example, "I went" is <strong>я пошёл</strong> (male) or <strong>я пошла</strong> (female). Selecting your gender ensures the translation is grammatically correct for you personally.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>💼 Can I use this translator for business communications?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes! The <strong>Formal</strong> translation mode is specifically designed for professional and business contexts. It uses the polite Вы form and appropriate vocabulary for emails, letters, and meetings. Always select "Formal" when writing to clients, managers, or official contacts.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>📚 What does the Word Breakdown section do?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">The Word &amp; Phrase Breakdown translates individual key words and common phrases from your text separately. Each word is labelled as a verb, noun, adjective, or phrase — making it a powerful tool for anyone learning Russian or English, helping you understand the building blocks of the translation.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🔄 Can I translate Russian back to English?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Absolutely. Click the <strong>⇄ swap button</strong> between the language pills to switch from English → Russian to Russian → English. The entire interface — including labels, buttons, and breakdown tags — switches to Russian so you always work in your source language.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>⚡ How do I translate quickly without using the mouse?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Simply press <strong>Enter</strong> after typing your text to trigger the translation instantly. You can also use <strong>Ctrl + Enter</strong>. This makes the translator feel like a fast, keyboard-native tool — no clicking required.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🆓 Is this translator free to use?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes — this translator is completely free. There are no subscriptions, no sign-ups, and no usage limits for normal use. It is powered by open translation technology and developed by <strong>Mytheon Technologies</strong>, based in Almaty, Kazakhstan.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>📝 Is Russian grammar very different from English?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Yes, significantly. Russian is a highly inflected language — nouns, adjectives, and pronouns change their endings depending on their role in the sentence (called <strong>cases</strong>). There are 6 grammatical cases, 3 genders, and verb conjugations that depend on tense and the speaker's gender. This is why context-aware translation matters so much.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>🗣️ Why should I select who I am talking to?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">In Russian, certain adjectives and terms of address change depending on the gender of the person you are speaking to. For example, "Dear" is <strong>Дорогой</strong> for a male and <strong>Дорогая</strong> for a female. Selecting the listener's gender ensures these forms are correct and natural-sounding.</div>
+      </div>
+
+    </div><!-- /faq -->
+
+    <footer>
+      <div class="footer-brand">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+      <div class="footer-address">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+    </footer>
+
+  </div><!-- /app -->
+
+  <!-- RIGHT AD -->
+  <div class="ad-banner">
+    <div class="ad-icon">📢</div>
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-size">160 × 600</div>
+    <div style="margin-top:8px; font-size:0.7rem; color:#c0cce8;">AdSense / Yandex<br>Banner Here</div>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-brand">⚡ Powered by MYTHEON TECHNOLOGIES</div>
-    <div class="footer-address">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
-  </footer>
-
-</div>
+</div><!-- /page-wrap -->
 
 <div id="toast">📋 Copied!</div>
 
@@ -529,132 +632,85 @@ let speakerGend  = 'male';
 let listenerGend = 'male';
 
 /* ═══════════════════════════════════════════
-   UI LANGUAGE STRINGS
+   UI STRINGS
 ═══════════════════════════════════════════ */
 const LANG = {
   'en-ru': {
-    speakerLabel:    '👤 I am speaking as...',
-    listenerLabel:   '🗣️ I am talking to...',
-    male:            '👨 Male',
-    female:          '👩 Female',
-    placeholder:     '✍️  Type or paste your text here...',
-    charsLabel:      'characters',
-    translateBtn:    'Translate',
-    hint:            'Tip: Press <kbd>Ctrl + Enter</kbd> to translate quickly',
-    loading:         'Translating… 🌐',
-    resultsHeader:   '✨ Translations',
-    formalLabel:     '🎩 Formal',
-    casualLabel:     '😊 Casual',
-    altLabel:        '💡 Alternative',
-    breakdownTitle:  '📚 Word & Phrase Breakdown — for learning',
-    thType:          'Type',
-    thOrig:          'Original',
-    thTrans:         'Translation',
-    thNotes:         'Notes',
-    analysing:       '🔍 Analysing…',
-    noBreakdown:     'No breakdown available for this text.',
-    noText:          '✍️ Please type some text first!',
-    copied:          '📋 Copied!',
-    tagVerb:         'Verb',
-    tagNoun:         'Noun',
-    tagAdj:          'Adj',
-    tagAdv:          'Adverb',
-    tagPhrase:       'Phrase',
-    noteVerb:        '👩 fem. form applied',
-    noteNoun:        '📌 memorise gender!',
-    notePhrase:      '💬 Common phrase',
-    formalNoteEnRu:  '🎩 Uses "Вы" — polite address',
-    casualNoteEnRu:  '😊 Uses "ты" — friendly / informal',
-    altNoteEnRu:     '💡 Alternative phrasing',
-    formalNoteRuEn:  '🎩 Direct translation',
-    casualNoteRuEn:  '😊 From casual Russian form',
-    altNoteRuEn:     '💡 Simplified version',
-    errText:         '❌ Translation failed — check your connection.',
+    speakerLabel:'👤 I am speaking as...',listenerLabel:'🗣️ I am talking to...',
+    male:'👨 Male',female:'👩 Female',
+    placeholder:'✍️  Type or paste your text here...',
+    charsLabel:'characters',translateBtn:'Translate',
+    loading:'Translating… 🌐',resultsHeader:'✨ Translations',
+    formalLabel:'🎩 Formal',casualLabel:'😊 Casual',
+    breakdownTitle:'📚 Word & Phrase Breakdown — for learning',
+    thType:'Type',thOrig:'Original',thTrans:'Translation',thNotes:'Notes',
+    analysing:'🔍 Analysing…',noBreakdown:'No breakdown available.',
+    noText:'✍️ Please type some text first!',copied:'📋 Copied!',
+    tagVerb:'Verb',tagNoun:'Noun',tagAdj:'Adj',tagAdv:'Adverb',tagPhrase:'Phrase',
+    noteVerbF:'👩 fem. form',noteNoun:'📌 learn gender',notePhrase:'💬 Phrase',
+    formalNote:'🎩 Polite "Вы" form — use in business &amp; with strangers',
+    casualNote:'😊 Friendly "ты" form — use with friends &amp; family',
+    formalNoteRu:'🎩 Direct translation',casualNoteRu:'😊 Casual Russian form',
+    faqTitle:'❓ Frequently Asked Questions',
+    errText:'❌ Translation failed — check your connection.',
   },
   'ru-en': {
-    speakerLabel:    '👤 Я говорю как...',
-    listenerLabel:   '🗣️ Я разговариваю с...',
-    male:            '👨 Мужчина',
-    female:          '👩 Женщина',
-    placeholder:     '✍️  Введите или вставьте текст здесь...',
-    charsLabel:      'символов',
-    translateBtn:    'Перевести',
-    hint:            'Совет: Нажмите <kbd>Ctrl + Enter</kbd> для быстрого перевода',
-    loading:         'Переводим… 🌐',
-    resultsHeader:   '✨ Переводы',
-    formalLabel:     '🎩 Официальный',
-    casualLabel:     '😊 Неформальный',
-    altLabel:        '💡 Альтернативный',
-    breakdownTitle:  '📚 Разбор слов и фраз — для изучения',
-    thType:          'Тип',
-    thOrig:          'Оригинал',
-    thTrans:         'Перевод',
-    thNotes:         'Заметки',
-    analysing:       '🔍 Анализируем…',
-    noBreakdown:     'Разбор для этого текста недоступен.',
-    noText:          '✍️ Пожалуйста, введите текст!',
-    copied:          '📋 Скопировано!',
-    tagVerb:         'Глагол',
-    tagNoun:         'Сущест.',
-    tagAdj:          'Прилаг.',
-    tagAdv:          'Наречие',
-    tagPhrase:       'Фраза',
-    noteVerb:        '👩 женская форма',
-    noteNoun:        '📌 запомните род!',
-    notePhrase:      '💬 Устойчивое выражение',
-    formalNoteEnRu:  '🎩 Uses "Вы" — polite address',
-    casualNoteEnRu:  '😊 Uses "ты" — friendly / informal',
-    altNoteEnRu:     '💡 Alternative phrasing',
-    formalNoteRuEn:  '🎩 Прямой перевод',
-    casualNoteRuEn:  '😊 Из разговорной формы',
-    altNoteRuEn:     '💡 Упрощённая версия',
-    errText:         '❌ Ошибка перевода — проверьте соединение.',
+    speakerLabel:'👤 Я говорю как...',listenerLabel:'🗣️ Я разговариваю с...',
+    male:'👨 Мужчина',female:'👩 Женщина',
+    placeholder:'✍️  Введите или вставьте текст здесь...',
+    charsLabel:'символов',translateBtn:'Перевести',
+    loading:'Переводим… 🌐',resultsHeader:'✨ Переводы',
+    formalLabel:'🎩 Официальный',casualLabel:'😊 Неформальный',
+    breakdownTitle:'📚 Разбор слов и фраз — для изучения',
+    thType:'Тип',thOrig:'Оригинал',thTrans:'Перевод',thNotes:'Заметки',
+    analysing:'🔍 Анализируем…',noBreakdown:'Разбор недоступен.',
+    noText:'✍️ Пожалуйста, введите текст!',copied:'📋 Скопировано!',
+    tagVerb:'Глагол',tagNoun:'Сущест.',tagAdj:'Прилаг.',tagAdv:'Наречие',tagPhrase:'Фраза',
+    noteVerbF:'👩 женская форма',noteNoun:'📌 запомните род',notePhrase:'💬 Фраза',
+    formalNote:'🎩 Прямой перевод',casualNote:'😊 Из разговорной формы',
+    formalNoteRu:'🎩 Прямой перевод',casualNoteRu:'😊 Из разговорной формы',
+    faqTitle:'❓ Часто задаваемые вопросы',
+    errText:'❌ Ошибка перевода — проверьте соединение.',
   }
 };
-
-function t(key) { return LANG[direction][key] || LANG['en-ru'][key]; }
+const t = k => LANG[direction][k] || LANG['en-ru'][k];
 
 /* ═══════════════════════════════════════════
    UPDATE ALL UI TEXT
 ═══════════════════════════════════════════ */
 function updateUI() {
-  const L = LANG[direction];
-  document.getElementById('speakerLabel').textContent   = L.speakerLabel;
-  document.getElementById('listenerLabel').textContent  = L.listenerLabel;
-  document.getElementById('maleLabel1').textContent     = L.male;
-  document.getElementById('femaleLabel1').textContent   = L.female;
-  document.getElementById('maleLabel2').textContent     = L.male;
-  document.getElementById('femaleLabel2').textContent   = L.female;
-  document.getElementById('inputText').placeholder      = L.placeholder;
-  document.getElementById('charsLabel').textContent     = L.charsLabel;
-  document.getElementById('translateBtnText').textContent = L.translateBtn;
-  document.getElementById('hintText').innerHTML         = 'Tip: Press <kbd>Ctrl + Enter</kbd> to translate quickly'.replace(
-    'Tip: Press', direction === 'ru-en' ? 'Совет: Нажмите' : 'Tip: Press'
-  ).replace('to translate quickly', direction === 'ru-en' ? 'для быстрого перевода' : 'to translate quickly');
-  document.getElementById('loadingText').textContent    = L.loading;
-  document.getElementById('resultsHeader').textContent  = L.resultsHeader;
-  document.getElementById('formalLabel').textContent    = L.formalLabel;
-  document.getElementById('casualLabel').textContent    = L.casualLabel;
-  document.getElementById('altLabel').textContent       = L.altLabel;
-  document.getElementById('breakdownTitle').textContent = L.breakdownTitle;
-  document.getElementById('thType').textContent         = L.thType;
-  document.getElementById('thOrig').textContent         = L.thOrig;
-  document.getElementById('thTrans').textContent        = L.thTrans;
-  document.getElementById('thNotes').textContent        = L.thNotes;
+  document.getElementById('speakerLabel').textContent    = t('speakerLabel');
+  document.getElementById('listenerLabel').textContent   = t('listenerLabel');
+  document.getElementById('maleLabel1').textContent      = t('male');
+  document.getElementById('femaleLabel1').textContent    = t('female');
+  document.getElementById('maleLabel2').textContent      = t('male');
+  document.getElementById('femaleLabel2').textContent    = t('female');
+  document.getElementById('inputText').placeholder       = t('placeholder');
+  document.getElementById('charsLabel').textContent      = t('charsLabel');
+  document.getElementById('translateBtnText').textContent= t('translateBtn');
+  document.getElementById('loadingText').textContent     = t('loading');
+  document.getElementById('resultsHeader').textContent   = t('resultsHeader');
+  document.getElementById('formalLabel').textContent     = t('formalLabel');
+  document.getElementById('casualLabel').textContent     = t('casualLabel');
+  document.getElementById('breakdownTitle').textContent  = t('breakdownTitle');
+  document.getElementById('thType').textContent          = t('thType');
+  document.getElementById('thOrig').textContent          = t('thOrig');
+  document.getElementById('thTrans').textContent         = t('thTrans');
+  document.getElementById('thNotes').textContent         = t('thNotes');
+  document.getElementById('faqTitle').textContent        = t('faqTitle');
 }
 
 /* ═══════════════════════════════════════════
    UI HELPERS
 ═══════════════════════════════════════════ */
 function countChars() {
-  document.getElementById('charNum').textContent =
-    document.getElementById('inputText').value.length;
+  document.getElementById('charNum').textContent = document.getElementById('inputText').value.length;
 }
 
 function swapDirection() {
   direction = direction === 'en-ru' ? 'ru-en' : 'en-ru';
-  document.getElementById('srcPill').textContent   = direction === 'en-ru' ? '🇬🇧 English' : '🇷🇺 Russian';
-  document.getElementById('tgtPill').textContent   = direction === 'en-ru' ? '🇷🇺 Russian' : '🇬🇧 English';
+  document.getElementById('srcPill').textContent = direction === 'en-ru' ? '🇬🇧 English' : '🇷🇺 Russian';
+  document.getElementById('tgtPill').textContent = direction === 'en-ru' ? '🇷🇺 Russian' : '🇬🇧 English';
   document.getElementById('srcPill').classList.add('active-lang');
   document.getElementById('tgtPill').classList.remove('active-lang');
   document.getElementById('results').classList.remove('show');
@@ -692,15 +748,30 @@ async function copyCard(id) {
   showToast(t('copied'));
 }
 
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // close all
+  document.querySelectorAll('.faq-q.open').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) {
+    btn.classList.add('open');
+    ans.classList.add('open');
+  }
+}
+
 /* ═══════════════════════════════════════════
-   API
+   TRANSLATION API — Google Translate (unofficial)
 ═══════════════════════════════════════════ */
-async function fetchMM(text, lp) {
-  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${lp}`;
+async function fetchGoogle(text, sl, tl) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`;
   const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
   const d = await r.json();
-  if (d.responseStatus === 200) return d.responseData.translatedText;
-  throw new Error('API error ' + d.responseStatus);
+  // Join all translation segments
+  return d[0].map(seg => seg[0]).join('');
 }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -733,56 +804,51 @@ const GENDER_MAP_F = [
 const LISTENER_F_MAP = [
   [/\bдорогой\b/g,'дорогая'],[/\bуважаемый\b/g,'уважаемая'],[/\bмилый\b/g,'милая'],
 ];
-
 function applyMap(text, map) {
-  let out = text;
-  map.forEach(([re, rep]) => { out = out.replace(re, rep); });
-  return out;
+  let o = text; map.forEach(([re,rep]) => { o = o.replace(re, rep); }); return o;
 }
-function makeFormal(text)            { return applyMap(text, TY_TO_VY); }
-function makeCasual(text)            { return applyMap(text, VY_TO_TY); }
-function applyGender(text, g)        { return g === 'female' ? applyMap(text, GENDER_MAP_F) : text; }
-function applyListenerGender(text,g) { return g === 'female' ? applyMap(text, LISTENER_F_MAP) : text; }
+function makeFormal(t)  { return applyMap(t, TY_TO_VY); }
+function makeCasual(t)  { return applyMap(t, VY_TO_TY); }
+function applyGender(text, g) { return g==='female' ? applyMap(text, GENDER_MAP_F) : text; }
+function applyListenerG(text, g) { return g==='female' ? applyMap(text, LISTENER_F_MAP) : text; }
 
 /* ═══════════════════════════════════════════
-   WORD BREAKDOWN HELPERS
+   WORD BREAKDOWN
 ═══════════════════════════════════════════ */
-const EN_STOP = new Set(['the','a','an','in','on','at','to','for','of','and','or','but',
-  'is','it','i','my','me','you','your','he','she','we','they','this','that','with',
-  'from','not','are','was','were','be','have','has','had','do','does','did','will',
-  'would','could','should','may','might','shall','as','by','up','if','so','no','yes',
-  'just','also','very','more','about']);
-const RU_STOP = new Set(['и','в','на','с','по','для','от','из','к','а','но','что','это',
-  'я','ты','он','она','мы','вы','они','не','да','нет','же','уже','как','так','бы',
-  'ли','или','то','всё','там','тут','ещё','вот']);
+const EN_STOP = new Set(['the','a','an','in','on','at','to','for','of','and','or','but','is',
+  'it','i','my','me','you','your','he','she','we','they','this','that','with','from','not',
+  'are','was','were','be','have','has','had','do','does','did','will','would','could',
+  'should','may','might','shall','as','by','up','if','so','no','yes','just','also','very']);
+const RU_STOP = new Set(['и','в','на','с','по','для','от','из','к','а','но','что','это','я',
+  'ты','он','она','мы','вы','они','не','да','нет','же','уже','как','так','бы','ли','или',
+  'то','всё','там','тут','ещё','вот']);
 
-function detectType(word) {
-  const w = word.toLowerCase();
-  const isRu = /[а-яё]/i.test(w);
-  if (!isRu) {
-    if (['is','are','was','were','be','have','has','had','do','does','did','go','went',
-         'come','came','want','like','love','need','know','think','see','look','say',
-         'tell','ask','work','live','feel','seem','call','get','put','give','take',
-         'make','let','run','turn','help','try','use','keep','play','move','hear',
-         'speak','write','read','meet'].includes(w)
-      || w.endsWith('ing') || w.endsWith('ate') || w.endsWith('ify')) return 'verb';
-    if (w.endsWith('ly')) return 'adverb';
-    if (w.endsWith('ful')||w.endsWith('less')||w.endsWith('ous')||w.endsWith('ive')||w.endsWith('al')) return 'adj';
+function detectType(w) {
+  const lo = w.toLowerCase();
+  const ru = /[а-яё]/i.test(lo);
+  if (!ru) {
+    if (['is','are','was','were','be','have','has','had','do','does','did','go','went','come',
+         'came','want','like','love','need','know','think','see','look','say','tell','ask',
+         'work','live','feel','call','get','put','give','take','make','help','try','use',
+         'keep','play','hear','speak','write','read','meet','run','turn'].includes(lo)
+        || lo.endsWith('ing') || lo.endsWith('ate') || lo.endsWith('ify')) return 'verb';
+    if (lo.endsWith('ly')) return 'adverb';
+    if (lo.endsWith('ful')||lo.endsWith('less')||lo.endsWith('ous')||lo.endsWith('ive')||lo.endsWith('al')) return 'adj';
   } else {
-    if (w.endsWith('ть')||w.endsWith('тся')||w.endsWith('ться')||w.endsWith('ет')||w.endsWith('ют')||w.endsWith('ать')) return 'verb';
-    if (w.endsWith('но')||w.endsWith('ко')||w.endsWith('ски')) return 'adverb';
-    if (w.endsWith('ый')||w.endsWith('ий')||w.endsWith('ой')||w.endsWith('ая')||w.endsWith('яя')) return 'adj';
+    if (lo.endsWith('ть')||lo.endsWith('тся')||lo.endsWith('ать')||lo.endsWith('ет')||lo.endsWith('ют')) return 'verb';
+    if (lo.endsWith('но')||lo.endsWith('ко')||lo.endsWith('ски')) return 'adverb';
+    if (lo.endsWith('ый')||lo.endsWith('ий')||lo.endsWith('ой')||lo.endsWith('ая')) return 'adj';
   }
   return 'noun';
 }
 
-function getTagConfig() {
+function getTagCfg() {
   return {
-    verb:   { emoji: '⚡', css: 'tag-verb',   label: t('tagVerb')   },
-    noun:   { emoji: '📦', css: 'tag-noun',   label: t('tagNoun')   },
-    adj:    { emoji: '🎨', css: 'tag-adj',    label: t('tagAdj')    },
-    adverb: { emoji: '💨', css: 'tag-adv',    label: t('tagAdv')    },
-    phrase: { emoji: '💬', css: 'tag-phrase', label: t('tagPhrase') },
+    verb:  {emoji:'⚡',css:'tag-verb',  label:t('tagVerb')},
+    noun:  {emoji:'📦',css:'tag-noun',  label:t('tagNoun')},
+    adj:   {emoji:'🎨',css:'tag-adj',   label:t('tagAdj')},
+    adverb:{emoji:'💨',css:'tag-adv',   label:t('tagAdv')},
+    phrase:{emoji:'💬',css:'tag-phrase',label:t('tagPhrase')},
   };
 }
 
@@ -797,19 +863,12 @@ function extractWords(text) {
 
 function extractPhrases(text) {
   const words = text.trim().split(/\s+/);
-  const phrases = [];
-  for (let i = 0; i < Math.min(words.length - 1, 4); i++) {
-    const p = words[i] + ' ' + words[i+1];
-    if (p.replace(/[^a-zA-Zа-яёА-ЯЁ]/g,'').length > 5) phrases.push(p);
+  const out = [];
+  for (let i = 0; i < Math.min(words.length - 1, 3); i++) {
+    const p = words[i]+' '+words[i+1];
+    if (p.replace(/[^a-zA-Zа-яёА-ЯЁ]/g,'').length > 5) out.push(p);
   }
-  return phrases.slice(0, 2);
-}
-
-function genderNote(type) {
-  if (direction !== 'en-ru') return '';
-  if (type === 'verb' && speakerGend === 'female') return t('noteVerb');
-  if (type === 'noun') return t('noteNoun');
-  return '';
+  return out.slice(0,2);
 }
 
 /* ═══════════════════════════════════════════
@@ -819,70 +878,51 @@ async function doTranslate() {
   const input = document.getElementById('inputText').value.trim();
   if (!input) { showToast(t('noText')); return; }
 
+  const sl = direction === 'en-ru' ? 'en' : 'ru';
+  const tl = direction === 'en-ru' ? 'ru' : 'en';
+
   const btn = document.getElementById('translateBtn');
   btn.disabled = true;
   document.getElementById('translateBtnText').textContent = '⏳ ' + t('translateBtn') + '…';
-
   document.getElementById('loading').classList.add('show');
   document.getElementById('results').classList.remove('show');
 
   try {
-    const lp = direction === 'en-ru' ? 'en|ru' : 'ru|en';
-    let base = await fetchMM(input, lp);
-    let formal, casual, alt;
+    let base = await fetchGoogle(input, sl, tl);
+    let formal, casual;
 
     if (direction === 'en-ru') {
       base   = applyGender(base, speakerGend);
-      base   = applyListenerGender(base, listenerGend);
+      base   = applyListenerG(base, listenerGend);
       formal = makeFormal(base);
       casual = makeCasual(base);
-
-      await delay(400);
-      const altInput = input
-        .replace(/\bI would like\b/gi, 'I want')
-        .replace(/\bCould you\b/gi, 'Can you')
-        .replace(/\bplease\b/gi, '').trim();
-      alt = await fetchMM(altInput !== input ? altInput : input, lp);
-      alt = applyGender(alt, speakerGend);
-      if (alt.toLowerCase() === base.toLowerCase()) {
-        await delay(300);
-        alt = await fetchMM('In other words: ' + input, lp);
-      }
-
-      document.getElementById('formalNote').textContent = t('formalNoteEnRu');
-      document.getElementById('casualNote').textContent = t('casualNoteEnRu');
-      document.getElementById('altNote').textContent    = t('altNoteEnRu');
+      document.getElementById('formalNote').textContent = t('formalNote');
+      document.getElementById('casualNote').textContent = t('casualNote');
     } else {
       formal = base;
-      await delay(400);
-      casual = await fetchMM(makeCasual(input), lp);
-      if (casual.toLowerCase() === formal.toLowerCase()) casual = base + ' (informal)';
       await delay(300);
-      alt = await fetchMM('Simply put: ' + input, lp);
-      if (alt.toLowerCase() === formal.toLowerCase()) alt = formal;
-
-      document.getElementById('formalNote').textContent = t('formalNoteRuEn');
-      document.getElementById('casualNote').textContent = t('casualNoteRuEn');
-      document.getElementById('altNote').textContent    = t('altNoteRuEn');
+      try {
+        casual = await fetchGoogle(makeCasual(input), sl, tl);
+        if (casual.toLowerCase() === formal.toLowerCase()) casual = base;
+      } catch { casual = base; }
+      document.getElementById('formalNote').textContent = t('formalNoteRu');
+      document.getElementById('casualNote').textContent = t('casualNoteRu');
     }
 
     document.getElementById('formalText').textContent = formal;
     document.getElementById('casualText').textContent = casual;
-    document.getElementById('altText').textContent    = alt;
-
     document.getElementById('loading').classList.remove('show');
     document.getElementById('results').classList.add('show');
 
-    await buildBreakdown(input, lp);
+    await buildBreakdown(input, sl, tl);
 
   } catch (err) {
     document.getElementById('loading').classList.remove('show');
     document.getElementById('results').classList.add('show');
     document.getElementById('formalText').textContent = t('errText');
     document.getElementById('casualText').textContent = '';
-    document.getElementById('altText').textContent    = '';
     document.getElementById('breakdownBody').innerHTML =
-      `<tr><td colspan="4" style="padding:14px 18px; color:#ef4444;">Error: ${err.message}</td></tr>`;
+      `<tr><td colspan="4" style="padding:14px 18px;color:#ef4444;">Error: ${err.message}</td></tr>`;
     console.error(err);
   }
 
@@ -893,9 +933,9 @@ async function doTranslate() {
 /* ═══════════════════════════════════════════
    BREAKDOWN
 ═══════════════════════════════════════════ */
-async function buildBreakdown(input, lp) {
+async function buildBreakdown(input, sl, tl) {
   const tbody = document.getElementById('breakdownBody');
-  tbody.innerHTML = `<tr><td colspan="4" style="padding:14px 18px; color:#b0bcd8;">${t('analysing')}</td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="4" style="padding:14px 18px;color:#b0bcd8;">${t('analysing')}</td></tr>`;
 
   const words   = extractWords(input);
   const phrases = extractPhrases(input);
@@ -903,27 +943,30 @@ async function buildBreakdown(input, lp) {
 
   for (const w of words) {
     try {
-      await delay(220);
-      const tr = await fetchMM(w, lp);
+      await delay(150);
+      const tr = await fetchGoogle(w, sl, tl);
       const type = detectType(w);
-      rows.push({ type, orig: w, trans: tr, note: genderNote(type) });
+      let note = '';
+      if (direction==='en-ru' && type==='verb' && speakerGend==='female') note = t('noteVerbF');
+      else if (direction==='en-ru' && type==='noun') note = t('noteNoun');
+      rows.push({ type, orig: w, trans: tr, note });
     } catch { /* skip */ }
   }
   for (const ph of phrases) {
     try {
-      await delay(250);
-      const tr = await fetchMM(ph, lp);
-      rows.push({ type: 'phrase', orig: ph, trans: tr, note: t('notePhrase') });
+      await delay(150);
+      const tr = await fetchGoogle(ph, sl, tl);
+      rows.push({ type:'phrase', orig:ph, trans:tr, note:t('notePhrase') });
     } catch { /* skip */ }
   }
 
   tbody.innerHTML = '';
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="4" style="padding:14px 18px; color:#b0bcd8;">${t('noBreakdown')}</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="padding:14px 18px;color:#b0bcd8;">${t('noBreakdown')}</td></tr>`;
     return;
   }
 
-  const TAG = getTagConfig();
+  const TAG = getTagCfg();
   rows.forEach(({ type, orig, trans, note }) => {
     const cfg = TAG[type] || TAG.noun;
     const tr  = document.createElement('tr');
@@ -937,8 +980,14 @@ async function buildBreakdown(input, lp) {
 }
 
 /* ═══════════════════════════════════════════
-   KEYBOARD SHORTCUT
+   KEYBOARD — Enter to translate, Shift+Enter for newline
 ═══════════════════════════════════════════ */
+document.getElementById('inputText').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    doTranslate();
+  }
+});
 document.addEventListener('keydown', e => {
   if (e.ctrlKey && e.key === 'Enter') doTranslate();
 });
