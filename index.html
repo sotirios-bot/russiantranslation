@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🇬🇧 ↔ 🇷🇺 Russian Translator</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0d0d1a 0%, #12142b 50%, #0a1628 100%);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 20px 0 28px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #4fc3f7 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    header p {
+      color: #6b7280;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+
+    /* ── DIRECTION TOGGLE ── */
+    .direction-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .lang-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      min-width: 150px;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .lang-pill.active-lang { border-color: #a78bfa; }
+    .swap-btn {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border: none;
+      border-radius: 50%;
+      width: 48px; height: 48px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.3s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    .swap-btn:hover {
+      transform: rotate(180deg);
+      box-shadow: 0 0 20px rgba(168,85,247,0.5);
+    }
+
+    /* ── GENDER SELECTORS ── */
+    .gender-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .gender-box { }
+    .gender-box label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .gender-btns {
+      display: flex;
+      gap: 8px;
+    }
+    .g-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      color: #9ca3af;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .g-btn:hover { border-color: #a78bfa; color: #e0e0e0; }
+    .g-btn.on {
+      background: rgba(167,139,250,0.15);
+      border-color: #a78bfa;
+      color: #e0e0e0;
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(167,139,250,0.2);
+    }
+
+    /* ── INPUT ── */
+    .input-wrap { position: relative; }
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 16px;
+      color: #e0e0e0;
+      font-size: 1.05rem;
+      font-family: inherit;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      line-height: 1.6;
+    }
+    textarea:focus {
+      border-color: #a78bfa;
+      box-shadow: 0 0 0 3px rgba(167,139,250,0.1);
+    }
+    textarea::placeholder { color: #374151; }
+    .char-count {
+      text-align: right;
+      font-size: 0.78rem;
+      color: #4b5563;
+      margin-top: 5px;
+    }
+
+    /* ── TRANSLATE BTN ── */
+    .translate-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%);
+      border: none;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .translate-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background 0.2s;
+    }
+    .translate-btn:hover:not(:disabled)::after { background: rgba(255,255,255,0.08); }
+    .translate-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168,85,247,0.35); }
+    .translate-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .hint { text-align: center; font-size: 0.75rem; color: #374151; margin-top: 7px; }
+
+    /* ── LOADING ── */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+    }
+    .loading.show { display: block; }
+    .spinner {
+      display: inline-block;
+      width: 36px; height: 36px;
+      border: 3px solid rgba(167,139,250,0.25);
+      border-top-color: #a78bfa;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── RESULTS SECTION ── */
+    .results { display: none; }
+    .results.show { display: block; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .results-header::before, .results-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 680px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid;
+      position: relative;
+    }
+    .result-card.formal  { background: rgba(79,195,247,0.05);  border-color: rgba(79,195,247,0.25); }
+    .result-card.casual  { background: rgba(251,146,60,0.05);  border-color: rgba(251,146,60,0.25); }
+    .result-card.alt     { background: rgba(74,222,128,0.05);  border-color: rgba(74,222,128,0.25); }
+
+    .rc-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .rc-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+    }
+    .formal  .rc-label { color: #4fc3f7; }
+    .casual  .rc-label { color: #fb923c; }
+    .alt     .rc-label { color: #4ade80; }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      opacity: 0.45;
+      transition: opacity 0.2s, transform 0.2s;
+      padding: 2px;
+    }
+    .copy-btn:hover { opacity: 1; transform: scale(1.2); }
+
+    .rc-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #e5e7eb;
+      min-height: 48px;
+    }
+    .rc-note {
+      font-size: 0.78rem;
+      color: #4b5563;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── BREAKDOWN ── */
+    .breakdown-card {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+    }
+    .breakdown-title {
+      padding: 16px 22px 12px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      padding: 10px 18px;
+      text-align: left;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #4b5563;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    tbody tr { transition: background 0.15s; }
+    tbody tr:hover { background: rgba(255,255,255,0.03); }
+    tbody td {
+      padding: 11px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.93rem;
+      vertical-align: middle;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .tag-verb   { background: rgba(79,195,247,0.15);  color: #4fc3f7; }
+    .tag-noun   { background: rgba(251,146,60,0.15);  color: #fb923c; }
+    .tag-phrase { background: rgba(74,222,128,0.15);  color: #4ade80; }
+    .tag-adj    { background: rgba(232,121,249,0.15); color: #e879f9; }
+    .tag-adv    { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+
+    .orig-word { color: #e5e7eb; font-weight: 500; }
+    .trans-word { color: #e5e7eb; font-weight: 700; }
+    .note-cell { color: #4b5563; font-size: 0.82rem; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      color: #e0e0e0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      color: #1f2937;
+      font-size: 0.78rem;
+      padding: 12px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <h1>🇬🇧 ↔ 🇷🇺 Russian Translator</h1>
+    <p>✨ Smart translations with gender context, formality levels &amp; learning breakdowns ✨</p>
+  </header>
+
+  <!-- INPUT CARD -->
+  <div class="card">
+
+    <!-- Direction toggle -->
+    <div class="direction-row">
+      <div class="lang-pill active-lang" id="srcPill">🇬🇧 English</div>
+      <button class="swap-btn" onclick="swapDirection()" title="Swap languages">⇄</button>
+      <div class="lang-pill" id="tgtPill">🇷🇺 Russian</div>
+    </div>
+
+    <!-- Gender selectors -->
+    <div class="gender-row">
+      <div class="gender-box">
+        <label>👤 I am speaking as...</label>
+        <div class="gender-btns">
+          <button class="g-btn on" id="sp-m" onclick="setGender('speaker','male')">👨 Male</button>
+          <button class="g-btn"    id="sp-f" onclick="setGender('speaker','female')">👩 Female</button>
+        </div>
+      </div>
+      <div class="gender-box">
+        <label>🗣️ I am talking to...</label>
+        <div class="gender-btns">
+          <button class="g-btn on" id="ls-m" onclick="setGender('listener','male')">👨 Male</button>
+          <button class="g-btn"    id="ls-f" onclick="setGender('listener','female')">👩 Female</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Textarea -->
+    <div class="input-wrap">
+      <textarea id="inputText" placeholder="✍️  Type or paste your text here..." oninput="countChars()"></textarea>
+      <div class="char-count"><span id="charNum">0</span> characters</div>
+    </div>
+
+    <button class="translate-btn" id="translateBtn" onclick="doTranslate()">
+      🔄 &nbsp; Translate
+    </button>
+    <p class="hint">Tip: Press <kbd>Ctrl + Enter</kbd> to translate quickly</p>
+
+  </div><!-- /card -->
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p style="margin-top:12px; color:#6b7280;">Translating… 🌐</p>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="results-header">✨ Translations</div>
+
+    <div class="results-grid">
+      <div class="result-card formal">
+        <div class="rc-head">
+          <span class="rc-label">🎩 Formal</span>
+          <button class="copy-btn" onclick="copyCard('formalText')" title="Copy">📋</button>
+        </div>
+        <div class="rc-text" id="formalText"></div>
+        <div class="rc-note" id="formalNote"></div>
+      </div>
+      <div class="result-card casual">
+        <div class="rc-head">
+          <span class="rc-label">😊 Casual</span>
+          <button class="copy-btn" onclick="copyCard('casualText')" title="Copy">📋</button>
+        </div>
+        <div class="rc-text" id="casualText"></div>
+        <div class="rc-note" id="casualNote"></div>
+      </div>
+      <div class="result-card alt">
+        <div class="rc-head">
+          <span class="rc-label">💡 Alternative</span>
+          <button class="copy-btn" onclick="copyCard('altText')" title="Copy">📋</button>
+        </div>
+        <div class="rc-text" id="altText"></div>
+        <div class="rc-note" id="altNote"></div>
+      </div>
+    </div>
+
+    <!-- WORD BREAKDOWN -->
+    <div class="breakdown-card" id="breakdownCard">
+      <div class="breakdown-title">📚 Word &amp; Phrase Breakdown — for learning</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Original</th>
+            <th>Translation</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="breakdownBody">
+          <tr><td colspan="4" style="padding:14px 18px; color:#374151;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /results -->
+
+  <footer>Powered by MyMemory API 🌐 &nbsp;|&nbsp; Free &amp; Open Source &nbsp;|&nbsp; 🇬🇧 🇷🇺</footer>
+
+</div><!-- /app -->
+
+<div id="toast">📋 Copied!</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let direction   = 'en-ru';   // 'en-ru' | 'ru-en'
+let speakerGend = 'male';
+let listenerGend= 'male';
+
+/* ═══════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════ */
+function countChars() {
+  document.getElementById('charNum').textContent =
+    document.getElementById('inputText').value.length;
+}
+
+function swapDirection() {
+  direction = direction === 'en-ru' ? 'ru-en' : 'en-ru';
+  document.getElementById('srcPill').textContent = direction === 'en-ru' ? '🇬🇧 English' : '🇷🇺 Russian';
+  document.getElementById('tgtPill').textContent = direction === 'en-ru' ? '🇷🇺 Russian' : '🇬🇧 English';
+  document.getElementById('srcPill').classList.toggle('active-lang', true);
+  document.getElementById('results').classList.remove('show');
+  document.getElementById('inputText').value = '';
+  countChars();
+}
+
+function setGender(role, val) {
+  if (role === 'speaker') {
+    speakerGend = val;
+    document.getElementById('sp-m').classList.toggle('on', val === 'male');
+    document.getElementById('sp-f').classList.toggle('on', val === 'female');
+  } else {
+    listenerGend = val;
+    document.getElementById('ls-m').classList.toggle('on', val === 'male');
+    document.getElementById('ls-f').classList.toggle('on', val === 'female');
+  }
+}
+
+function showToast(msg = '📋 Copied!') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+async function copyCard(id) {
+  const text = document.getElementById(id).textContent;
+  try { await navigator.clipboard.writeText(text); }
+  catch { const ta = Object.assign(document.createElement('textarea'), { value: text });
+          document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  showToast('📋 Copied!');
+}
+
+/* ═══════════════════════════════════════════
+   API
+═══════════════════════════════════════════ */
+async function fetchMM(text, lp) {
+  const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${lp}`;
+  const r = await fetch(url);
+  const d = await r.json();
+  if (d.responseStatus === 200) return d.responseData.translatedText;
+  throw new Error('API error ' + d.responseStatus);
+}
+
+/* small delay to respect rate limits */
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+/* ═══════════════════════════════════════════
+   RUSSIAN GRAMMAR HELPERS
+═══════════════════════════════════════════ */
+
+/* Formal (Вы) ↔ Casual (ты) substitution maps */
+const TY_TO_VY = [
+  [/\bты\b/g,       'Вы'],
+  [/\bтебя\b/g,     'Вас'],
+  [/\bтебе\b/g,     'Вам'],
+  [/\bтобой\b/g,    'Вами'],
+  [/\bтвой\b/g,     'Ваш'],
+  [/\bтвоя\b/g,     'Ваша'],
+  [/\bтвоё\b/g,     'Ваше'],
+  [/\bтвои\b/g,     'Ваши'],
+  [/\bтвоего\b/g,   'Вашего'],
+  [/\bтвоей\b/g,    'Вашей'],
+  [/\bтвоему\b/g,   'Вашему'],
+];
+const VY_TO_TY = [
+  [/\bВы\b/g,       'ты'],
+  [/\bВас\b/g,      'тебя'],
+  [/\bВам\b/g,      'тебе'],
+  [/\bВами\b/g,     'тобой'],
+  [/\bВаш\b/g,      'твой'],
+  [/\bВаша\b/g,     'твоя'],
+  [/\bВаше\b/g,     'твоё'],
+  [/\bВаши\b/g,     'твои'],
+  [/\bВашего\b/g,   'твоего'],
+  [/\bВашей\b/g,    'твоей'],
+  [/\bВашему\b/g,   'твоему'],
+];
+
+function applyMap(text, map) {
+  let out = text;
+  map.forEach(([re, rep]) => { out = out.replace(re, rep); });
+  return out;
+}
+
+function makeFormal(text) { return applyMap(text, TY_TO_VY); }
+function makeCasual(text) { return applyMap(text, VY_TO_TY); }
+
+/* Past-tense gender pairs (masc → fem) */
+const GENDER_MAP_F = [
+  [/\bпришёл\b/g,'пришла'],[/\bушёл\b/g,'ушла'],[/\bнашёл\b/g,'нашла'],
+  [/\bбыл\b/g,'была'],[/\bбыло\b/g,'было'],
+  [/\bсказал\b/g,'сказала'],[/\bсказало\b/g,'сказало'],
+  [/\bпоехал\b/g,'поехала'],[/\bприехал\b/g,'приехала'],
+  [/\bсделал\b/g,'сделала'],[/\bпошёл\b/g,'пошла'],
+  [/\bработал\b/g,'работала'],[/\bзнал\b/g,'знала'],
+  [/\bдумал\b/g,'думала'],[/\bхотел\b/g,'хотела'],
+  [/\bмог\b/g,'могла'],[/\bустал\b/g,'устала'],
+  [/\bрад\b/g,'рада'],[/\bпозвонил\b/g,'позвонила'],
+  [/\bспросил\b/g,'спросила'],[/\bответил\b/g,'ответила'],
+  [/\bрешил\b/g,'решила'],[/\bначал\b/g,'начала'],
+  [/\bпонял\b/g,'поняла'],[/\bвзял\b/g,'взяла'],
+  [/\bдал\b/g,'дала'],[/\bпришёл\b/g,'пришла'],
+];
+
+function applyGender(text, gender) {
+  if (gender === 'female') return applyMap(text, GENDER_MAP_F);
+  return text;
+}
+
+/* Listener gender: affects adjective endings in some constructs */
+const LISTENER_F_MAP = [
+  [/\bдорогой\b/g,  'дорогая'],
+  [/\bуважаемый\b/g,'уважаемая'],
+  [/\bмилый\b/g,    'милая'],
+];
+function applyListenerGender(text, gender) {
+  if (gender === 'female') return applyMap(text, LISTENER_F_MAP);
+  return text;
+}
+
+/* ═══════════════════════════════════════════
+   WORD BREAKDOWN HELPERS
+═══════════════════════════════════════════ */
+const EN_STOP = new Set([
+  'the','a','an','in','on','at','to','for','of','and','or','but',
+  'is','it','i','my','me','you','your','he','she','we','they','this',
+  'that','with','from','not','are','was','were','be','have','has','had',
+  'do','does','did','will','would','could','should','may','might','shall',
+  'as','by','up','if','so','no','yes','just','also','very','more','about'
+]);
+
+const RU_STOP = new Set([
+  'и','в','на','с','по','для','от','из','к','а','но','что','это',
+  'я','ты','он','она','мы','вы','они','не','да','нет','же','уже',
+  'как','так','бы','ли','или','то','всё','там','тут','ещё','вот'
+]);
+
+function detectType(word) {
+  const w = word.toLowerCase();
+  const isRu = /[а-яё]/i.test(w);
+  if (!isRu) {
+    if (['is','are','was','were','be','have','has','had','do','does','did',
+         'go','went','come','came','want','like','love','need','know','think',
+         'see','look','say','tell','ask','work','live','feel','seem','call',
+         'get','put','give','take','make','let','run','turn','help','try',
+         'use','keep','play','move','hear','speak','write','read','meet'].includes(w)
+      || w.endsWith('ing') || w.endsWith('ate') || w.endsWith('ify'))
+      return 'verb';
+    if (w.endsWith('ly')) return 'adverb';
+    if (w.endsWith('ful')||w.endsWith('less')||w.endsWith('ous')||w.endsWith('ive')||w.endsWith('al')) return 'adj';
+  } else {
+    if (w.endsWith('ть')||w.endsWith('тся')||w.endsWith('ться')||w.endsWith('ет')||w.endsWith('ют')||w.endsWith('ать')) return 'verb';
+    if (w.endsWith('но')||w.endsWith('ко')||w.endsWith('ски')) return 'adverb';
+    if (w.endsWith('ый')||w.endsWith('ий')||w.endsWith('ой')||w.endsWith('ая')||w.endsWith('яя')) return 'adj';
+  }
+  return 'noun';
+}
+
+const TAG_CONFIG = {
+  verb:   { emoji: '⚡', css: 'tag-verb',   label: 'Verb'   },
+  noun:   { emoji: '📦', css: 'tag-noun',   label: 'Noun'   },
+  adj:    { emoji: '🎨', css: 'tag-adj',    label: 'Adj'    },
+  adverb: { emoji: '💨', css: 'tag-adv',    label: 'Adverb' },
+  phrase: { emoji: '💬', css: 'tag-phrase', label: 'Phrase' },
+};
+
+function extractWords(text) {
+  const isRu = direction === 'ru-en';
+  const stop  = isRu ? RU_STOP : EN_STOP;
+  return [...new Set(
+    text.split(/\s+/)
+      .map(w => w.replace(/[^a-zA-Zа-яёА-ЯЁ]/g,'').toLowerCase())
+      .filter(w => w.length > 3 && !stop.has(w))
+  )].slice(0, 6);
+}
+
+function extractPhrases(text) {
+  const words = text.trim().split(/\s+/);
+  const phrases = [];
+  for (let i = 0; i < Math.min(words.length - 1, 4); i++) {
+    const p = words[i] + ' ' + words[i+1];
+    const clean = p.replace(/[^a-zA-Zа-яёА-ЯЁ ]/g,'');
+    if (clean.replace(/\s/g,'').length > 5) phrases.push(p);
+  }
+  return phrases.slice(0, 2);
+}
+
+function genderNote(type, word) {
+  if (direction !== 'en-ru') return '';
+  if (type === 'verb' && speakerGend === 'female') return '👩 fem. form applied';
+  if (type === 'noun') return '📌 memorise gender!';
+  return '';
+}
+
+/* ═══════════════════════════════════════════
+   MAIN TRANSLATE
+═══════════════════════════════════════════ */
+async function doTranslate() {
+  const input = document.getElementById('inputText').value.trim();
+  if (!input) { showToast('✍️ Please type some text first!'); return; }
+
+  const btn = document.getElementById('translateBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳  Translating…';
+
+  document.getElementById('loading').classList.add('show');
+  document.getElementById('results').classList.remove('show');
+
+  try {
+    const lp = direction === 'en-ru' ? 'en|ru' : 'ru|en';
+
+    /* ── primary translation ── */
+    let base = await fetchMM(input, lp);
+
+    let formal, casual, alt;
+
+    if (direction === 'en-ru') {
+      base   = applyGender(base, speakerGend);
+      base   = applyListenerGender(base, listenerGend);
+      formal = makeFormal(base);
+      casual = makeCasual(base);
+
+      /* alternative: translate with slight rephrasing */
+      await delay(400);
+      const altInput = input
+        .replace(/\bI would like\b/gi, 'I want')
+        .replace(/\bCould you\b/gi,    'Can you')
+        .replace(/\bplease\b/gi,       '')
+        .trim();
+      alt = await fetchMM(altInput !== input ? altInput : input, lp);
+      alt = applyGender(alt, speakerGend);
+      /* if alt == base try a context prefix */
+      if (alt.toLowerCase() === base.toLowerCase()) {
+        await delay(300);
+        alt = await fetchMM('In other words: ' + input, lp);
+      }
+
+      /* notes */
+      document.getElementById('formalNote').textContent =
+        listenerGend === 'female' ? '🎩 Uses "Вы" — polite address' : '🎩 Uses "Вы" — polite address';
+      document.getElementById('casualNote').textContent =
+        '😊 Uses "ты" — friendly / informal';
+      document.getElementById('altNote').textContent =
+        '💡 Alternative phrasing';
+
+    } else {
+      /* Russian → English */
+      formal = base;
+      await delay(400);
+      casual = await fetchMM(makeCasual(input), lp);
+      if (casual.toLowerCase() === formal.toLowerCase()) casual = base + ' (informal)';
+      await delay(300);
+      alt    = await fetchMM('Simply put: ' + input, lp);
+      if (alt.toLowerCase() === formal.toLowerCase()) alt = formal;
+
+      document.getElementById('formalNote').textContent = '🎩 Direct translation';
+      document.getElementById('casualNote').textContent = '😊 From casual Russian form';
+      document.getElementById('altNote').textContent    = '💡 Simplified version';
+    }
+
+    document.getElementById('formalText').textContent = formal;
+    document.getElementById('casualText').textContent = casual;
+    document.getElementById('altText').textContent    = alt;
+
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('results').classList.add('show');
+
+    /* ── word breakdown ── */
+    await buildBreakdown(input, lp);
+
+  } catch (err) {
+    document.getElementById('loading').classList.remove('show');
+    document.getElementById('results').classList.add('show');
+    document.getElementById('formalText').textContent = '❌ Translation failed — check your connection.';
+    document.getElementById('casualText').textContent = '';
+    document.getElementById('altText').textContent    = '';
+    document.getElementById('breakdownBody').innerHTML =
+      '<tr><td colspan="4" style="padding:14px 18px; color:#ef4444;">Error: ' + err.message + '</td></tr>';
+    console.error(err);
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔄  Translate';
+}
+
+/* ═══════════════════════════════════════════
+   BREAKDOWN
+═══════════════════════════════════════════ */
+async function buildBreakdown(input, lp) {
+  const tbody = document.getElementById('breakdownBody');
+  tbody.innerHTML = '<tr><td colspan="4" style="padding:14px 18px; color:#4b5563;">🔍 Analysing…</td></tr>';
+
+  const words   = extractWords(input);
+  const phrases = extractPhrases(input);
+  const rows    = [];
+
+  for (const w of words) {
+    try {
+      await delay(220);
+      const tr = await fetchMM(w, lp);
+      rows.push({ type: detectType(w), orig: w, trans: tr, note: genderNote(detectType(w), w) });
+    } catch { /* skip */ }
+  }
+
+  for (const ph of phrases) {
+    try {
+      await delay(250);
+      const tr = await fetchMM(ph, lp);
+      rows.push({ type: 'phrase', orig: ph, trans: tr, note: '💬 Common phrase' });
+    } catch { /* skip */ }
+  }
+
+  tbody.innerHTML = '';
+
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="padding:14px 18px; color:#4b5563;">No breakdown available for this text.</td></tr>';
+    return;
+  }
+
+  rows.forEach(({ type, orig, trans, note }) => {
+    const cfg = TAG_CONFIG[type] || TAG_CONFIG.noun;
+    const tr  = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="tag ${cfg.css}">${cfg.emoji} ${cfg.label}</span></td>
+      <td class="orig-word">${orig}</td>
+      <td class="trans-word">${trans}</td>
+      <td class="note-cell">${note}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   KEYBOARD SHORTCUT
+═══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.key === 'Enter') doTranslate();
+});
+</script>
+
+</body>
+</html>
