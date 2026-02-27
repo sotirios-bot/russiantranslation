@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NRZ5N9GV');</script>
+  <!-- End Google Tag Manager -->
+
+  <title>PDF Translator — English ↔ Russian | Mytheon Technologies</title>
+  <meta name="description" content="Upload a PDF in English or Russian and download the translation instantly. Free online PDF translator — no signup, no limits. Powered by Mytheon Technologies."/>
+  <link rel="canonical" href="https://englishtorussian.ai/pdf/"/>
+
+  <style>
+  /* ═══ CSS VARIABLES ═══ */
+  :root {
+    --bg:         #f0f4ff;
+    --surface:    #ffffff;
+    --surface2:   #fafcff;
+    --border:     #d0dcf5;
+    --border2:    #eaf0ff;
+    --text:       #1a1a2e;
+    --muted:      #5570a0;
+    --faint:      #9aadcc;
+    --xfaint:     #b0bcd8;
+    --primary:    #2253cb;
+    --primary-bg: #eaf0ff;
+    --primary-dk: #1a40a8;
+    --orange:     #ea7000;
+    --orange-bg:  #fff7f0;
+    --green:      #1a9e5c;
+    --green-bg:   #f0fdf6;
+    --red:        #ef4444;
+    --red-bg:     #fef2f2;
+    --shadow:     rgba(34,83,203,0.07);
+    --shadow2:    rgba(34,83,203,0.18);
+  }
+  [data-theme="dark"] {
+    --bg:         #080c18;
+    --surface:    #0f1520;
+    --surface2:   #0a1020;
+    --border:     rgba(255,255,255,0.09);
+    --border2:    rgba(255,255,255,0.05);
+    --text:       #e5e7eb;
+    --muted:      #9ca3af;
+    --faint:      #6b7280;
+    --xfaint:     #4b5563;
+    --primary:    #5b85f5;
+    --primary-bg: rgba(91,133,245,0.12);
+    --primary-dk: #7599ff;
+    --orange:     #fb923c;
+    --orange-bg:  rgba(251,146,60,0.08);
+    --green:      #34d399;
+    --green-bg:   rgba(52,211,153,0.08);
+    --red:        #f87171;
+    --red-bg:     rgba(248,113,113,0.08);
+    --shadow:     rgba(0,0,0,0.35);
+    --shadow2:    rgba(0,0,0,0.55);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); min-height:100vh; color:var(--text); transition:background .3s,color .3s; }
+
+  /* ═══ WRAPPER ═══ */
+  .wrap { max-width:960px; margin:0 auto; padding:0 16px 60px; }
+
+  /* ═══ HEADER ═══ */
+  .top-bar { display:flex; align-items:center; justify-content:space-between; padding:14px 0 0; gap:10px; flex-wrap:wrap; }
+  .back-link { display:flex; align-items:center; gap:6px; color:var(--primary); font-size:.87rem; font-weight:600; text-decoration:none; border:1px solid var(--border); border-radius:20px; padding:6px 14px; background:var(--surface); transition:all .2s; }
+  .back-link:hover { background:var(--primary-bg); border-color:var(--primary); }
+  .tool-btn { display:flex; align-items:center; gap:5px; padding:6px 14px; background:var(--surface); border:1px solid var(--border); border-radius:20px; font-size:.82rem; color:var(--muted); cursor:pointer; transition:all .2s; font-weight:500; }
+  .tool-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+
+  header { text-align:center; padding:28px 0 22px; }
+  h1 { font-size:2rem; font-weight:800; color:var(--primary); letter-spacing:-.5px; line-height:1.25; }
+  .subtitle { color:var(--muted); margin-top:9px; font-size:.93rem; line-height:1.65; }
+
+  /* ═══ DIRECTION ROW ═══ */
+  .direction-row { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:24px; flex-wrap:wrap; }
+  .lang-pill { display:flex; align-items:center; gap:7px; background:var(--bg); border:2px solid var(--border); border-radius:50px; padding:10px 22px; font-size:.95rem; font-weight:600; min-width:140px; justify-content:center; color:var(--muted); transition:all .2s; cursor:pointer; }
+  .lang-pill.active-lang { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  .swap-btn { background:var(--primary); border:none; border-radius:50%; width:44px; height:44px; font-size:1.15rem; cursor:pointer; color:#fff; transition:transform .35s,background .2s; flex-shrink:0; box-shadow:0 4px 14px var(--shadow2); }
+  .swap-btn:hover { transform:rotate(180deg); background:var(--primary-dk); }
+
+  /* ═══ DROP ZONE ═══ */
+  .drop-zone { border:2.5px dashed var(--border); border-radius:20px; background:var(--surface); padding:52px 24px; text-align:center; cursor:pointer; transition:all .25s; position:relative; }
+  .drop-zone:hover, .drop-zone.dragover { border-color:var(--primary); background:var(--primary-bg); }
+  .drop-zone.dragover .drop-icon { transform:scale(1.15); }
+  .drop-icon { font-size:3rem; margin-bottom:14px; display:block; transition:transform .2s; }
+  .drop-title { font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:6px; }
+  .drop-sub { font-size:.84rem; color:var(--faint); margin-bottom:18px; }
+  .browse-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 24px; background:var(--primary); color:#fff; border:none; border-radius:25px; font-size:.9rem; font-weight:700; cursor:pointer; transition:all .2s; box-shadow:0 4px 14px var(--shadow2); }
+  .browse-btn:hover { background:var(--primary-dk); transform:translateY(-1px); }
+  .drop-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+
+  /* ═══ FILE INFO ═══ */
+  .file-info { display:none; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px 20px; margin-bottom:20px; align-items:center; gap:14px; }
+  .file-info.show { display:flex; }
+  .file-icon { font-size:2rem; flex-shrink:0; }
+  .file-details { flex:1; min-width:0; }
+  .file-name { font-weight:700; font-size:.95rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .file-meta { font-size:.78rem; color:var(--faint); margin-top:3px; }
+  .file-clear { background:none; border:none; color:var(--xfaint); cursor:pointer; font-size:1.3rem; flex-shrink:0; padding:4px; transition:color .2s; }
+  .file-clear:hover { color:var(--red); }
+
+  /* ═══ WARNING ═══ */
+  .warning { display:none; background:var(--orange-bg); border:1px solid var(--orange); border-radius:12px; padding:12px 16px; margin-bottom:16px; font-size:.86rem; color:var(--orange); line-height:1.6; }
+  .warning.show { display:block; }
+  .error-box { display:none; background:var(--red-bg); border:1px solid var(--red); border-radius:12px; padding:13px 16px; margin-bottom:16px; font-size:.88rem; color:var(--red); line-height:1.6; }
+  .error-box.show { display:block; }
+
+  /* ═══ PROGRESS ═══ */
+  .progress-area { display:none; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:20px; }
+  .progress-area.show { display:block; }
+  .progress-label { font-size:.85rem; color:var(--muted); margin-bottom:10px; font-weight:500; }
+  .progress-bar { background:var(--bg); border-radius:99px; height:10px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg, var(--primary), var(--primary-dk)); border-radius:99px; transition:width .4s ease; width:0%; }
+  .progress-pct { font-size:.78rem; color:var(--faint); margin-top:7px; text-align:right; }
+
+  /* ═══ RESULTS ═══ */
+  .results-area { display:none; }
+  .results-area.show { display:block; }
+  .results-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  .preview-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:0 2px 12px var(--shadow); }
+  .preview-card.translated { border-color:rgba(34,83,203,.3); }
+  .preview-head { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:var(--surface2); border-bottom:1px solid var(--border2); }
+  .preview-label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:1.1px; color:var(--faint); }
+  .translated .preview-label { color:var(--primary); }
+  .preview-copy { background:none; border:1px solid var(--border); border-radius:8px; padding:4px 10px; font-size:.73rem; color:var(--faint); cursor:pointer; transition:all .2s; }
+  .preview-copy:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  .preview-body { padding:16px; max-height:340px; overflow-y:auto; font-size:.88rem; line-height:1.75; color:var(--text); white-space:pre-wrap; word-break:break-word; }
+  .preview-foot { padding:8px 14px; background:var(--surface2); border-top:1px solid var(--border2); font-size:.73rem; color:var(--xfaint); }
+
+  /* ═══ ACTION BUTTONS ═══ */
+  .action-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+  .btn-primary { display:flex; align-items:center; gap:7px; padding:13px 26px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-size:.97rem; font-weight:700; cursor:pointer; transition:all .2s; box-shadow:0 4px 16px var(--shadow2); }
+  .btn-primary:hover { background:var(--primary-dk); transform:translateY(-2px); box-shadow:0 8px 24px var(--shadow2); }
+  .btn-secondary { display:flex; align-items:center; gap:7px; padding:13px 22px; background:var(--surface); color:var(--muted); border:1px solid var(--border); border-radius:12px; font-size:.93rem; font-weight:600; cursor:pointer; transition:all .2s; }
+  .btn-secondary:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  .btn-danger { display:flex; align-items:center; gap:7px; padding:13px 22px; background:var(--surface); color:var(--faint); border:1px solid var(--border); border-radius:12px; font-size:.93rem; font-weight:600; cursor:pointer; transition:all .2s; }
+  .btn-danger:hover { border-color:var(--red); color:var(--red); }
+
+  /* ═══ STATS BAR ═══ */
+  .stats-bar { display:flex; gap:20px; flex-wrap:wrap; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 18px; margin-bottom:16px; }
+  .stat { display:flex; flex-direction:column; gap:2px; }
+  .stat-val { font-size:1.1rem; font-weight:800; color:var(--primary); }
+  .stat-lbl { font-size:.7rem; color:var(--faint); text-transform:uppercase; letter-spacing:.8px; font-weight:600; }
+
+  /* ═══ HOW IT WORKS ═══ */
+  .how-section { margin-top:36px; }
+  .how-title { font-size:1.05rem; font-weight:800; color:var(--primary); margin-bottom:16px; }
+  .how-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .how-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 16px; text-align:center; }
+  .how-num { font-size:1.6rem; margin-bottom:8px; }
+  .how-title-sm { font-size:.88rem; font-weight:700; color:var(--text); margin-bottom:5px; }
+  .how-desc { font-size:.78rem; color:var(--muted); line-height:1.55; }
+
+  /* ═══ FOOTER ═══ */
+  footer { text-align:center; padding:22px 0 10px; border-top:1px solid var(--border); margin-top:30px; }
+  .footer-brand { font-size:.85rem; font-weight:700; color:var(--primary); letter-spacing:1px; text-transform:uppercase; }
+  .footer-address { font-size:.74rem; color:var(--faint); margin-top:4px; }
+
+  /* ═══ TOAST ═══ */
+  #toast { position:fixed; bottom:24px; right:24px; background:var(--primary); border-radius:10px; padding:10px 18px; font-size:.87rem; color:#fff; opacity:0; transform:translateY(10px); transition:opacity .25s,transform .25s; pointer-events:none; z-index:9999; box-shadow:0 4px 16px var(--shadow2); }
+  #toast.show { opacity:1; transform:translateY(0); }
+
+  /* ═══ MOBILE ═══ */
+  @media(max-width:700px){
+    h1 { font-size:1.4rem; }
+    .results-grid { grid-template-columns:1fr; }
+    .how-grid { grid-template-columns:1fr; }
+    .drop-zone { padding:36px 16px; }
+    .drop-icon { font-size:2.4rem; }
+    .action-row { flex-direction:column; }
+    .btn-primary,.btn-secondary,.btn-danger { justify-content:center; }
+    .lang-pill { min-width:110px; padding:8px 14px; font-size:.87rem; }
+    .stats-bar { gap:12px; }
+  }
+  @media(max-width:400px){
+    h1 { font-size:1.2rem; }
+    .top-bar { flex-direction:column; align-items:flex-start; }
+  }
+  </style>
+</head>
+<body data-theme="light">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRZ5N9GV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="wrap">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="/" class="back-link">← Text Translator</a>
+    <button class="tool-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <h1>📄 PDF Translator</h1>
+    <p class="subtitle">Upload a PDF in English or Russian — we extract the text, translate it, and let you download the result.</p>
+  </header>
+
+  <!-- DIRECTION -->
+  <div class="direction-row">
+    <div class="lang-pill active-lang" id="srcPill" onclick="swapDir()">🇬🇧 English</div>
+    <button class="swap-btn" onclick="swapDir()" title="Swap languages">⇄</button>
+    <div class="lang-pill" id="tgtPill" onclick="swapDir()">🇷🇺 Russian</div>
+  </div>
+
+  <!-- DROP ZONE -->
+  <div class="drop-zone" id="dropZone">
+    <span class="drop-icon">📄</span>
+    <div class="drop-title">Drop your PDF here</div>
+    <div class="drop-sub">or click anywhere to browse — max 15 MB</div>
+    <button class="browse-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">📂 Choose PDF file</button>
+    <input type="file" id="fileInput" accept=".pdf" onchange="handleFileInput(this)"/>
+  </div>
+
+  <!-- FILE INFO -->
+  <div class="file-info" id="fileInfo">
+    <span class="file-icon">📄</span>
+    <div class="file-details">
+      <div class="file-name" id="fileName"></div>
+      <div class="file-meta" id="fileMeta"></div>
+    </div>
+    <button class="file-clear" onclick="resetAll()" title="Remove file">✕</button>
+  </div>
+
+  <!-- WARNING (scanned PDF) -->
+  <div class="warning" id="warningBox">
+    ⚠️ <strong>Low text detected.</strong> This PDF may be a scanned or image-based document. Text extraction works only on PDFs with selectable text. Scanned PDFs require OCR software.
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- PROGRESS -->
+  <div class="progress-area" id="progressArea">
+    <div class="progress-label" id="progressLabel">Reading PDF…</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-area" id="resultsArea">
+
+    <!-- STATS -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat"><span class="stat-val" id="statPages">-</span><span class="stat-lbl">Pages</span></div>
+      <div class="stat"><span class="stat-val" id="statWords">-</span><span class="stat-lbl">Words</span></div>
+      <div class="stat"><span class="stat-val" id="statChars">-</span><span class="stat-lbl">Characters</span></div>
+      <div class="stat"><span class="stat-val" id="statChunks">-</span><span class="stat-lbl">Chunks translated</span></div>
+    </div>
+
+    <!-- PREVIEW PANELS -->
+    <div class="results-grid">
+      <div class="preview-card">
+        <div class="preview-head">
+          <span class="preview-label" id="origLabel">Original (English)</span>
+          <button class="preview-copy" onclick="copyText('origBody')">📋 Copy</button>
+        </div>
+        <div class="preview-body" id="origBody"></div>
+        <div class="preview-foot" id="origFoot"></div>
+      </div>
+      <div class="preview-card translated">
+        <div class="preview-head">
+          <span class="preview-label" id="transLabel">Translation (Russian)</span>
+          <button class="preview-copy" onclick="copyText('transBody')">📋 Copy</button>
+        </div>
+        <div class="preview-body" id="transBody"></div>
+        <div class="preview-foot" id="transFoot"></div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="action-row">
+      <button class="btn-primary" onclick="downloadPDF()">⬇️ Download as PDF</button>
+      <button class="btn-secondary" onclick="copyText('transBody')">📋 Copy translation</button>
+      <button class="btn-danger" onclick="resetAll()">🔄 Translate another PDF</button>
+    </div>
+
+  </div><!-- /results-area -->
+
+  <!-- HOW IT WORKS -->
+  <div class="how-section" id="howSection">
+    <div class="how-title">How it works</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">📄</div>
+        <div class="how-title-sm">Upload your PDF</div>
+        <div class="how-desc">Drop any PDF with selectable text — contracts, articles, emails, reports.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">🌐</div>
+        <div class="how-title-sm">We translate it</div>
+        <div class="how-desc">Text is extracted page by page and translated using Google's engine in chunks.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-num">⬇️</div>
+        <div class="how-title-sm">Download the result</div>
+        <div class="how-desc">Save the translated document as a PDF using your browser's built-in print dialog.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+    <div class="footer-address">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+  </footer>
+
+</div><!-- /wrap -->
+
+<div id="toast"></div>
+
+<!-- pdf.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script>
+/* ════════════════════════════════
+   STATE
+════════════════════════════════ */
+let direction = 'en-ru';  // or 'ru-en'
+let currentFile = null;
+let extractedText = '';
+let translatedTextContent = '';
+let totalPages = 0;
+
+/* ════════════════════════════════
+   PDF.js SETUP
+════════════════════════════════ */
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+/* ════════════════════════════════
+   THEME
+════════════════════════════════ */
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.body.dataset.theme = saved;
+  updateThemeBtn();
+})();
+
+function toggleTheme() {
+  const isDark = document.body.dataset.theme === 'dark';
+  document.body.dataset.theme = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', document.body.dataset.theme);
+  updateThemeBtn();
+}
+function updateThemeBtn() {
+  const isDark = document.body.dataset.theme === 'dark';
+  document.getElementById('themeBtn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+}
+
+/* ════════════════════════════════
+   DIRECTION TOGGLE
+════════════════════════════════ */
+function swapDir() {
+  direction = direction === 'en-ru' ? 'ru-en' : 'en-ru';
+  const src = document.getElementById('srcPill');
+  const tgt = document.getElementById('tgtPill');
+  if (direction === 'en-ru') {
+    src.textContent = '🇬🇧 English'; tgt.textContent = '🇷🇺 Russian';
+    src.classList.add('active-lang'); tgt.classList.remove('active-lang');
+  } else {
+    src.textContent = '🇷🇺 Russian'; tgt.textContent = '🇬🇧 English';
+    src.classList.add('active-lang'); tgt.classList.remove('active-lang');
+  }
+}
+
+/* ════════════════════════════════
+   DRAG & DROP
+════════════════════════════════ */
+const dropZone = document.getElementById('dropZone');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+dropZone.addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT') {
+    document.getElementById('fileInput').click();
+  }
+});
+
+function handleFileInput(input) {
+  if (input.files[0]) handleFile(input.files[0]);
+}
+
+/* ════════════════════════════════
+   HANDLE FILE
+════════════════════════════════ */
+function handleFile(file) {
+  hideError();
+  hide('warningBox');
+
+  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    showError('Please upload a PDF file (.pdf).');
+    return;
+  }
+  if (file.size > 15 * 1024 * 1024) {
+    showError('File is too large. Maximum allowed size is 15 MB.');
+    return;
+  }
+
+  currentFile = file;
+  showFileInfo(file);
+  hide('dropZone');
+  hide('resultsArea');
+  startProcessing(file);
+}
+
+function showFileInfo(file) {
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('fileMeta').textContent =
+    formatBytes(file.size) + ' • PDF document';
+  show('fileInfo', 'flex');
+}
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
+  return (b / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+/* ════════════════════════════════
+   PROCESSING PIPELINE
+════════════════════════════════ */
+async function startProcessing(file) {
+  show('progressArea');
+  hide('resultsArea');
+  hide('howSection');
+  setProgress(0, 'Reading PDF…');
+
+  try {
+    // 1. Extract text
+    const { text, pages } = await extractText(file);
+    totalPages = pages;
+
+    if (!text.trim() || text.trim().length < 20) {
+      show('warningBox');
+      hideProgress();
+      return;
+    }
+
+    extractedText = text;
+
+    // 2. Translate
+    const sl = direction === 'en-ru' ? 'en' : 'ru';
+    const tl = direction === 'en-ru' ? 'ru' : 'en';
+    setProgress(38, 'Starting translation…');
+    const { translated, chunks } = await translateInChunks(text, sl, tl);
+    translatedTextContent = translated;
+
+    // 3. Show results
+    setProgress(100, 'Done!');
+    await sleep(400);
+    hideProgress();
+    showResults(text, translated, pages, chunks);
+
+  } catch (err) {
+    hideProgress();
+    showError('An error occurred: ' + (err.message || err));
+    console.error(err);
+  }
+}
+
+/* ════════════════════════════════
+   TEXT EXTRACTION (pdf.js)
+════════════════════════════════ */
+async function extractText(file) {
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const numPages = pdf.numPages;
+  let fullText = '';
+
+  for (let i = 1; i <= numPages; i++) {
+    const pct = Math.round((i / numPages) * 35);
+    setProgress(pct, `Reading page ${i} of ${numPages}…`);
+
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+
+    // Reconstruct text, inserting newlines on Y-axis changes (new lines in PDF)
+    let pageText = '';
+    let lastY = null;
+    for (const item of content.items) {
+      if ('str' in item) {
+        if (lastY !== null && Math.abs(item.transform[5] - lastY) > 4) {
+          pageText += '\n';
+        }
+        pageText += item.str;
+        lastY = item.transform[5];
+      }
+    }
+    fullText += pageText.trim() + '\n\n';
+  }
+
+  return { text: fullText.trim(), pages: numPages };
+}
+
+/* ════════════════════════════════
+   CHUNKED TRANSLATION
+════════════════════════════════ */
+async function translateInChunks(text, sl, tl) {
+  const MAX = 2000;
+  const chunks = [];
+  const paragraphs = text.split(/\n{2,}/);
+  let current = '';
+
+  for (const para of paragraphs) {
+    if (current.length + para.length > MAX && current.trim()) {
+      chunks.push(current.trim());
+      current = para + '\n\n';
+    } else {
+      current += para + '\n\n';
+    }
+  }
+  if (current.trim()) chunks.push(current.trim());
+
+  const results = [];
+  for (let i = 0; i < chunks.length; i++) {
+    const pct = 38 + Math.round(((i + 1) / chunks.length) * 58);
+    setProgress(pct, `Translating… ${i + 1} of ${chunks.length} chunk${chunks.length > 1 ? 's' : ''}`);
+
+    try {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(chunks[i])}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const result = data[0].map(s => s[0]).join('');
+      results.push(result);
+    } catch {
+      results.push('[Translation error — chunk ' + (i + 1) + ']');
+    }
+
+    if (i < chunks.length - 1) await sleep(350);
+  }
+
+  return { translated: results.join('\n\n'), chunks: chunks.length };
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+/* ════════════════════════════════
+   SHOW RESULTS
+════════════════════════════════ */
+function showResults(orig, trans, pages, chunks) {
+  const sl = direction === 'en-ru' ? 'English' : 'Russian';
+  const tl = direction === 'en-ru' ? 'Russian' : 'English';
+
+  // Labels
+  document.getElementById('origLabel').textContent = `Original (${sl})`;
+  document.getElementById('transLabel').textContent = `Translation (${tl})`;
+
+  // Text
+  document.getElementById('origBody').textContent = orig;
+  document.getElementById('transBody').textContent = trans;
+
+  // Footer notes
+  const words = orig.trim().split(/\s+/).length;
+  const chars = orig.length;
+  document.getElementById('origFoot').textContent =
+    `${words.toLocaleString()} words • ${chars.toLocaleString()} chars`;
+  document.getElementById('transFoot').textContent =
+    `${trans.trim().split(/\s+/).length.toLocaleString()} words • ${trans.length.toLocaleString()} chars`;
+
+  // Stats
+  document.getElementById('statPages').textContent = pages;
+  document.getElementById('statWords').textContent = words.toLocaleString();
+  document.getElementById('statChars').textContent = chars.toLocaleString();
+  document.getElementById('statChunks').textContent = chunks;
+
+  show('resultsArea');
+}
+
+/* ════════════════════════════════
+   DOWNLOAD AS PDF (print dialog)
+════════════════════════════════ */
+function downloadPDF() {
+  const sl = direction === 'en-ru' ? 'English' : 'Russian';
+  const tl = direction === 'en-ru' ? 'Russian' : 'English';
+  const fname = (currentFile?.name || 'document').replace(/\.pdf$/i, '');
+  const date = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  const words = translatedTextContent.trim().split(/\s+/).length;
+
+  const safe = translatedTextContent
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br>');
+
+  const win = window.open('', '_blank');
+  if (!win) {
+    showError('Pop-up blocked. Please allow pop-ups for this site and try again.');
+    return;
+  }
+
+  win.document.write(`<!DOCTYPE html>
+<html lang="${tl === 'Russian' ? 'ru' : 'en'}">
+<head>
+<meta charset="UTF-8"/>
+<title>${fname} — Translated ${sl} to ${tl}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans','Segoe UI',Arial,sans-serif;max-width:820px;margin:0 auto;padding:40px 44px;color:#1a1a2e;line-height:1.85;font-size:13.5px;}
+  .doc-header{border-bottom:3px solid #2253cb;padding-bottom:18px;margin-bottom:26px;}
+  .doc-title{font-size:1.25rem;font-weight:800;color:#2253cb;}
+  .doc-meta{font-size:.78rem;color:#777;margin-top:6px;display:flex;gap:18px;flex-wrap:wrap;}
+  .badge{display:inline-block;background:#eaf0ff;color:#2253cb;border-radius:20px;padding:2px 10px;font-weight:700;font-size:.72rem;}
+  .content{white-space:pre-wrap;word-break:break-word;}
+  .doc-footer{margin-top:44px;padding-top:14px;border-top:1px solid #e5e5e5;text-align:center;font-size:.73rem;color:#bbb;}
+  .print-btn{position:fixed;bottom:24px;right:24px;background:#2253cb;color:#fff;border:none;border-radius:12px;padding:12px 24px;font-size:.93rem;font-weight:700;cursor:pointer;box-shadow:0 4px 18px rgba(34,83,203,.4);display:flex;align-items:center;gap:7px;transition:all .2s;}
+  .print-btn:hover{background:#1a40a8;transform:translateY(-2px);}
+  @media print{
+    body{padding:20px 24px;}
+    .print-btn{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <div class="doc-title">${escHtml(fname)}</div>
+  <div class="doc-meta">
+    <span><span class="badge">${sl} → ${tl}</span></span>
+    <span>${date}</span>
+    <span>${totalPages} page${totalPages !== 1 ? 's' : ''} &nbsp;•&nbsp; ${words.toLocaleString()} words</span>
+    <span>englishtorussian.ai</span>
+  </div>
+</div>
+<div class="content">${safe}</div>
+<div class="doc-footer">Translated by Mytheon Technologies — englishtorussian.ai — 133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+<button class="print-btn" onclick="window.print()">🖨️ Save as PDF</button>
+</body></html>`);
+  win.document.close();
+  // Auto-open print dialog after render
+  setTimeout(() => { try { win.print(); } catch(e) {} }, 900);
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ════════════════════════════════
+   COPY TEXT
+════════════════════════════════ */
+function copyText(elId) {
+  const text = document.getElementById(elId).textContent;
+  navigator.clipboard.writeText(text).catch(() => {
+    const ta = Object.assign(document.createElement('textarea'), { value: text });
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  });
+  showToast('📋 Copied to clipboard!');
+}
+
+/* ════════════════════════════════
+   RESET
+════════════════════════════════ */
+function resetAll() {
+  currentFile = null;
+  extractedText = '';
+  translatedTextContent = '';
+  totalPages = 0;
+
+  // Reset file input
+  const fi = document.getElementById('fileInput');
+  fi.value = '';
+
+  hide('fileInfo');
+  hide('progressArea');
+  hide('resultsArea');
+  hide('warningBox');
+  hideError();
+  show('dropZone', 'block');
+  show('howSection', 'block');
+}
+
+/* ════════════════════════════════
+   PROGRESS
+════════════════════════════════ */
+function setProgress(pct, label) {
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressLabel').textContent = label;
+}
+function hideProgress() {
+  hide('progressArea');
+}
+
+/* ════════════════════════════════
+   HELPERS
+════════════════════════════════ */
+function show(id, display) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = display || 'block';
+}
+function hide(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'none';
+}
+function showError(msg) {
+  const el = document.getElementById('errorBox');
+  el.textContent = '❌ ' + msg;
+  el.style.display = 'block';
+}
+function hideError() {
+  document.getElementById('errorBox').style.display = 'none';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
