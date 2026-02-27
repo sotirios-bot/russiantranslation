@@ -11,6 +11,10 @@
   })(window,document,'script','dataLayer','GTM-NRZ5N9GV');</script>
   <!-- End Google Tag Manager -->
 
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5220550180754289"
+       crossorigin="anonymous"></script>
+
   <title>PDF Translator — English ↔ Russian | Mytheon Technologies</title>
   <meta name="description" content="Upload a PDF in English or Russian and download the translation instantly. Free online PDF translator — no signup, no limits. Powered by Mytheon Technologies."/>
   <link rel="canonical" href="https://englishtorussian.ai/pdf/"/>
@@ -276,10 +280,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- DROP ZONE -->
   <div class="drop-zone" id="dropZone">
     <span class="drop-icon">📄</span>
-    <div class="drop-title">Drop your PDF here</div>
-    <div class="drop-sub">or click anywhere to browse — max 15 MB</div>
-    <button class="browse-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">📂 Choose PDF file</button>
-    <input type="file" id="fileInput" accept=".pdf" onchange="handleFileInput(this)"/>
+    <div class="drop-title">Drop your PDF or Word document here</div>
+    <div class="drop-sub">PDF or .docx — max 15 MB — or click to browse</div>
+    <button class="browse-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">📂 Choose file</button>
+    <input type="file" id="fileInput" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="handleFileInput(this)"/>
   </div>
 
   <!-- FILE INFO -->
@@ -342,7 +346,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="action-row">
       <button class="btn-primary" onclick="downloadPDF()">⬇️ Download as PDF</button>
       <button class="btn-secondary" onclick="copyText('transBody')">📋 Copy translation</button>
-      <button class="btn-danger" onclick="resetAll()">🔄 Translate another PDF</button>
+      <button class="btn-danger" onclick="resetAll()">🔄 Translate another file</button>
     </div>
 
   </div><!-- /results-area -->
@@ -353,8 +357,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="how-grid">
       <div class="how-card">
         <div class="how-num">📄</div>
-        <div class="how-title-sm">Upload your PDF</div>
-        <div class="how-desc">Drop any PDF with selectable text — contracts, articles, emails, reports.</div>
+        <div class="how-title-sm">Upload your file</div>
+        <div class="how-desc">Drop a PDF or Word (.docx) file — contracts, articles, emails, reports.</div>
       </div>
       <div class="how-card">
         <div class="how-num">🌐</div>
@@ -380,6 +384,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- pdf.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- mammoth.js for .docx -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
 <script>
 /* ════════════════════════════════
@@ -459,12 +465,20 @@ function handleFileInput(input) {
 /* ════════════════════════════════
    HANDLE FILE
 ════════════════════════════════ */
+function getFileType(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.pdf') || file.type === 'application/pdf') return 'pdf';
+  if (name.endsWith('.docx') || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') return 'docx';
+  return null;
+}
+
 function handleFile(file) {
   hideError();
   hide('warningBox');
 
-  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
-    showError('Please upload a PDF file (.pdf).');
+  const type = getFileType(file);
+  if (!type) {
+    showError('Please upload a PDF (.pdf) or Word (.docx) file.');
     return;
   }
   if (file.size > 15 * 1024 * 1024) {
@@ -473,16 +487,16 @@ function handleFile(file) {
   }
 
   currentFile = file;
-  showFileInfo(file);
+  showFileInfo(file, type);
   hide('dropZone');
   hide('resultsArea');
-  startProcessing(file);
+  startProcessing(file, type);
 }
 
-function showFileInfo(file) {
+function showFileInfo(file, type) {
   document.getElementById('fileName').textContent = file.name;
-  document.getElementById('fileMeta').textContent =
-    formatBytes(file.size) + ' • PDF document';
+  const label = type === 'docx' ? 'Word document (.docx)' : 'PDF document';
+  document.getElementById('fileMeta').textContent = formatBytes(file.size) + ' • ' + label;
   show('fileInfo', 'flex');
 }
 
@@ -495,15 +509,17 @@ function formatBytes(b) {
 /* ════════════════════════════════
    PROCESSING PIPELINE
 ════════════════════════════════ */
-async function startProcessing(file) {
+async function startProcessing(file, type) {
   show('progressArea');
   hide('resultsArea');
   hide('howSection');
-  setProgress(0, 'Reading PDF…');
+  setProgress(0, type === 'docx' ? 'Reading Word document…' : 'Reading PDF…');
 
   try {
     // 1. Extract text
-    const { text, pages } = await extractText(file);
+    const { text, pages } = type === 'docx'
+      ? await extractTextFromDocx(file)
+      : await extractText(file);
     totalPages = pages;
 
     if (!text.trim() || text.trim().length < 20) {
@@ -566,6 +582,29 @@ async function extractText(file) {
   }
 
   return { text: fullText.trim(), pages: numPages };
+}
+
+/* ════════════════════════════════
+   TEXT EXTRACTION (mammoth.js — .docx)
+════════════════════════════════ */
+async function extractTextFromDocx(file) {
+  setProgress(10, 'Reading Word document…');
+  const arrayBuffer = await file.arrayBuffer();
+  setProgress(25, 'Extracting text from Word document…');
+
+  const result = await mammoth.extractRawText({ arrayBuffer });
+
+  if (result.messages && result.messages.length) {
+    console.warn('Mammoth warnings:', result.messages);
+  }
+
+  const text = result.value.trim();
+  // Estimate "pages" based on word count (~300 words per page)
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  const estimatedPages = Math.max(1, Math.round(wordCount / 300));
+
+  setProgress(35, 'Text extracted successfully…');
+  return { text, pages: estimatedPages };
 }
 
 /* ════════════════════════════════
