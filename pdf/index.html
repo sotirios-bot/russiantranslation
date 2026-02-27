@@ -169,20 +169,80 @@
   #toast.show { opacity:1; transform:translateY(0); }
 
   /* ═══ MOBILE ═══ */
-  @media(max-width:700px){
-    h1 { font-size:1.4rem; }
-    .results-grid { grid-template-columns:1fr; }
-    .how-grid { grid-template-columns:1fr; }
-    .drop-zone { padding:36px 16px; }
-    .drop-icon { font-size:2.4rem; }
-    .action-row { flex-direction:column; }
-    .btn-primary,.btn-secondary,.btn-danger { justify-content:center; }
-    .lang-pill { min-width:110px; padding:8px 14px; font-size:.87rem; }
-    .stats-bar { gap:12px; }
+  @media(max-width:768px){
+    /* Wrapper */
+    .wrap { padding:0 16px 40px; }
+
+    /* Top bar */
+    .top-bar { padding:10px 0 0; gap:6px; }
+    .back-link { font-size:.79rem; padding:5px 11px; }
+    .tool-btn { font-size:.79rem; padding:5px 11px; }
+
+    /* Header */
+    header { padding:18px 0 14px; }
+    h1 { font-size:1.3rem; }
+    .subtitle { font-size:.83rem; margin-top:6px; }
+
+    /* Direction */
+    .direction-row { gap:8px; margin-bottom:18px; }
+    .lang-pill { min-width:0; flex:1; max-width:155px; padding:9px 10px; font-size:.87rem; }
+    .swap-btn { width:40px; height:40px; }
+
+    /* Drop zone */
+    .drop-zone { padding:30px 16px; }
+    .drop-icon { font-size:2.2rem; margin-bottom:10px; }
+    .drop-title { font-size:1rem; }
+    .drop-sub { font-size:.8rem; margin-bottom:14px; }
+    .browse-btn { padding:9px 20px; font-size:.86rem; }
+
+    /* File info */
+    .file-info { gap:10px; padding:12px 14px; }
+    .file-icon { font-size:1.6rem; }
+    .file-name { font-size:.87rem; }
+    .file-meta { font-size:.74rem; }
+
+    /* Progress */
+    .progress-area { padding:15px; }
+
+    /* Stats bar — wrap into 2×2 grid */
+    .stats-bar { display:grid; grid-template-columns:1fr 1fr; gap:10px 16px; padding:12px 14px; }
+    .stat-val { font-size:1.05rem; }
+    .stat-lbl { font-size:.65rem; }
+
+    /* Results — stack vertically */
+    .results-grid { grid-template-columns:1fr; gap:12px; }
+    .preview-body { max-height:220px; font-size:.86rem; line-height:1.65; }
+    .preview-head { padding:10px 14px; }
+    .preview-foot { padding:7px 12px; }
+
+    /* Action buttons — full width column */
+    .action-row { flex-direction:column; gap:8px; }
+    .btn-primary { width:100%; justify-content:center; padding:13px; }
+    .btn-secondary { width:100%; justify-content:center; padding:12px; }
+    .btn-danger { width:100%; justify-content:center; padding:12px; }
+
+    /* How it works — single column, horizontal card layout */
+    .how-section { margin-top:26px; }
+    .how-grid { grid-template-columns:1fr; gap:10px; }
+    .how-card { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; text-align:left; }
+    .how-num { font-size:1.4rem; margin-bottom:0; flex-shrink:0; }
+
+    /* Footer */
+    footer { padding:16px 0 10px; }
+    .footer-brand { font-size:.8rem; }
+    .footer-address { font-size:.72rem; }
+
+    /* Toast */
+    #toast { bottom:12px; right:12px; left:12px; text-align:center; font-size:.82rem; }
   }
+
   @media(max-width:400px){
-    h1 { font-size:1.2rem; }
-    .top-bar { flex-direction:column; align-items:flex-start; }
+    .wrap { padding:0 13px 32px; }
+    h1 { font-size:1.12rem; }
+    .top-bar { flex-wrap:wrap; }
+    .lang-pill { padding:8px 8px; font-size:.81rem; }
+    .stats-bar { grid-template-columns:1fr 1fr; gap:8px 12px; }
+    .drop-zone { padding:24px 14px; }
   }
   </style>
 </head>
