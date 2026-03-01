@@ -227,6 +227,28 @@
   .howto-copy-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-size:.73rem; color:var(--faint); cursor:pointer; transition:all .2s; flex-shrink:0; }
   .howto-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
   @media(max-width:600px) { .howto-ru { text-align:left; word-break:break-word; } }
+
+  /* ═══ EASTER EGG ═══ */
+  @keyframes eeParticle {
+    0%   { transform:translate(-50%,-50%) scale(0.2); opacity:1; }
+    65%  { opacity:1; }
+    100% { transform:translate(calc(-50% + var(--eetx)),calc(-50% + var(--eety))) scale(0.9); opacity:0; }
+  }
+  @keyframes eePulse {
+    from { transform:scale(1) rotate(-10deg); }
+    to   { transform:scale(1.22) rotate(10deg); }
+  }
+  @keyframes eeEntrance {
+    0%  { transform:scale(0) rotate(-25deg); opacity:0; }
+    60% { transform:scale(1.35) rotate(8deg); opacity:1; }
+    80% { transform:scale(0.9) rotate(-4deg); }
+    100%{ transform:scale(1) rotate(0deg); opacity:1; }
+  }
+  @keyframes eeShine {
+    from { text-shadow:0 0 24px rgba(255,120,160,.7),0 0 48px rgba(255,50,110,.4); }
+    to   { text-shadow:0 0 38px rgba(255,160,200,1), 0 0 70px rgba(255,100,150,.7); }
+  }
+  @keyframes eeFadeIn { from{opacity:0} to{opacity:1} }
   </style>
 
   <!-- Tailwind CSS -->
@@ -532,6 +554,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div><!-- /app -->
 
 </div><!-- /page-wrap -->
+
+<!-- EASTER EGG OVERLAY -->
+<div id="easterEgg" onclick="closeEasterEgg()" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(8,4,24,0.92);align-items:center;justify-content:center;flex-direction:column;cursor:pointer;animation:eeFadeIn .3s ease">
+  <div id="eeParticles" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"></div>
+  <div style="position:relative;z-index:1;text-align:center;padding:20px;pointer-events:none">
+    <div id="eeEmoji" style="font-size:130px;line-height:1;display:block;will-change:transform"></div>
+    <div style="font-size:2rem;font-weight:900;color:#fff;margin-top:14px;animation:eeShine .8s ease-in-out infinite alternate">Дильнара! 😉</div>
+    <div style="font-size:1.05rem;color:rgba(255,255,255,.5);margin-top:10px;letter-spacing:.5px">tap anywhere to continue</div>
+  </div>
+</div>
 
 <div id="toast" class="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-5 sm:w-auto text-sm text-white rounded-xl px-4 py-2.5 z-[9999] shadow-lg text-center sm:text-left" style="background:var(--primary)"></div>
 
@@ -869,6 +901,8 @@ function showGrammarTip(text) {
 async function doTranslate() {
   const input = document.getElementById('inputText').value.trim();
   if (!input) { showToast(t('noText')); return; }
+
+  checkEasterEgg(input);
 
   const sl = direction === 'en-ru' ? 'en' : 'ru';
   const tl = direction === 'en-ru' ? 'ru' : 'en';
@@ -1301,6 +1335,65 @@ function checkUrlHash() {
     onInput();
     doTranslate();
   } catch {}
+}
+
+/* ════════════════════════════════════════
+   EASTER EGG — Дильнара 😍
+════════════════════════════════════════ */
+const EE_TRIGGERS = new Set(['di','dii','ди','дильнара']);
+function checkEasterEgg(input) {
+  if (EE_TRIGGERS.has(input.trim().toLowerCase())) { showEasterEgg(); }
+}
+function showEasterEgg() {
+  const el = document.getElementById('easterEgg');
+  el.style.display = 'flex';
+  el.style.animation = 'none'; el.offsetHeight; el.style.animation = 'eeFadeIn .3s ease';
+  const em = document.getElementById('eeEmoji');
+  em.textContent = '😍';
+  em.style.animation = 'none'; em.offsetHeight;
+  em.style.animation = 'eeEntrance .65s cubic-bezier(.34,1.56,.64,1) forwards, eePulse .55s .65s ease-in-out infinite alternate';
+  launchFireworks();
+  clearTimeout(el._eet);
+  el._eet = setTimeout(closeEasterEgg, 5000);
+}
+function closeEasterEgg() {
+  const el = document.getElementById('easterEgg');
+  el.style.display = 'none';
+  document.getElementById('eeParticles').innerHTML = '';
+}
+function launchFireworks() {
+  const wrap = document.getElementById('eeParticles');
+  wrap.innerHTML = '';
+  const EMOJIS = ['❤️','💖','💕','💝','⭐','✨','💫','🌟','🎉','🎊','🌸','💛','🥰','🔥','🎈'];
+  function burst(delay) {
+    setTimeout(() => {
+      const cx = 15 + Math.random() * 70;
+      const cy = 10 + Math.random() * 55;
+      const count = 14 + Math.floor(Math.random() * 8);
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        const angle = (i / count) * Math.PI * 2 + (Math.random() - .5) * .7;
+        const dist  = 90 + Math.random() * 180;
+        const dur   = .7 + Math.random() * 1.0;
+        const size  = 18 + Math.random() * 24;
+        const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+        p.style.cssText = [
+          'position:absolute',
+          `left:${cx}%`,`top:${cy}%`,
+          `font-size:${size}px`,
+          'transform:translate(-50%,-50%)',
+          'pointer-events:none',
+          `animation:eeParticle ${dur}s ease-out forwards`,
+          `--eetx:${(Math.cos(angle)*dist).toFixed(1)}px`,
+          `--eety:${(Math.sin(angle)*dist).toFixed(1)}px`,
+        ].join(';');
+        p.textContent = emoji;
+        wrap.appendChild(p);
+        setTimeout(() => p.remove(), dur * 1000 + 400);
+      }
+    }, delay);
+  }
+  [0, 220, 480, 780, 1120, 1520, 2020, 2700].forEach(d => burst(d));
 }
 
 /* ════════════════════════════════════════
