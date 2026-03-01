@@ -228,6 +228,35 @@
   .howto-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
   @media(max-width:600px) { .howto-ru { text-align:left; word-break:break-word; } }
 
+  /* ═══ TOOL PILLS (shared across new tools) ═══ */
+  .t-pill { background:var(--bg); border:2px solid var(--border); color:var(--faint); border-radius:10px; padding:6px 14px; font-size:.82rem; font-weight:700; cursor:pointer; transition:all .15s; font-family:inherit; }
+  .t-pill.on { background:var(--primary-bg); border-color:var(--primary); color:var(--primary); }
+  .t-pill:hover { background:var(--primary-bg); border-color:var(--primary); color:var(--primary); }
+
+  /* ═══ FLIP CARD ═══ */
+  .fc-inner { transform-style:preserve-3d; transition:transform .55s cubic-bezier(.4,0,.2,1); border-radius:16px; }
+  .fc-inner.flipped { transform:rotateY(180deg); }
+  .fc-face { -webkit-backface-visibility:hidden; backface-visibility:hidden; border-radius:16px; }
+  .fc-back-face { transform:rotateY(180deg); }
+  @keyframes fc-shake { 0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)} }
+  .fc-wrong-shake { animation:fc-shake .35s ease; }
+
+  /* ═══ OPTION BUTTONS ═══ */
+  .opt-btn { width:100%; padding:10px 14px; border-radius:12px; border:2px solid var(--border); background:var(--bg); color:var(--text); font-size:.88rem; font-weight:600; cursor:pointer; text-align:left; transition:all .15s; font-family:inherit; }
+  .opt-btn:hover:not(:disabled) { border-color:var(--primary); background:var(--primary-bg); color:var(--primary); }
+  .opt-btn.correct { border-color:var(--green)!important; background:var(--green-bg)!important; color:var(--green)!important; }
+  .opt-btn.wrong   { border-color:#ef4444!important; background:rgba(239,68,68,.08)!important; color:#ef4444!important; }
+  .opt-btn:disabled { cursor:default; opacity:.85; }
+
+  /* ═══ GAP FILL ═══ */
+  .gap-input { background:none; border:none; border-bottom:2px solid var(--primary); min-width:64px; text-align:center; font-size:.92rem; color:var(--primary); font-family:inherit; outline:none; padding:2px 6px; }
+  .gap-input.correct { border-color:var(--green); color:var(--green); }
+  .gap-input.wrong   { border-color:#ef4444; color:#ef4444; }
+
+  /* ═══ LISTENING ═══ */
+  @keyframes ls-pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.08)} }
+  .ls-playing { animation:ls-pulse .9s ease-in-out infinite; }
+
   /* ═══ EASTER EGG ═══ */
   @keyframes eeParticle {
     0%   { transform:translate(-50%,-50%) scale(0.2); opacity:1; }
@@ -450,13 +479,182 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="mb-4">
       <div class="sec-header" id="phraseHeader">📖 Phrasebook</div>
       <div class="flex gap-2 mb-4 flex-wrap" id="phraseTabs">
-        <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium active" onclick="switchTab('business',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">💼 Business</button>
+        <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium active" onclick="switchTab('daily',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">📅 Daily</button>
+        <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('business',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">💼 Business</button>
         <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('travel',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">✈️ Travel</button>
         <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('romance',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">❤️ Romance</button>
         <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('medical',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">🏥 Medical</button>
         <button class="tab-btn px-4 py-2.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('emergency',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">🚨 Emergency</button>
       </div>
       <div id="phraseContent"></div>
+    </div>
+
+    <!-- FLIP CARD QUIZ -->
+    <div class="mb-5">
+      <div class="sec-header">🃏 Flip Card Quiz</div>
+      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+        <div id="fcSetup">
+          <p class="text-xs mb-4" style="color:var(--muted)">Test your vocabulary with flashcards. Select a level, optional topic and how many cards you want.</p>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Level</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setFcPill('level','A1',this)">A1 Beginner</button>
+              <button class="t-pill" onclick="setFcPill('level','A2',this)">A2 Elementary</button>
+              <button class="t-pill" onclick="setFcPill('level','B1',this)">B1 Intermediate</button>
+              <button class="t-pill" onclick="setFcPill('level','B2',this)">B2 Advanced</button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-1.5" style="color:var(--faint)">Topic <span style="font-weight:400;text-transform:none;color:var(--xfaint)">(optional)</span></div>
+            <input type="text" id="fcTopic" placeholder="e.g. food, family, verbs, travel…" class="w-full px-4 py-2.5 rounded-xl text-sm outline-none" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" />
+          </div>
+          <div class="mb-5">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Number of cards</div>
+            <div class="flex gap-2 flex-wrap items-center">
+              <button class="t-pill on" onclick="setFcPill('count',5,this)">5</button>
+              <button class="t-pill" onclick="setFcPill('count',10,this)">10</button>
+              <button class="t-pill" onclick="setFcPill('count',20,this)">20</button>
+              <button class="t-pill" onclick="setFcPill('count',30,this)">30</button>
+              <input type="number" id="fcCountCustom" placeholder="other…" min="1" max="50" class="px-3 py-2 rounded-xl text-sm outline-none w-24" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" oninput="fcState.count=Math.min(50,parseInt(this.value)||5);document.querySelectorAll('#fcSetup .t-pill[data-grp=count]').forEach(b=>b.classList.remove('on'))" />
+            </div>
+          </div>
+          <button onclick="startFlipQuiz()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">▶ Start Quiz</button>
+        </div>
+        <!-- Quiz area -->
+        <div id="fcQuiz" style="display:none">
+          <div class="flex justify-between items-center mb-2 text-sm font-semibold">
+            <span style="color:var(--faint)">Card <span id="fcCurr">1</span> / <span id="fcTot">5</span></span>
+            <span style="color:var(--green)">✓ <span id="fcScr">0</span> correct</span>
+          </div>
+          <div class="rounded-full h-1.5 mb-4" style="background:var(--border)"><div id="fcBar" class="h-1.5 rounded-full transition-all duration-500" style="background:var(--primary);width:0%"></div></div>
+          <div style="perspective:900px;margin-bottom:16px">
+            <div id="fcInner" class="fc-inner" style="position:relative;min-height:120px">
+              <div id="fcFront" class="fc-face" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;background:var(--primary);color:#fff">
+                <div id="fcFrontLbl" style="font-size:.68rem;opacity:.7;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px"></div>
+                <div id="fcFrontTxt" style="font-size:1.45rem;font-weight:900;line-height:1.25"></div>
+              </div>
+              <div id="fcBack" class="fc-face fc-back-face" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;border:2px solid var(--primary)" style="background:var(--surface2)">
+                <div id="fcBackLbl" style="font-size:.68rem;color:var(--faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px"></div>
+                <div id="fcBackTxt" style="font-size:1.35rem;font-weight:900;color:var(--primary);line-height:1.25"></div>
+              </div>
+            </div>
+          </div>
+          <div id="fcOpts">
+            <div class="text-xs mb-2 font-bold uppercase tracking-widest" style="color:var(--faint)" id="fcOptsLbl">Select the correct translation:</div>
+            <div id="fcOptGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          </div>
+          <div id="fcFb" style="display:none;margin-top:10px;padding:10px 14px;border-radius:12px;font-weight:700;font-size:.9rem;text-align:center"></div>
+        </div>
+        <!-- Results -->
+        <div id="fcEnd" style="display:none;text-align:center;padding:14px 6px">
+          <div style="font-size:56px;margin-bottom:8px" id="fcEndEmoji">🎉</div>
+          <div style="font-size:1.3rem;font-weight:900;color:var(--primary)" id="fcEndTitle"></div>
+          <div style="font-size:.88rem;color:var(--muted);margin-top:6px" id="fcEndSub"></div>
+          <div class="flex gap-2 justify-center mt-4 flex-wrap">
+            <button onclick="startFlipQuiz()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 Try Again</button>
+            <button onclick="resetFcSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAP-FILL EXERCISE -->
+    <div class="mb-5">
+      <div class="sec-header">📝 Gap-Fill Exercise</div>
+      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+        <div id="gfSetup">
+          <p class="text-xs mb-4" style="color:var(--muted)">Complete sentences by filling in the missing words. Choose multiple choice or free typing.</p>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Level</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setGfPill('level','A1',this)">A1</button>
+              <button class="t-pill" onclick="setGfPill('level','A2',this)">A2</button>
+              <button class="t-pill" onclick="setGfPill('level','B1',this)">B1</button>
+              <button class="t-pill" onclick="setGfPill('level','B2',this)">B2</button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Theme</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setGfPill('theme','verbs',this)">⚡ Verbs</button>
+              <button class="t-pill" onclick="setGfPill('theme','vocabulary',this)">📖 Vocabulary</button>
+              <button class="t-pill" onclick="setGfPill('theme','cases',this)">🔤 Cases</button>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Number of gaps</div>
+            <div class="flex gap-2 flex-wrap items-center">
+              <button class="t-pill on" onclick="setGfPill('count',5,this)">5</button>
+              <button class="t-pill" onclick="setGfPill('count',10,this)">10</button>
+              <button class="t-pill" onclick="setGfPill('count',20,this)">20</button>
+              <input type="number" id="gfCountCustom" placeholder="other…" min="1" max="30" class="px-3 py-2 rounded-xl text-sm outline-none w-24" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" oninput="gfState.count=Math.min(30,parseInt(this.value)||5);document.querySelectorAll('#gfSetup .t-pill[data-grp=count]').forEach(b=>b.classList.remove('on'))" />
+            </div>
+          </div>
+          <div class="mb-5">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Answer mode</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setGfPill('mode','mc',this)">☑️ Multiple Choice</button>
+              <button class="t-pill" onclick="setGfPill('mode','fill',this)">✏️ Fill-in</button>
+            </div>
+          </div>
+          <button onclick="generateGapFill()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">📝 Generate Exercise</button>
+        </div>
+        <div id="gfExercise" style="display:none">
+          <div id="gfQList" class="flex flex-col gap-4"></div>
+          <button onclick="checkGapFill()" id="gfCheckBtn" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm mt-4" style="background:var(--green)">✅ Check Answers</button>
+          <div id="gfScore" style="display:none;text-align:center;margin-top:12px;padding:12px;border-radius:12px;font-weight:700;font-size:.95rem"></div>
+          <div class="flex gap-2 justify-center mt-3 flex-wrap">
+            <button onclick="generateGapFill()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 New Exercise</button>
+            <button onclick="resetGfSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Settings</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTENING EXERCISE -->
+    <div class="mb-5">
+      <div class="sec-header">🎧 Listening Exercise</div>
+      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+        <div id="lsSetup">
+          <p class="text-xs mb-4" style="color:var(--muted)">Listen to a passage and answer comprehension questions. Uses your browser's text-to-speech.</p>
+          <div class="mb-4">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Level</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setLsPill('level','A1',this)">A1 Beginner</button>
+              <button class="t-pill" onclick="setLsPill('level','A2',this)">A2 Elementary</button>
+              <button class="t-pill" onclick="setLsPill('level','B1',this)">B1 Intermediate</button>
+            </div>
+          </div>
+          <div class="mb-5">
+            <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Length</div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="t-pill on" onclick="setLsPill('length','short',this)">⚡ Short</button>
+              <button class="t-pill" onclick="setLsPill('length','medium',this)">📄 Medium</button>
+              <button class="t-pill" onclick="setLsPill('length','long',this)">📜 Long</button>
+            </div>
+          </div>
+          <button onclick="generateListening()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🎧 Generate &amp; Listen</button>
+        </div>
+        <div id="lsPlayer" style="display:none">
+          <div class="flex items-center gap-3 mb-4 p-4 rounded-xl" style="background:var(--bg);border:1px solid var(--border)">
+            <button id="lsPlayBtn" onclick="toggleListen()" class="w-12 h-12 rounded-full text-white border-none cursor-pointer flex-shrink-0 text-xl font-bold" style="background:var(--primary)">▶</button>
+            <div style="flex:1">
+              <div class="text-sm font-bold" id="lsTitle" style="color:var(--text)">Listening Exercise</div>
+              <div class="text-xs mt-0.5" id="lsSubtitle" style="color:var(--faint)"></div>
+            </div>
+            <button onclick="toggleLsText()" class="text-xs px-3 py-1.5 rounded-lg cursor-pointer border" style="background:var(--surface);border-color:var(--border);color:var(--muted)">📄 Text</button>
+          </div>
+          <div id="lsText" style="display:none;margin-bottom:16px;padding:14px;border-radius:12px;font-size:.88rem;line-height:1.75;color:var(--text);background:var(--bg);border:1px solid var(--border)"></div>
+          <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--faint)">Comprehension Questions</div>
+          <div id="lsQList" class="flex flex-col gap-4"></div>
+          <button onclick="checkListening()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm mt-4" style="background:var(--green)">✅ Check Answers</button>
+          <div id="lsScore" style="display:none;text-align:center;margin-top:12px;padding:12px;border-radius:12px;font-weight:700;font-size:.95rem"></div>
+          <div class="flex gap-2 justify-center mt-3 flex-wrap">
+            <button onclick="generateListening()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 New Passage</button>
+            <button onclick="resetLsSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Settings</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- VERB CONJUGATOR -->
@@ -681,7 +879,7 @@ function swapDirection() {
   document.getElementById('charNum').textContent = '0';
   document.getElementById('detectPill').classList.remove('show');
   updateUI();
-  renderPhrasebook('business');
+  renderPhrasebook('daily');
 }
 function syncPills() {
   document.getElementById('srcPill').textContent = direction === 'en-ru' ? '🇬🇧 English' : '🇷🇺 Russian';
@@ -708,7 +906,7 @@ function autoDetect(text) {
     syncPills();
     updateUI();
     document.getElementById('detectPill').classList.add('show');
-    renderPhrasebook('business');
+    renderPhrasebook('daily');
   }
 }
 
@@ -1081,6 +1279,28 @@ function clearHistory() {
    PHRASEBOOK DATA
 ════════════════════════════════════════ */
 const PHRASES = {
+  daily:[
+    {en:'Good morning! How did you sleep?',ru:'Доброе утро! Как вы спали?'},
+    {en:'Have a great day!',ru:'Хорошего дня!'},
+    {en:'What are your plans for today?',ru:'Какие у вас планы на сегодня?'},
+    {en:'I am going to work now.',ru:'Я иду на работу.'},
+    {en:'What would you like for breakfast?',ru:'Что вы хотите на завтрак?'},
+    {en:'The weather is beautiful today.',ru:'Сегодня прекрасная погода.'},
+    {en:'I need to do some shopping.',ru:'Мне нужно сходить за покупками.'},
+    {en:'What time is dinner ready?',ru:'Когда будет готов ужин?'},
+    {en:'I am feeling a bit tired today.',ru:'Сегодня я немного устал(а).'},
+    {en:'Let me know if you need anything.',ru:'Дайте знать, если что-то нужно.'},
+    {en:'Did you sleep well last night?',ru:'Хорошо ли вы спали прошлой ночью?'},
+    {en:'I will be home by seven.',ru:'Я буду дома к семи часам.'},
+    {en:'Can you help me with this?',ru:'Можете мне с этим помочь?'},
+    {en:'I am going for a walk.',ru:'Я иду на прогулку.'},
+    {en:'What is for dinner tonight?',ru:'Что сегодня на ужин?'},
+    {en:'See you later!',ru:'До встречи!'},
+    {en:'Take care of yourself.',ru:'Береги себя.'},
+    {en:'I need a coffee.',ru:'Мне нужен кофе.'},
+    {en:'How was your day?',ru:'Как прошёл ваш день?'},
+    {en:'I am on my way.',ru:'Я уже еду / иду.'},
+  ],
   business:[
     {en:'Good morning',ru:'Доброе утро'},{en:'Please send me the contract',ru:'Пожалуйста, отправьте мне договор'},
     {en:'I would like to schedule a meeting',ru:'Я хотел(а) бы назначить встречу'},{en:'Thank you for your time',ru:'Спасибо за уделённое время'},
@@ -1298,6 +1518,452 @@ function renderCases(enWord, ruWord, cases) {
 }
 
 /* ════════════════════════════════════════
+   FLIP CARD — DATA
+════════════════════════════════════════ */
+const FC_VOCAB = {
+  A1:[
+    {en:'water',ru:'вода',t:'food'},{en:'bread',ru:'хлеб',t:'food'},{en:'milk',ru:'молоко',t:'food'},
+    {en:'coffee',ru:'кофе',t:'food'},{en:'tea',ru:'чай',t:'food'},{en:'apple',ru:'яблоко',t:'food'},
+    {en:'house',ru:'дом',t:'home'},{en:'room',ru:'комната',t:'home'},{en:'table',ru:'стол',t:'home'},
+    {en:'chair',ru:'стул',t:'home'},{en:'dog',ru:'собака',t:'animals'},{en:'cat',ru:'кошка',t:'animals'},
+    {en:'book',ru:'книга',t:'school'},{en:'pen',ru:'ручка',t:'school'},{en:'school',ru:'школа',t:'school'},
+    {en:'teacher',ru:'учитель',t:'school'},{en:'family',ru:'семья',t:'family'},{en:'mother',ru:'мама',t:'family'},
+    {en:'father',ru:'папа',t:'family'},{en:'brother',ru:'брат',t:'family'},{en:'sister',ru:'сестра',t:'family'},
+    {en:'city',ru:'город',t:'travel'},{en:'street',ru:'улица',t:'travel'},{en:'shop',ru:'магазин',t:'travel'},
+    {en:'to eat',ru:'есть',t:'verbs'},{en:'to drink',ru:'пить',t:'verbs'},{en:'to go',ru:'идти / ходить',t:'verbs'},
+    {en:'to work',ru:'работать',t:'verbs'},{en:'to sleep',ru:'спать',t:'verbs'},{en:'to read',ru:'читать',t:'verbs'},
+  ],
+  A2:[
+    {en:'weather',ru:'погода',t:'nature'},{en:'sun',ru:'солнце',t:'nature'},{en:'rain',ru:'дождь',t:'nature'},
+    {en:'snow',ru:'снег',t:'nature'},{en:'morning',ru:'утро',t:'time'},{en:'evening',ru:'вечер',t:'time'},
+    {en:'yesterday',ru:'вчера',t:'time'},{en:'tomorrow',ru:'завтра',t:'time'},{en:'meeting',ru:'встреча',t:'work'},
+    {en:'office',ru:'офис',t:'work'},{en:'computer',ru:'компьютер',t:'work'},{en:'phone',ru:'телефон',t:'work'},
+    {en:'restaurant',ru:'ресторан',t:'travel'},{en:'hotel',ru:'гостиница',t:'travel'},{en:'ticket',ru:'билет',t:'travel'},
+    {en:'airport',ru:'аэропорт',t:'travel'},{en:'trip',ru:'поездка',t:'travel'},{en:'to arrive',ru:'приезжать',t:'verbs'},
+    {en:'to forget',ru:'забывать',t:'verbs'},{en:'to buy',ru:'покупать',t:'verbs'},{en:'to think',ru:'думать',t:'verbs'},
+    {en:'interesting',ru:'интересный',t:'adjectives'},{en:'beautiful',ru:'красивый',t:'adjectives'},
+    {en:'difficult',ru:'трудный',t:'adjectives'},{en:'expensive',ru:'дорогой',t:'adjectives'},
+    {en:'to understand',ru:'понимать',t:'verbs'},{en:'to remember',ru:'помнить',t:'verbs'},
+    {en:'to sell',ru:'продавать',t:'verbs'},{en:'easy',ru:'лёгкий',t:'adjectives'},{en:'cheap',ru:'дешёвый',t:'adjectives'},
+    {en:'neighbour',ru:'сосед',t:'home'},
+  ],
+  B1:[
+    {en:'experience',ru:'опыт',t:'work'},{en:'opportunity',ru:'возможность',t:'work'},
+    {en:'challenge',ru:'трудность',t:'work'},{en:'relationship',ru:'отношения',t:'social'},
+    {en:'environment',ru:'окружающая среда',t:'nature'},{en:'opinion',ru:'мнение',t:'communication'},
+    {en:'discussion',ru:'обсуждение',t:'communication'},{en:'advice',ru:'совет',t:'communication'},
+    {en:'decision',ru:'решение',t:'work'},{en:'achievement',ru:'достижение',t:'work'},
+    {en:'to realise',ru:'осознавать',t:'verbs'},{en:'to explain',ru:'объяснять',t:'verbs'},
+    {en:'to develop',ru:'развивать',t:'verbs'},{en:'to improve',ru:'улучшать',t:'verbs'},
+    {en:'to agree',ru:'соглашаться',t:'verbs'},{en:'to suggest',ru:'предлагать',t:'verbs'},
+    {en:'responsible',ru:'ответственный',t:'adjectives'},{en:'successful',ru:'успешный',t:'adjectives'},
+    {en:'confident',ru:'уверенный',t:'adjectives'},{en:'patient',ru:'терпеливый',t:'adjectives'},
+    {en:'in spite of',ru:'несмотря на',t:'phrases'},{en:'furthermore',ru:'кроме того',t:'phrases'},
+    {en:'as a result',ru:'в результате',t:'phrases'},{en:'on the other hand',ru:'с другой стороны',t:'phrases'},
+    {en:'culture',ru:'культура',t:'social'},{en:'tradition',ru:'традиция',t:'social'},
+    {en:'generation',ru:'поколение',t:'social'},{en:'neighbourhood',ru:'район',t:'travel'},
+    {en:'to depend on',ru:'зависеть от',t:'verbs'},{en:'nevertheless',ru:'тем не менее',t:'phrases'},
+  ],
+  B2:[
+    {en:'consequence',ru:'последствие',t:'abstract'},{en:'perspective',ru:'точка зрения',t:'abstract'},
+    {en:'fundamental',ru:'фундаментальный',t:'adjectives'},{en:'sophisticated',ru:'утончённый',t:'adjectives'},
+    {en:'controversial',ru:'спорный',t:'adjectives'},{en:'ambiguous',ru:'двусмысленный',t:'adjectives'},
+    {en:'significant',ru:'значительный',t:'adjectives'},{en:'substantial',ru:'существенный',t:'adjectives'},
+    {en:'to demonstrate',ru:'демонстрировать',t:'verbs'},{en:'to facilitate',ru:'способствовать',t:'verbs'},
+    {en:'to emphasise',ru:'подчёркивать',t:'verbs'},{en:'to acknowledge',ru:'признавать',t:'verbs'},
+    {en:'to anticipate',ru:'предвидеть',t:'verbs'},{en:'to implement',ru:'реализовывать',t:'verbs'},
+    {en:'to assess',ru:'оценивать',t:'verbs'},{en:'regardless of',ru:'вне зависимости от',t:'phrases'},
+    {en:'consequently',ru:'следовательно',t:'phrases'},{en:'to mitigate',ru:'смягчать',t:'verbs'},
+    {en:'paradigm',ru:'парадигма',t:'abstract'},{en:'coherent',ru:'последовательный',t:'adjectives'},
+    {en:'pragmatic',ru:'прагматичный',t:'adjectives'},{en:'resilience',ru:'стойкость',t:'abstract'},
+    {en:'discrepancy',ru:'расхождение',t:'abstract'},{en:'innovative',ru:'инновационный',t:'adjectives'},
+    {en:'to substantiate',ru:'обосновывать',t:'verbs'},{en:'implication',ru:'подтекст',t:'abstract'},
+    {en:'albeit',ru:'хотя',t:'phrases'},{en:'notwithstanding',ru:'несмотря на',t:'phrases'},
+    {en:'to evaluate',ru:'анализировать',t:'verbs'},{en:'comprehensive',ru:'всесторонний',t:'adjectives'},
+  ],
+};
+
+/* ════════════════════════════════════════
+   GAP FILL — DATA
+════════════════════════════════════════ */
+const GF_DATA = {
+  verbs:[
+    {rus:'Я ___ кофе каждое утро.',ans:'пью',ane:'drink',tip:'to drink',eng:'I ___ coffee every morning.'},
+    {rus:'Она ___ на работу автобусом.',ans:'едет',ane:'goes',tip:'to go (transport)',eng:'She ___ to work by bus.'},
+    {rus:'Мы ___ в кино вчера.',ans:'ходили',ane:'went',tip:'to go (past)',eng:'We ___ to the cinema yesterday.'},
+    {rus:'Он ___ русский язык уже два года.',ans:'изучает',ane:'has been learning',tip:'to study/learn',eng:'He ___ Russian for two years.'},
+    {rus:'Дети ___ в парке каждый день.',ans:'играют',ane:'play',tip:'to play',eng:'Children ___ in the park every day.'},
+    {rus:'Я ___ домой в шесть часов.',ans:'прихожу',ane:'come',tip:'to come home',eng:'I ___ home at six o\'clock.'},
+    {rus:'Она ___ письмо своей подруге.',ans:'пишет',ane:'writes',tip:'to write',eng:'She ___ a letter to her friend.'},
+    {rus:'Мы ___ ужин вместе каждый вечер.',ans:'готовим',ane:'cook',tip:'to cook',eng:'We ___ dinner together every evening.'},
+    {rus:'Он ___ книгу уже три часа.',ans:'читает',ane:'has been reading',tip:'to read',eng:'He ___ the book for three hours.'},
+    {rus:'Они ___ в Москву завтра.',ans:'летят',ane:'are flying',tip:'to fly',eng:'They ___ to Moscow tomorrow.'},
+    {rus:'Мы ___ по-русски на уроке.',ans:'говорим',ane:'speak',tip:'to speak',eng:'We ___ Russian in class.'},
+    {rus:'Я ___ купить новый телефон.',ans:'хочу',ane:'want',tip:'to want',eng:'I ___ to buy a new phone.'},
+    {rus:'Он ___ открытку своей маме.',ans:'отправил',ane:'sent',tip:'to send (past)',eng:'He ___ a card to his mother.'},
+    {rus:'Она ___ новое платье на вечеринку.',ans:'надела',ane:'put on',tip:'to put on (past)',eng:'She ___ a new dress for the party.'},
+    {rus:'Я ___ за границей три года.',ans:'работал',ane:'worked',tip:'to work (past)',eng:'I ___ abroad for three years.'},
+  ],
+  vocabulary:[
+    {rus:'Мне нравится читать ___.',ans:'книги',ane:'books',tip:'books',eng:'I like reading ___.'},
+    {rus:'На столе стоит красивая ___.',ans:'ваза',ane:'vase',tip:'vase',eng:'There is a beautiful ___ on the table.'},
+    {rus:'У меня есть ___ кошка.',ans:'пушистая',ane:'fluffy',tip:'fluffy (adj)',eng:'I have a ___ cat.'},
+    {rus:'В нашем городе есть большой ___.',ans:'парк',ane:'park',tip:'park',eng:'There is a big ___ in our city.'},
+    {rus:'Она работает ___ в больнице.',ans:'врачом',ane:'doctor',tip:'doctor (instr.)',eng:'She works as a ___ in a hospital.'},
+    {rus:'Каждое лето мы едем на ___.',ans:'море',ane:'sea',tip:'sea',eng:'Every summer we go to the ___.'},
+    {rus:'Он живёт в маленькой ___.',ans:'квартире',ane:'apartment',tip:'apartment (prep.)',eng:'He lives in a small ___.'},
+    {rus:'На урок нужно принести ___.',ans:'тетрадь',ane:'notebook',tip:'notebook',eng:'You need to bring a ___ to class.'},
+    {rus:'Дети любят есть ___ на десерт.',ans:'мороженое',ane:'ice cream',tip:'ice cream',eng:'Children love eating ___ for dessert.'},
+    {rus:'Он купил красивый ___ на день рождения.',ans:'подарок',ane:'gift',tip:'gift',eng:'He bought a beautiful ___ for the birthday.'},
+    {rus:'Её ___ — самый добрый человек.',ans:'дедушка',ane:'grandfather',tip:'grandfather',eng:'Her ___ is the kindest person.'},
+    {rus:'Мы купили новую ___ для кухни.',ans:'мебель',ane:'furniture',tip:'furniture',eng:'We bought new ___ for the kitchen.'},
+    {rus:'Сегодня очень плохая ___.',ans:'погода',ane:'weather',tip:'weather',eng:'The ___ is very bad today.'},
+    {rus:'Мой ___ живёт в другом городе.',ans:'друг',ane:'friend',tip:'friend',eng:'My ___ lives in another city.'},
+    {rus:'В ресторане мы заказали вкусный ___.',ans:'суп',ane:'soup',tip:'soup',eng:'At the restaurant we ordered delicious ___.'},
+  ],
+  cases:[
+    {rus:'Я думаю о своём ___.',ans:'друге',ane:'friend',tip:'Prep. case',eng:'I think about my ___.'},
+    {rus:'Она пошла к ___.',ans:'врачу',ane:'doctor',tip:'Dat. case',eng:'She went to the ___.'},
+    {rus:'Мы живём без ___.',ans:'машины',ane:'car',tip:'Gen. case',eng:'We live without a ___.'},
+    {rus:'Он пишет письмо своей ___.',ans:'сестре',ane:'sister',tip:'Dat. case',eng:'He writes a letter to his ___.'},
+    {rus:'Я вижу красивый ___.',ans:'парк',ane:'park',tip:'Acc. case',eng:'I see a beautiful ___.'},
+    {rus:'Мы говорим о погоде в ___.',ans:'Москве',ane:'Moscow',tip:'Prep. case',eng:'We talk about the weather in ___.'},
+    {rus:'Дети играют с ___.',ans:'собакой',ane:'dog',tip:'Instr. case',eng:'The children play with the ___.'},
+    {rus:'Я иду к ___.',ans:'маме',ane:'mum',tip:'Dat. case',eng:'I am going to my ___.'},
+    {rus:'Без ___ невозможно жить.',ans:'воды',ane:'water',tip:'Gen. case',eng:'It is impossible to live without ___.'},
+    {rus:'Он работает ___.',ans:'учителем',ane:'teacher',tip:'Instr. case',eng:'He works as a ___.'},
+    {rus:'Я иду в ___.',ans:'магазин',ane:'shop',tip:'Acc. case',eng:'I am going to the ___.'},
+    {rus:'Мы живём в красивом ___.',ans:'городе',ane:'city',tip:'Prep. case',eng:'We live in a beautiful ___.'},
+    {rus:'Она рада своему ___.',ans:'успеху',ane:'success',tip:'Dat. case',eng:'She is happy about her ___.'},
+    {rus:'Я горжусь своими ___.',ans:'детьми',ane:'children',tip:'Instr. case',eng:'I am proud of my ___.'},
+    {rus:'У ___ есть красивые глаза.',ans:'неё',ane:'her',tip:'Gen. after у',eng:'___ has beautiful eyes.'},
+  ],
+};
+
+/* ════════════════════════════════════════
+   LISTENING — DATA
+════════════════════════════════════════ */
+const LISTEN_DATA = {
+  A1:{
+    short:{
+      ru:'Это Анна. Она живёт в Москве. У неё есть кошка. Её зовут Мурка. Каждое утро Анна пьёт кофе и читает книгу. Она любит гулять в парке.',
+      en:'This is Anna. She lives in Moscow. She has a cat. Its name is Murka. Every morning Anna drinks coffee and reads a book. She loves walking in the park.',
+      qs:[{q:'Where does Anna live?',opts:['Moscow','London','Paris','Berlin'],c:0},
+          {q:'What does Anna have?',opts:['A dog','A cat','A rabbit','A bird'],c:1},
+          {q:'What does Anna love doing?',opts:['Swimming','Cooking','Walking in the park','Watching TV'],c:2}]},
+    medium:{
+      ru:'Привет! Меня зовут Дмитрий. Мне 25 лет. Я живу в Санкт-Петербурге. Я работаю программистом. Каждый день я езжу на работу на метро. Вечером я занимаюсь спортом. В выходные я люблю ходить в кино или встречаться с друзьями.',
+      en:'Hi! My name is Dmitry. I am 25 years old. I live in Saint Petersburg. I work as a programmer. Every day I go to work by metro. In the evening I do sport. At weekends I like going to the cinema or meeting friends.',
+      qs:[{q:'How old is Dmitry?',opts:['20','25','30','35'],c:1},
+          {q:'What is Dmitry\'s job?',opts:['Doctor','Teacher','Programmer','Driver'],c:2},
+          {q:'How does Dmitry travel to work?',opts:['By car','By bus','By metro','On foot'],c:2},
+          {q:'What does Dmitry do at weekends?',opts:['Works extra','Sleeps all day','Cinema or friends','Travels abroad'],c:2}]},
+    long:{
+      ru:'Добрый день! Меня зовут Мария. Мне 32 года. Я живу недалеко от Москвы. По профессии я учитель английского языка. Я работаю в школе уже восемь лет. Мне очень нравится моя работа. Каждое утро я встаю в семь часов и готовлю завтрак для своей семьи. У меня есть муж и двое детей — сын и дочь. В свободное время я люблю читать книги и заниматься йогой. Летом мы всей семьёй едем на дачу.',
+      en:'Good afternoon! My name is Maria. I am 32 years old. I live near Moscow. My profession is English teacher. I have been working at a school for eight years. I really like my job. Every morning I wake up at seven and cook breakfast for my family. I have a husband and two children — a son and a daughter. In my free time I love reading and doing yoga. In summer our whole family goes to the dacha.',
+      qs:[{q:'What is Maria\'s job?',opts:['Doctor','English teacher','Programmer','Chef'],c:1},
+          {q:'How many years has Maria worked at school?',opts:['Three','Five','Eight','Ten'],c:2},
+          {q:'What time does Maria wake up?',opts:['Six','Seven','Eight','Nine'],c:1},
+          {q:'How many children does Maria have?',opts:['One','Two','Three','Four'],c:1},
+          {q:'What does Maria do in summer?',opts:['Travels abroad','Goes to the dacha','Stays in the city','Visits friends'],c:1}]}
+  },
+  A2:{
+    short:{
+      ru:'Вчера я ходил в ресторан с коллегами. Мы заказали много вкусных блюд. Я взял суп и стейк. На десерт мы ели шоколадный торт. Счёт разделили поровну. Вечер прошёл отлично!',
+      en:'Yesterday I went to a restaurant with my colleagues. We ordered lots of delicious dishes. I had soup and steak. For dessert we ate chocolate cake. We split the bill equally. It was a great evening!',
+      qs:[{q:'Who did the speaker go to the restaurant with?',opts:['Friends','Family','Colleagues','Neighbours'],c:2},
+          {q:'What did the speaker have for dessert?',opts:['Ice cream','Fruit','Chocolate cake','Nothing'],c:2},
+          {q:'How did they pay?',opts:['One person paid','Split equally','Boss paid','Did not pay'],c:1}]},
+    medium:{
+      ru:'На прошлой неделе я начал изучать русский язык. Каждый день я занимаюсь по два часа. Сначала это было очень сложно, потому что русский алфавит сильно отличается от латинского. Но теперь я уже могу читать простые слова. Мой учитель говорит, что у меня хорошее произношение. Моя цель — говорить по-русски свободно через год.',
+      en:'Last week I started learning Russian. Every day I study for two hours. At first it was very difficult because the Russian alphabet is so different from the Latin one. But now I can already read simple words. My teacher says I have good pronunciation. My goal is to speak Russian fluently in a year.',
+      qs:[{q:'How long does the speaker study each day?',opts:['One hour','Two hours','Three hours','Four hours'],c:1},
+          {q:'What was difficult at first?',opts:['Grammar','The alphabet','Pronunciation','Writing'],c:1},
+          {q:'What does the teacher say?',opts:['Study more','Good pronunciation','Too slow','Wrong method'],c:1},
+          {q:'What is the speaker\'s goal?',opts:['Visit Russia','Teach Russian','Speak fluently in a year','Read literature'],c:2}]},
+    long:{
+      ru:'Сегодня я хочу рассказать о поездке в Санкт-Петербург. Я поехал туда с женой. Мы провели там четыре дня. В первый день мы ходили в Эрмитаж — один из самых знаменитых музеев мира. Во второй день мы гуляли по Невскому проспекту. На третий день мы поехали в Петергоф — там удивительные фонтаны. В последний день мы купили сувениры и поехали домой. Это было незабываемое путешествие!',
+      en:'Today I want to tell you about my trip to Saint Petersburg. I went there with my wife. We spent four days there. On the first day we visited the Hermitage — one of the most famous museums in the world. On the second day we walked along Nevsky Prospect. On the third day we went to Peterhof — there are amazing fountains there. On the last day we bought souvenirs and went home. It was an unforgettable trip!',
+      qs:[{q:'How many days did they spend in Saint Petersburg?',opts:['Three','Four','Five','A week'],c:1},
+          {q:'What did they do on the first day?',opts:['Walk Nevsky','Visit the Hermitage','Go to Peterhof','Shop for souvenirs'],c:1},
+          {q:'What is special about Peterhof?',opts:['Paintings','Fountains','Palace rooms','Market'],c:1},
+          {q:'What did they do last?',opts:['Museum visit','Boat trip','Bought souvenirs and went home','Had a party'],c:2}]}
+  },
+  B1:{
+    short:{
+      ru:'В последние годы всё больше людей предпочитают работать удалённо. Это имеет плюсы и минусы. С одной стороны, экономится время на дорогу и можно работать из любой точки мира. С другой стороны, дома бывает сложно сосредоточиться.',
+      en:'In recent years more and more people prefer to work remotely. This has advantages and disadvantages. On one hand, it saves commute time and you can work from anywhere in the world. On the other hand, it can be hard to concentrate at home.',
+      qs:[{q:'What is the topic?',opts:['New technology','Remote work','Office culture','Transport'],c:1},
+          {q:'What is an advantage?',opts:['Better pay','Saving commute time','More colleagues','Bigger office'],c:1},
+          {q:'What is a disadvantage?',opts:['Longer hours','Lower pay','Difficulty concentrating','Bad internet'],c:2}]},
+    medium:{
+      ru:'Исследования показывают, что чтение книг полезно для здоровья. Во-первых, оно снижает уровень стресса — уже шесть минут чтения помогают расслабиться. Во-вторых, чтение улучшает память и концентрацию. В-третьих, книги расширяют словарный запас. Эксперты рекомендуют читать хотя бы тридцать минут в день. Причём неважно — на бумаге или с экрана.',
+      en:'Research shows that reading books is beneficial for health. Firstly, it reduces stress — just six minutes of reading helps you relax. Secondly, reading improves memory and concentration. Thirdly, books expand vocabulary. Experts recommend reading at least thirty minutes a day. It does not matter whether you read on paper or on a screen.',
+      qs:[{q:'How many minutes of reading reduces stress?',opts:['Three','Six','Ten','Twenty'],c:1},
+          {q:'How long should you read daily?',opts:['Ten minutes','Twenty minutes','Thirty minutes','An hour'],c:2},
+          {q:'Does paper vs screen matter?',opts:['Yes, paper is better','Yes, screen is better','No, it doesn\'t matter','Text doesn\'t say'],c:2},
+          {q:'What is NOT mentioned as a benefit?',opts:['Reduces stress','Improves memory','Expands vocabulary','Improves fitness'],c:3}]},
+    long:{
+      ru:'Искусственный интеллект стремительно меняет нашу жизнь. Сегодня он используется в медицине для диагностики, в образовании для персонализации обучения, в транспорте для создания автономных автомобилей. Многие эксперты считают, что ИИ заменит часть профессий. Под угрозой — рутинные профессии. Однако творческие и социальные профессии останутся за человеком. Важно развивать навыки, которые сложно автоматизировать: критическое мышление и эмоциональный интеллект.',
+      en:'Artificial intelligence is rapidly changing our lives. Today it is used in medicine for diagnostics, in education for personalising learning, and in transport for autonomous vehicles. Many experts believe AI will replace some professions. Routine professions are most at risk. However, creative and social professions will remain human. It is important to develop skills that are hard to automate: critical thinking and emotional intelligence.',
+      qs:[{q:'Where is AI used for diagnostics?',opts:['Education','Medicine','Transport','Finance'],c:1},
+          {q:'Which professions are most at risk?',opts:['Creative','Social','Routine data-processing','Technical'],c:2},
+          {q:'What should people develop?',opts:['Coding','Critical thinking and emotional intelligence','Data skills','Foreign languages'],c:1},
+          {q:'What is the author\'s tone?',opts:['Very negative','Completely positive','Balanced','Indifferent'],c:2}]}
+  },
+};
+
+/* ════════════════════════════════════════
+   FLIP CARD — STATE & LOGIC
+════════════════════════════════════════ */
+let fcState = {level:'A1',count:5,topic:'',deck:[],idx:0,score:0,flipped:false};
+function setFcPill(grp, val, btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  fcState[grp] = val;
+}
+function shuffleArr(a) { return a.slice().sort(()=>Math.random()-.5); }
+function startFlipQuiz() {
+  const topic = document.getElementById('fcTopic').value.trim().toLowerCase();
+  let pool = (FC_VOCAB[fcState.level]||FC_VOCAB.A1).filter(w=>!topic||w.t.includes(topic)||w.en.includes(topic)||w.ru.includes(topic));
+  if (!pool.length) pool = FC_VOCAB[fcState.level]||FC_VOCAB.A1;
+  fcState.deck = shuffleArr(pool).slice(0,Math.min(fcState.count,pool.length));
+  fcState.idx = 0; fcState.score = 0;
+  document.getElementById('fcSetup').style.display='none';
+  document.getElementById('fcEnd').style.display='none';
+  document.getElementById('fcQuiz').style.display='block';
+  renderFcCard();
+}
+function renderFcCard() {
+  const card = fcState.deck[fcState.idx];
+  const isEnRu = direction==='en-ru';
+  document.getElementById('fcCurr').textContent = fcState.idx+1;
+  document.getElementById('fcTot').textContent  = fcState.deck.length;
+  document.getElementById('fcScr').textContent  = fcState.score;
+  const pct = (fcState.idx/fcState.deck.length)*100;
+  document.getElementById('fcBar').style.width  = pct+'%';
+  document.getElementById('fcFrontLbl').textContent = isEnRu ? 'English' : 'Russian';
+  document.getElementById('fcFrontTxt').textContent = isEnRu ? card.en : card.ru;
+  document.getElementById('fcBackLbl').textContent  = isEnRu ? 'Russian' : 'English';
+  document.getElementById('fcBackTxt').textContent  = isEnRu ? card.ru : card.en;
+  document.getElementById('fcOptsLbl').textContent  = isEnRu ? 'Select the correct Russian translation:' : 'Select the correct English translation:';
+  // Reset card state
+  fcState.flipped = false;
+  const inner = document.getElementById('fcInner');
+  inner.classList.remove('flipped','fc-wrong-shake');
+  // Build options
+  const correct = isEnRu ? card.ru : card.en;
+  const pool = (FC_VOCAB[fcState.level]||FC_VOCAB.A1).filter(w=>w!==card);
+  const wrongs = shuffleArr(pool).slice(0,3).map(w=>isEnRu?w.ru:w.en);
+  const opts = shuffleArr([correct,...wrongs]);
+  const grid = document.getElementById('fcOptGrid');
+  grid.innerHTML = '';
+  opts.forEach(opt => {
+    const b = document.createElement('button');
+    b.className='opt-btn'; b.textContent=opt;
+    b.onclick=()=>selectFcAnswer(b,opt,correct);
+    grid.appendChild(b);
+  });
+  document.getElementById('fcFb').style.display='none';
+  document.getElementById('fcOpts').style.display='block';
+}
+function selectFcAnswer(btn, chosen, correct) {
+  document.querySelectorAll('#fcOptGrid .opt-btn').forEach(b=>b.disabled=true);
+  const inner = document.getElementById('fcInner');
+  const fb = document.getElementById('fcFb');
+  inner.classList.add('flipped'); fcState.flipped=true;
+  if (chosen===correct) {
+    fcState.score++;
+    btn.classList.add('correct');
+    fb.style.display='block'; fb.style.background='var(--green-bg)'; fb.style.color='var(--green)';
+    fb.textContent='✓ Correct! Well done!';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#fcOptGrid .opt-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    inner.classList.add('fc-wrong-shake');
+    fb.style.display='block'; fb.style.background='rgba(239,68,68,.08)'; fb.style.color='#ef4444';
+    fb.textContent='✗ The correct answer was: '+correct;
+  }
+  document.getElementById('fcScr').textContent=fcState.score;
+  setTimeout(()=>{ fcState.idx++; if(fcState.idx<fcState.deck.length) renderFcCard(); else endFlipQuiz(); },1600);
+}
+function endFlipQuiz() {
+  document.getElementById('fcQuiz').style.display='none';
+  document.getElementById('fcEnd').style.display='block';
+  const n=fcState.deck.length, s=fcState.score, pct=Math.round(s/n*100);
+  document.getElementById('fcBar').style.width='100%';
+  document.getElementById('fcEndEmoji').textContent = pct>=80?'🏆':pct>=60?'🎉':pct>=40?'📚':'💪';
+  document.getElementById('fcEndTitle').textContent = `${s} / ${n} correct — ${pct}%`;
+  document.getElementById('fcEndSub').textContent = pct>=80?'Excellent! You really know your vocabulary!':pct>=60?'Good job! Keep practising.':pct>=40?'Nice effort. Review and try again!':'Keep going — practice makes perfect!';
+}
+function resetFcSetup() {
+  document.getElementById('fcEnd').style.display='none';
+  document.getElementById('fcQuiz').style.display='none';
+  document.getElementById('fcSetup').style.display='block';
+}
+
+/* ════════════════════════════════════════
+   GAP FILL — STATE & LOGIC
+════════════════════════════════════════ */
+let gfState = {level:'A1',theme:'verbs',count:5,mode:'mc',sentences:[]};
+function setGfPill(grp,val,btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  gfState[grp]=val;
+}
+function generateGapFill() {
+  const pool = GF_DATA[gfState.theme]||GF_DATA.verbs;
+  const isEnRu = direction==='en-ru';
+  gfState.sentences = shuffleArr(pool).slice(0,Math.min(gfState.count,pool.length));
+  document.getElementById('gfSetup').style.display='none';
+  document.getElementById('gfExercise').style.display='block';
+  document.getElementById('gfScore').style.display='none';
+  document.getElementById('gfCheckBtn').style.display='block';
+  const list = document.getElementById('gfQList');
+  list.innerHTML='';
+  gfState.sentences.forEach((s,i)=>{
+    const sentence = isEnRu ? s.rus : s.eng;
+    const answer   = isEnRu ? s.ans : s.ane;
+    const allAnswers = gfState.sentences.map(x=>isEnRu?x.ans:x.ane);
+    const wrongs = shuffleArr(allAnswers.filter(a=>a!==answer)).slice(0,3);
+    const opts = shuffleArr([answer,...wrongs]);
+    const div = document.createElement('div');
+    div.style='background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px';
+    div.innerHTML=`<div style="font-size:.7rem;color:var(--faint);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">${i+1}. ${s.tip}</div>
+      <div style="font-size:.95rem;color:var(--text);line-height:1.7;margin-bottom:${gfState.mode==='mc'?'8px':'0'}">${sentence.replace('___',gfState.mode==='fill'?`<input class="gap-input" id="gf_${i}" type="text" placeholder="…" />`:`<strong style="color:var(--primary)">[___]</strong>`)}</div>
+      ${gfState.mode==='mc'?`<div class="grid grid-cols-2 gap-1.5 mt-2">${opts.map(o=>`<button class="opt-btn" data-gfi="${i}" data-ans="${answer}" onclick="selectGfAnswer(this)">${o}</button>`).join('')}</div>`:''}`;
+    list.appendChild(div);
+  });
+}
+function selectGfAnswer(btn) {
+  const i = btn.dataset.gfi, correct = btn.dataset.ans;
+  btn.closest('.grid').querySelectorAll('.opt-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correct) b.classList.add('correct');
+  });
+  if(btn.textContent!==correct) btn.classList.add('wrong');
+}
+function checkGapFill() {
+  const isEnRu = direction==='en-ru';
+  let score=0;
+  gfState.sentences.forEach((s,i)=>{
+    const ans = isEnRu?s.ans:s.ane;
+    if(gfState.mode==='fill') {
+      const inp = document.getElementById('gf_'+i);
+      if(!inp) return;
+      const val = inp.value.trim().toLowerCase();
+      if(val===ans.toLowerCase()||ans.toLowerCase().split('/').map(x=>x.trim()).includes(val)){
+        inp.classList.add('correct'); score++;
+      } else { inp.classList.add('wrong'); inp.value+=' → '+ans; }
+    } else {
+      const corrBtn = document.querySelector(`button[data-gfi="${i}"][data-ans="${ans}"]`);
+      if(corrBtn&&corrBtn.classList.contains('correct')) score++;
+    }
+  });
+  const n=gfState.sentences.length;
+  const el=document.getElementById('gfScore');
+  el.style.display='block';
+  const pct=Math.round(score/n*100);
+  el.style.background=pct>=80?'var(--green-bg)':pct>=50?'var(--primary-bg)':'rgba(239,68,68,.08)';
+  el.style.color=pct>=80?'var(--green)':pct>=50?'var(--primary)':'#ef4444';
+  el.textContent=`${score} / ${n} correct — ${pct}%  ${pct>=80?'🏆':pct>=50?'📚':'💪'}`;
+  document.getElementById('gfCheckBtn').style.display='none';
+}
+function resetGfSetup() {
+  document.getElementById('gfExercise').style.display='none';
+  document.getElementById('gfSetup').style.display='block';
+}
+
+/* ════════════════════════════════════════
+   LISTENING — STATE & LOGIC
+════════════════════════════════════════ */
+let lsState = {level:'A1',length:'short',utt:null,playing:false};
+function setLsPill(grp,val,btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  lsState[grp]=val;
+}
+function generateListening() {
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  if(!data){showToast('No passage found for this combination.');return;}
+  const isEnRu=direction==='en-ru';
+  const text=isEnRu?data.ru:data.en;
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  lsState.playing=false;
+  document.getElementById('lsSetup').style.display='none';
+  document.getElementById('lsPlayer').style.display='block';
+  document.getElementById('lsScore').style.display='none';
+  document.getElementById('lsText').style.display='none';
+  document.getElementById('lsText').textContent=text;
+  document.getElementById('lsTitle').textContent=`Level ${lsState.level} — ${lsState.length.charAt(0).toUpperCase()+lsState.length.slice(1)} passage`;
+  document.getElementById('lsSubtitle').textContent=isEnRu?'Russian listening':'English listening';
+  document.getElementById('lsPlayBtn').textContent='▶';
+  // Build questions
+  const qList=document.getElementById('lsQList');
+  qList.innerHTML='';
+  data.qs.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.style='background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px';
+    div.innerHTML=`<div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:8px">${i+1}. ${q.q}</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">${q.opts.map((o,j)=>`<button class="opt-btn" data-lsq="${i}" data-correct="${q.c}" data-idx="${j}" onclick="selectLsAnswer(this)">${o}</button>`).join('')}</div>`;
+    qList.appendChild(div);
+  });
+  // Auto-play
+  setTimeout(()=>startListen(text,isEnRu?'ru-RU':'en-US'),400);
+}
+function startListen(text,lang) {
+  if(!window.speechSynthesis){showToast('🔇 TTS not available in this browser');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang; u.rate=0.88;
+  u.onstart=()=>{lsState.playing=true;document.getElementById('lsPlayBtn').textContent='⏸';document.getElementById('lsPlayBtn').classList.add('ls-playing');};
+  u.onend=u.onerror=()=>{lsState.playing=false;document.getElementById('lsPlayBtn').textContent='▶';document.getElementById('lsPlayBtn').classList.remove('ls-playing');};
+  lsState.utt=u;
+  window.speechSynthesis.speak(u);
+}
+function toggleListen() {
+  if(!window.speechSynthesis){showToast('🔇 TTS not available');return;}
+  const isEnRu=direction==='en-ru';
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  const text=isEnRu?data.ru:data.en;
+  const lang=isEnRu?'ru-RU':'en-US';
+  if(lsState.playing){window.speechSynthesis.cancel();lsState.playing=false;document.getElementById('lsPlayBtn').textContent='▶';document.getElementById('lsPlayBtn').classList.remove('ls-playing');}
+  else{startListen(text,lang);}
+}
+function toggleLsText() {
+  const el=document.getElementById('lsText');
+  el.style.display=el.style.display==='none'?'block':'none';
+}
+function selectLsAnswer(btn) {
+  const qIdx=btn.dataset.lsq;
+  btn.closest('.grid').querySelectorAll('.opt-btn').forEach(b=>{
+    b.disabled=true;
+    if(parseInt(b.dataset.idx)===parseInt(b.dataset.correct)) b.classList.add('correct');
+  });
+  if(parseInt(btn.dataset.idx)!==parseInt(btn.dataset.correct)) btn.classList.add('wrong');
+}
+function checkListening() {
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  let score=0;
+  data.qs.forEach((q,i)=>{
+    const corrBtn=document.querySelector(`button[data-lsq="${i}"].correct`);
+    if(corrBtn) score++;
+  });
+  const n=data.qs.length, pct=Math.round(score/n*100);
+  const el=document.getElementById('lsScore');
+  el.style.display='block';
+  el.style.background=pct>=80?'var(--green-bg)':pct>=50?'var(--primary-bg)':'rgba(239,68,68,.08)';
+  el.style.color=pct>=80?'var(--green)':pct>=50?'var(--primary)':'#ef4444';
+  el.textContent=`${score} / ${n} correct — ${pct}%  ${pct>=80?'🏆':pct>=50?'📚':'💪'}`;
+}
+function resetLsSetup() {
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  lsState.playing=false;
+  document.getElementById('lsPlayer').style.display='none';
+  document.getElementById('lsSetup').style.display='block';
+}
+
+/* ════════════════════════════════════════
    FAQ
 ════════════════════════════════════════ */
 function toggleFaq(btn) {
@@ -1401,7 +2067,7 @@ function launchFireworks() {
 ════════════════════════════════════════ */
 window.addEventListener('load', () => {
   loadTheme();
-  renderPhrasebook('business');
+  renderPhrasebook('daily');
   loadHistory();
   checkUrlHash();
 });
