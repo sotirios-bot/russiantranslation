@@ -436,16 +436,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div id="phraseContent"></div>
     </div>
 
-    <!-- HOW TO SAY -->
-    <div class="mb-4">
-      <div class="sec-header" id="howtoHeader">🗣️ How to Say it in Russian — 50 Essential Phrases</div>
-      <input type="text" class="w-full px-4 py-3 rounded-xl mb-3 text-sm outline-none transition" placeholder="🔍  Search phrases..." oninput="filterHowTo(this.value)" id="howtoSearch" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" />
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="howtoGrid"></div>
+    <!-- VERB CONJUGATOR -->
+    <div class="mb-5">
+      <div class="sec-header">⚡ Verb Conjugator</div>
+      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+        <p class="text-xs mb-3" style="color:var(--muted)">Enter a verb in English or Russian — get past, present &amp; future conjugations.</p>
+        <div class="flex gap-2 mb-4">
+          <input type="text" id="verbInput" placeholder="e.g. speak, говорить, go, писать…"
+                 class="flex-1 px-4 py-3 rounded-xl outline-none transition text-sm"
+                 style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit"
+                 onkeydown="if(event.key==='Enter') doConjugate()" />
+          <button onclick="doConjugate()" class="px-5 py-3 rounded-xl text-white font-bold border-none cursor-pointer transition text-sm flex-shrink-0" style="background:var(--primary)">Conjugate</button>
+        </div>
+        <div id="conjugateLoading" style="display:none" class="text-center py-4"><div class="spinner"></div></div>
+        <div id="conjugateResult" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- CASE EXPLAINER -->
+    <div class="mb-5">
+      <div class="sec-header">📚 Case Explainer</div>
+      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+        <p class="text-xs mb-3" style="color:var(--muted)">Enter a noun or adjective — see all 6 Russian cases with usage explained.</p>
+        <div class="flex gap-2 mb-4">
+          <input type="text" id="caseInput" placeholder="e.g. book, студент, красивый…"
+                 class="flex-1 px-4 py-3 rounded-xl outline-none transition text-sm"
+                 style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit"
+                 onkeydown="if(event.key==='Enter') doDecline()" />
+          <button onclick="doDecline()" class="px-5 py-3 rounded-xl text-white font-bold border-none cursor-pointer transition text-sm flex-shrink-0" style="background:var(--primary)">Explain</button>
+        </div>
+        <div id="caseLoading" style="display:none" class="text-center py-4"><div class="spinner"></div></div>
+        <div id="caseResult" style="display:none"></div>
+      </div>
     </div>
 
     <!-- FAQ -->
     <div class="my-6">
-      <div class="text-xl font-extrabold text-center mb-3.5" id="faqTitle" style="color:var(--primary)">❓ Frequently Asked Questions</div>
+      <button onclick="toggleFaqSection()" class="w-full flex items-center justify-between px-4 py-3.5 rounded-xl cursor-pointer transition mb-2 text-left" style="background:var(--surface);border:1px solid var(--border)">
+        <span class="text-sm font-bold" id="faqTitle" style="color:var(--primary)">❓ Frequently Asked Questions</span>
+        <span id="faqToggleIcon" class="font-bold text-lg" style="color:var(--faint)">＋</span>
+      </button>
+      <div id="faqItems" style="display:none">
 
       <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🌍 How accurate is this English to Russian translator?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">This translator uses Google's translation engine to deliver high-quality, context-aware results. It handles everyday language, business phrases and conversational text very well. For specialised legal or medical content, professional review is recommended.</div></div>
 
@@ -487,11 +518,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔍 Does it auto-detect the language?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — when you paste or type text, the translator automatically detects whether it is Russian or English and adjusts the direction accordingly. A green "Auto-detected" badge appears to confirm the switch.</div></div>
 
-    </div><!-- /faq -->
+      </div><!-- /faqItems -->
+    </div><!-- /faq-wrapper -->
 
     <footer class="text-center py-5 mt-2" style="border-top:1px solid var(--border)">
       <div class="text-sm font-bold tracking-widest uppercase" style="color:var(--primary)">⚡ Powered by MYTHEON TECHNOLOGIES</div>
       <div class="text-xs mt-1" style="color:var(--faint)">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+      <div class="text-sm mt-3 font-semibold" style="color:#e53e3e">Принцесса, ты лучшая ❤️⭐✨</div>
     </footer>
 
   </div><!-- /app -->
@@ -530,12 +563,10 @@ const LANG = {
     casualNote:'😊 Friendly "ты" — friends & family',
     formalNoteRu:'🎩 Direct translation',casualNoteRu:'😊 Casual Russian form',
     historyHeader:'🕐 Recent Translations',phraseHeader:'📖 Phrasebook',
-    howtoHeader:'🗣️ How to Say it in Russian — 50 Essential Phrases',
     faqTitle:'❓ Frequently Asked Questions',
     errText:'❌ Translation failed — check your connection.',
     detectText:'Auto-detected',autoDetectMsg:'Language auto-detected 🔍',
     themeLight:'☀️ Light',themeDark:'🌙 Dark',
-    searchPlaceholder:'🔍  Search phrases...',
   },
   'ru-en': {
     speakerLabel:'👤 Я говорю как...',listenerLabel:'🗣️ Я разговариваю с...',
@@ -552,12 +583,10 @@ const LANG = {
     formalNote:'🎩 Прямой перевод',casualNote:'😊 Из разговорной формы',
     formalNoteRu:'🎩 Прямой перевод',casualNoteRu:'😊 Из разговорной формы',
     historyHeader:'🕐 Недавние переводы',phraseHeader:'📖 Разговорник',
-    howtoHeader:'🗣️ Как это сказать по-русски — 50 фраз',
     faqTitle:'❓ Часто задаваемые вопросы',
     errText:'❌ Ошибка перевода — проверьте соединение.',
     detectText:'Определён автоматически',autoDetectMsg:'Язык определён автоматически 🔍',
     themeLight:'☀️ Светлая',themeDark:'🌙 Тёмная',
-    searchPlaceholder:'🔍  Поиск фраз...',
   }
 };
 const t = k => (LANG[direction][k] || LANG['en-ru'][k] || '');
@@ -584,12 +613,10 @@ function updateUI() {
   document.getElementById('thOrig').textContent  = t('thOrig');
   document.getElementById('thTrans').textContent = t('thTrans');
   document.getElementById('thNotes').textContent = t('thNotes');
-  document.getElementById('howtoHeader').textContent   = t('howtoHeader');
   document.getElementById('phraseHeader').textContent  = t('phraseHeader');
   document.getElementById('faqTitle').textContent      = t('faqTitle');
   document.getElementById('detectText').textContent    = t('detectText');
   document.getElementById('kbToggle').textContent      = t('kbToggle');
-  document.getElementById('howtoSearch').placeholder   = t('searchPlaceholder');
   const isDark = document.body.dataset.theme === 'dark';
   document.getElementById('themeBtn').textContent = isDark ? t('themeLight') : t('themeDark');
 }
@@ -621,7 +648,6 @@ function swapDirection() {
   document.getElementById('detectPill').classList.remove('show');
   updateUI();
   renderPhrasebook('business');
-  renderHowTo();
 }
 function syncPills() {
   document.getElementById('srcPill').textContent = direction === 'en-ru' ? '🇬🇧 English' : '🇷🇺 Russian';
@@ -649,7 +675,6 @@ function autoDetect(text) {
     updateUI();
     document.getElementById('detectPill').classList.add('show');
     renderPhrasebook('business');
-    renderHowTo();
   }
 }
 
@@ -1092,45 +1117,149 @@ function loadPhrase(en) {
 }
 
 /* ════════════════════════════════════════
-   HOW TO SAY
+   VERB CONJUGATOR
 ════════════════════════════════════════ */
-const HOW_TO = [
-  {en:'Hello',ru:'Привет / Здравствуйте'},{en:'Thank you',ru:'Спасибо'},{en:'Please',ru:'Пожалуйста'},
-  {en:'Yes',ru:'Да'},{en:'No',ru:'Нет'},{en:'Sorry / Excuse me',ru:'Извините / Простите'},
-  {en:'Goodbye',ru:'До свидания / Пока'},{en:'I love you',ru:'Я тебя люблю'},
-  {en:'I don\'t understand',ru:'Я не понимаю'},{en:'How much?',ru:'Сколько стоит?'},
-  {en:'Where is...?',ru:'Где находится...?'},{en:'My name is...',ru:'Меня зовут...'},
-  {en:'Nice to meet you',ru:'Приятно познакомиться'},{en:'Do you speak English?',ru:'Вы говорите по-английски?'},
-  {en:'I don\'t speak Russian',ru:'Я не говорю по-русски'},{en:'Good morning',ru:'Доброе утро'},
-  {en:'Good evening',ru:'Добрый вечер'},{en:'Good night',ru:'Спокойной ночи'},
-  {en:'Happy birthday',ru:'С днём рождения'},{en:'Cheers!',ru:'За здоровье!'},
-  {en:'I am hungry',ru:'Я голоден / голодна'},{en:'I am tired',ru:'Я устал / устала'},
-  {en:'That is beautiful',ru:'Это красиво'},{en:'What time is it?',ru:'Который час?'},
-  {en:'How are you?',ru:'Как дела?'},{en:'Fine, thank you',ru:'Хорошо, спасибо'},
-  {en:'Where are you from?',ru:'Откуда вы?'},{en:'I don\'t know',ru:'Я не знаю'},
-  {en:'Can you help me?',ru:'Вы можете мне помочь?'},{en:'I need...',ru:'Мне нужно...'},
-  {en:'How do you say...?',ru:'Как сказать...?'},{en:'Let\'s go',ru:'Пошли'},
-  {en:'Wait a moment',ru:'Подождите минуту'},{en:'I am sorry',ru:'Мне жаль'},
-  {en:'No problem',ru:'Нет проблем'},{en:'Of course',ru:'Конечно'},
-  {en:'Maybe',ru:'Может быть'},{en:'Never mind',ru:'Не важно'},
-  {en:'Again please',ru:'Повторите, пожалуйста'},{en:'More slowly please',ru:'Помедленнее, пожалуйста'},
-  {en:'I understand',ru:'Я понимаю'},{en:'Very good',ru:'Очень хорошо'},
-  {en:'Welcome',ru:'Добро пожаловать'},{en:'Congratulations',ru:'Поздравляю'},
-  {en:'Good luck',ru:'Удачи'},{en:'Take care',ru:'Береги себя'},
-  {en:'See you later',ru:'До встречи'},{en:'I miss you',ru:'Я скучаю по тебе'},
-  {en:'You\'re welcome',ru:'Пожалуйста / Не за что'},{en:'It\'s delicious',ru:'Это вкусно'},
-];
-function renderHowTo(filter) {
-  const grid = document.getElementById('howtoGrid');
-  const rows = HOW_TO.filter(r => !filter || r.en.toLowerCase().includes(filter.toLowerCase()) || r.ru.includes(filter));
-  grid.innerHTML = rows.map(r => `
-    <div class="howto-row" onclick="loadPhrase('${r.en.replace(/'/g,"\\'")}')">
-      <span class="howto-en">${r.en}</span>
-      <span class="howto-ru">${r.ru}</span>
-      <button class="howto-copy-btn" onclick="copyPhrase('${r.ru.replace(/'/g,"\\'")}',event)" title="Copy Russian">📋</button>
-    </div>`).join('') || `<div style="padding:12px;color:var(--xfaint);font-size:.88rem;">No matches found</div>`;
+async function doConjugate() {
+  const raw = document.getElementById('verbInput').value.trim();
+  if (!raw) { showToast('✍️ Enter a verb first'); return; }
+  document.getElementById('conjugateLoading').style.display = 'block';
+  document.getElementById('conjugateResult').style.display  = 'none';
+  try {
+    let enVerb = raw;
+    if (/[а-яёА-ЯЁ]/.test(raw)) {
+      enVerb = await fetchGoogle(raw, 'ru', 'en');
+    }
+    enVerb = enVerb.toLowerCase().replace(/^to\s+/, '').trim();
+
+    const pronouns = {
+      present: [
+        {ru:'Я',   en:`I ${enVerb} every day`},
+        {ru:'Ты',  en:`you ${enVerb} every day`},
+        {ru:'Он',  en:`he ${enVerb}s every day`},
+        {ru:'Она', en:`she ${enVerb}s every day`},
+        {ru:'Мы',  en:`we ${enVerb} every day`},
+        {ru:'Вы',  en:`you all ${enVerb} every day`},
+        {ru:'Они', en:`they ${enVerb} every day`},
+      ],
+      past: [
+        {ru:'Он',  en:`he used to ${enVerb}`},
+        {ru:'Она', en:`she used to ${enVerb}`},
+        {ru:'Они', en:`they used to ${enVerb}`},
+      ],
+      future: [
+        {ru:'Я',   en:`I will ${enVerb}`},
+        {ru:'Ты',  en:`you will ${enVerb}`},
+        {ru:'Он',  en:`he will ${enVerb}`},
+        {ru:'Она', en:`she will ${enVerb}`},
+        {ru:'Мы',  en:`we will ${enVerb}`},
+        {ru:'Вы',  en:`you all will ${enVerb}`},
+        {ru:'Они', en:`they will ${enVerb}`},
+      ],
+    };
+
+    async function conjugateSentence(sentence, pronoun) {
+      const full = await fetchGoogle(sentence, 'en', 'ru');
+      let form = full.replace(/[.!?]$/, '').trim();
+      const preLower = pronoun.toLowerCase() + ' ';
+      if (form.toLowerCase().startsWith(preLower)) form = form.slice(preLower.length);
+      form = form.replace(/\s+каждый день\.?$/i, '').trim();
+      return form.charAt(0).toUpperCase() + form.slice(1);
+    }
+
+    const results = {};
+    for (const [tense, rows] of Object.entries(pronouns)) {
+      results[tense] = [];
+      for (const row of rows) {
+        const form = await conjugateSentence(row.en, row.ru);
+        results[tense].push({ pronoun: row.ru, form });
+        await delay(80);
+      }
+    }
+    document.getElementById('conjugateLoading').style.display = 'none';
+    document.getElementById('conjugateResult').style.display  = 'block';
+    document.getElementById('conjugateResult').innerHTML = renderConjugation(enVerb, results);
+  } catch(err) {
+    document.getElementById('conjugateLoading').style.display = 'none';
+    document.getElementById('conjugateResult').style.display  = 'block';
+    document.getElementById('conjugateResult').innerHTML = `<p style="color:#ef4444;font-size:.88rem">❌ Error: ${err.message}</p>`;
+  }
 }
-function filterHowTo(val) { renderHowTo(val); }
+function renderConjugation(verb, results) {
+  const tenseLabels = { present:'🕐 Present', past:'📅 Past', future:'🔮 Future' };
+  let html = `<div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Conjugations for: <strong style="color:var(--primary)">${verb}</strong></div>`;
+  for (const [tense, rows] of Object.entries(results)) {
+    html += `<div style="margin-bottom:12px">
+      <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-weight:700;margin-bottom:6px">${tenseLabels[tense]}</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px">`;
+    for (const {pronoun, form} of rows) {
+      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:7px 10px">
+        <span style="font-size:.72rem;color:var(--faint)">${pronoun}</span>
+        <div style="font-size:.92rem;color:var(--primary);font-weight:700;margin-top:1px">${form}</div>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+  return html;
+}
+
+/* ════════════════════════════════════════
+   CASE EXPLAINER
+════════════════════════════════════════ */
+async function doDecline() {
+  const raw = document.getElementById('caseInput').value.trim();
+  if (!raw) { showToast('✍️ Enter a word first'); return; }
+  document.getElementById('caseLoading').style.display = 'block';
+  document.getElementById('caseResult').style.display  = 'none';
+  try {
+    let enWord = raw, ruWord = raw;
+    if (/[а-яёА-ЯЁ]/.test(raw)) {
+      enWord = await fetchGoogle(raw, 'ru', 'en');
+      ruWord = raw;
+    } else {
+      ruWord = await fetchGoogle(raw, 'en', 'ru');
+    }
+    enWord = enWord.toLowerCase().trim();
+
+    const CASES = [
+      { name:'Nominative',   ru:'Именительный',  q:'Кто? Что?',    en:`This is ${enWord}`,          usage:'Subject of the sentence' },
+      { name:'Genitive',     ru:'Родительный',   q:'Кого? Чего?',  en:`without ${enWord}`,           usage:'Possession, absence, negation' },
+      { name:'Dative',       ru:'Дательный',     q:'Кому? Чему?',  en:`give to ${enWord}`,           usage:'Indirect object — to/for whom' },
+      { name:'Accusative',   ru:'Винительный',   q:'Кого? Что?',   en:`I see ${enWord}`,             usage:'Direct object of action' },
+      { name:'Instrumental', ru:'Творительный',  q:'Кем? Чем?',   en:`with ${enWord}`,              usage:'By means of, together with' },
+      { name:'Prepositional',ru:'Предложный',    q:'О ком? О чём?',en:`thinking about ${enWord}`,   usage:'Location, topic of speech' },
+    ];
+
+    const caseResults = [];
+    for (const c of CASES) {
+      const translated = await fetchGoogle(c.en, 'en', 'ru');
+      const words = translated.replace(/[.!?]/g,'').trim().split(/\s+/);
+      const form = words[words.length - 1];
+      caseResults.push({ ...c, form });
+      await delay(80);
+    }
+    document.getElementById('caseLoading').style.display = 'none';
+    document.getElementById('caseResult').style.display  = 'block';
+    document.getElementById('caseResult').innerHTML = renderCases(enWord, ruWord, caseResults);
+  } catch(err) {
+    document.getElementById('caseLoading').style.display = 'none';
+    document.getElementById('caseResult').style.display  = 'block';
+    document.getElementById('caseResult').innerHTML = `<p style="color:#ef4444;font-size:.88rem">❌ Error: ${err.message}</p>`;
+  }
+}
+function renderCases(enWord, ruWord, cases) {
+  let html = `<div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Cases for: <strong style="color:var(--primary)">${enWord}</strong> / <strong style="color:var(--primary)">${ruWord}</strong></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">`;
+  for (const c of cases) {
+    html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px">
+      <div style="font-size:.7rem;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.8px">${c.name}</div>
+      <div style="font-size:.71rem;color:var(--muted);margin-top:1px">${c.ru} · ${c.q}</div>
+      <div style="font-size:1.05rem;color:var(--primary);font-weight:700;margin:4px 0">${c.form}</div>
+      <div style="font-size:.71rem;color:var(--faint)">${c.usage}</div>
+    </div>`;
+  }
+  html += `</div>`;
+  return html;
+}
 
 /* ════════════════════════════════════════
    FAQ
@@ -1139,6 +1268,13 @@ function toggleFaq(btn) {
   const ans = btn.nextElementSibling, isOpen = btn.classList.contains('open');
   document.querySelectorAll('.faq-q.open').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
   if (!isOpen) { btn.classList.add('open'); ans.classList.add('open'); }
+}
+function toggleFaqSection() {
+  const items = document.getElementById('faqItems');
+  const icon  = document.getElementById('faqToggleIcon');
+  const isOpen = items.style.display !== 'none';
+  items.style.display = isOpen ? 'none' : 'block';
+  icon.textContent = isOpen ? '＋' : '－';
 }
 
 /* ════════════════════════════════════════
@@ -1171,7 +1307,6 @@ function checkUrlHash() {
 window.addEventListener('load', () => {
   loadTheme();
   renderPhrasebook('business');
-  renderHowTo();
   loadHistory();
   checkUrlHash();
 });
