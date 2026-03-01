@@ -74,9 +74,7 @@
   </script>
 
   <style>
-  /* ═══════════════════════════════════════════
-     CSS VARIABLES — LIGHT / DARK
-  ═══════════════════════════════════════════ */
+  /* ═══ CSS VARIABLES — LIGHT / DARK ═══ */
   :root {
     --bg:         #f0f4ff;
     --surface:    #ffffff;
@@ -122,133 +120,78 @@
   body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); min-height:100vh; color:var(--text); transition:background .3s,color .3s; }
   a { color:var(--primary); }
 
-  /* ═══ TOP LEADERBOARD AD ═══ */
-  .top-ad { background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center; padding:10px; }
-  .ad-block { border:2px dashed var(--border); border-radius:10px; display:flex; align-items:center; justify-content:center; gap:8px; color:var(--xfaint); font-size:0.73rem; font-weight:600; letter-spacing:.5px; background:var(--bg); }
-  .top-ad .ad-block { width:728px; max-width:100%; height:90px; }
-
-  /* ═══ PAGE LAYOUT ═══ */
-  .page-wrap { display:grid; grid-template-columns:160px 1fr 160px; gap:20px; max-width:1320px; margin:0 auto; padding:0 12px; align-items:start; }
-  @media(max-width:1100px){ .page-wrap{grid-template-columns:1fr;} .ad-side{display:none;} }
-
-  /* ═══ SIDE ADS ═══ */
-  .ad-side { position:sticky; top:20px; width:160px; min-height:600px; margin-top:24px; }
-  .ad-side .ad-block { width:160px; min-height:600px; border-radius:16px; flex-direction:column; gap:6px; padding:16px; }
-  .ad-side .ad-block span { font-size:.68rem; }
-
-  /* ═══ MAIN ═══ */
-  .app { padding:20px 0 40px; }
-
-  /* ═══ HEADER ═══ */
-  header { text-align:center; padding:16px 0 22px; position:relative; }
-  h1 { font-size:2.1rem; font-weight:800; color:var(--primary); letter-spacing:-.5px; line-height:1.25; }
-  header p { color:var(--muted); margin-top:9px; font-size:.94rem; max-width:680px; margin-left:auto; margin-right:auto; line-height:1.65; }
-  .header-tools { position:absolute; top:16px; right:0; display:flex; gap:8px; }
-  .tool-btn { display:flex; align-items:center; gap:5px; padding:6px 13px; background:var(--surface); border:1px solid var(--border); border-radius:20px; font-size:.8rem; color:var(--muted); cursor:pointer; transition:all .2s; font-weight:500; }
-  .tool-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
-
-  /* ═══ CARD ═══ */
-  .card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:26px; margin-bottom:16px; box-shadow:0 4px 20px var(--shadow); }
-
-  /* ═══ DIRECTION ═══ */
-  .direction-row { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
-  .lang-pill { display:flex; align-items:center; gap:8px; background:var(--bg); border:2px solid var(--border); border-radius:50px; padding:10px 20px; font-size:.96rem; font-weight:600; min-width:145px; justify-content:center; color:var(--muted); transition:all .2s; }
-  .lang-pill.active-lang { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
-  .swap-btn { background:var(--primary); border:none; border-radius:50%; width:46px; height:46px; font-size:1.2rem; cursor:pointer; color:#fff; transition:transform .35s,background .2s; flex-shrink:0; box-shadow:0 4px 14px var(--shadow2); }
-  .swap-btn:hover { transform:rotate(180deg); background:var(--primary-dk); }
-  .detect-pill { display:none; align-items:center; gap:5px; background:var(--green-bg); border:1px solid var(--green); color:var(--green); border-radius:20px; padding:4px 11px; font-size:.72rem; font-weight:700; }
+  /* ═══ JS-TOGGLED STATES ═══ */
+  .lang-pill.active-lang { border-color:var(--primary) !important; color:var(--primary) !important; background:var(--primary-bg) !important; }
+  .g-btn.on { background:var(--primary-bg) !important; border-color:var(--primary) !important; color:var(--primary) !important; font-weight:700; }
+  .kb-toggle.on { border-color:var(--primary) !important; color:var(--primary) !important; background:var(--primary-bg) !important; }
+  .vkeyboard { display:none; }
+  .vkeyboard.show { display:block; }
+  .loading { display:none; }
+  .loading.show { display:block; }
+  .results { display:none; }
+  .results.show { display:block; }
+  .grammar-tip { display:none; }
+  .grammar-tip.show { display:block; }
+  .detect-pill { display:none; }
   .detect-pill.show { display:flex; }
+  .faq-a { display:none; }
+  .faq-a.open { display:block; }
+  .faq-q.open { color:var(--primary); background:var(--primary-bg); }
+  .faq-icon { transition:transform .25s; color:var(--primary); }
+  .faq-q.open .faq-icon { transform:rotate(45deg); }
+  .tab-btn.active { background:var(--primary-bg) !important; border-color:var(--primary) !important; color:var(--primary) !important; font-weight:700; }
+  #toast { opacity:0; transform:translateY(10px); transition:opacity .25s,transform .25s; pointer-events:none; }
+  #toast.show { opacity:1; transform:translateY(0); }
+  .iBtn { background:none; border:none; cursor:pointer; font-size:1rem; opacity:.38; transition:opacity .2s,transform .2s; padding:2px 4px; line-height:1; }
+  .iBtn:hover { opacity:1; transform:scale(1.18); }
+  .iBtn.starred { opacity:1; }
+  .howto-hidden { display:none; }
+  .swap-btn:hover { transform:rotate(180deg); background:var(--primary-dk) !important; }
 
-  /* ═══ GENDER ═══ */
-  .gender-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
-  .gender-box label { display:block; font-size:.73rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--faint); margin-bottom:7px; font-weight:600; }
-  .gender-btns { display:flex; gap:7px; }
-  .g-btn { flex:1; padding:9px 8px; border:2px solid var(--border); border-radius:11px; background:var(--bg); color:var(--faint); cursor:pointer; font-size:.88rem; transition:all .2s; text-align:center; font-weight:500; }
-  .g-btn:hover { border-color:var(--primary); color:var(--primary); }
-  .g-btn.on { background:var(--primary-bg); border-color:var(--primary); color:var(--primary); font-weight:700; }
+  /* ═══ SECTION HEADER WITH LINES ═══ */
+  .sec-header { display:flex; align-items:center; gap:10px; margin-bottom:13px; font-size:.74rem; color:var(--faint); text-transform:uppercase; letter-spacing:1.2px; font-weight:700; }
+  .sec-header::before,.sec-header::after { content:''; flex:1; height:1px; background:var(--border); }
 
-  /* ═══ TEXTAREA ═══ */
-  .input-wrap { position:relative; }
-  textarea { width:100%; min-height:120px; background:var(--bg); border:2px solid var(--border); border-radius:13px; padding:14px; color:var(--text); font-size:1.05rem; font-family:inherit; resize:vertical; outline:none; transition:border-color .2s,box-shadow .2s; line-height:1.6; }
-  textarea:focus { border-color:var(--primary); box-shadow:0 0 0 3px var(--primary-bg); background:var(--surface); }
-  textarea::placeholder { color:var(--xfaint); }
-  .input-footer { display:flex; justify-content:space-between; align-items:center; margin-top:6px; }
-  .char-count { font-size:.77rem; color:var(--xfaint); }
-  .kb-toggle { background:none; border:1px solid var(--border); border-radius:8px; padding:4px 10px; font-size:.77rem; color:var(--faint); cursor:pointer; transition:all .2s; }
-  .kb-toggle:hover,.kb-toggle.on { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
-  .kb-buttons { display:flex; gap:6px; }
-  .phrase-card-footer { display:flex; justify-content:flex-end; margin-top:7px; }
-  .phrase-copy-btn { background:none; border:1px solid var(--border); border-radius:7px; padding:3px 9px; font-size:.75rem; color:var(--faint); cursor:pointer; transition:all .2s; }
-  .phrase-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
-  .howto-copy-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-size:.73rem; color:var(--faint); cursor:pointer; transition:all .2s; flex-shrink:0; }
-  .howto-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  /* ═══ SPINNER ═══ */
+  @keyframes spin { to{transform:rotate(360deg);} }
+  .spinner { display:inline-block; width:34px; height:34px; border:3px solid var(--primary-bg); border-top-color:var(--primary); border-radius:50%; animation:spin .75s linear infinite; }
 
   /* ═══ VIRTUAL KEYBOARD ═══ */
-  .vkeyboard { display:none; background:var(--surface2); border:1px solid var(--border); border-radius:14px; padding:12px; margin-top:10px; }
-  .vkeyboard.show { display:block; }
   .vk-row { display:flex; gap:5px; justify-content:center; margin-bottom:5px; flex-wrap:wrap; }
   .vk-key { min-width:33px; height:33px; background:var(--surface); border:1px solid var(--border); border-radius:7px; font-size:.88rem; cursor:pointer; color:var(--text); transition:all .15s; display:flex; align-items:center; justify-content:center; font-family:inherit; }
   .vk-key:hover { background:var(--primary-bg); border-color:var(--primary); color:var(--primary); }
   .vk-key:active { transform:scale(.9); }
   .vk-wide { min-width:60px; font-size:.72rem; }
   .vk-space { min-width:130px; }
+  @media(max-width:768px) {
+    .vk-key { min-width:26px; height:30px; font-size:.75rem; }
+    .vk-wide { min-width:44px; font-size:.67rem; }
+    .vk-space { min-width:65px; }
+  }
+  @media(max-width:390px) {
+    .vk-key { min-width:22px; height:27px; font-size:.67rem; }
+    .vk-wide { min-width:36px; font-size:.62rem; }
+    .vk-space { min-width:48px; }
+  }
 
-  /* ═══ TRANSLATE BUTTON ═══ */
-  .translate-btn { width:100%; padding:15px; background:var(--primary); border:none; border-radius:13px; color:#fff; font-size:1.05rem; font-weight:700; letter-spacing:.5px; cursor:pointer; margin-top:12px; transition:all .2s; box-shadow:0 4px 16px var(--shadow2); }
-  .translate-btn:hover:not(:disabled) { background:var(--primary-dk); transform:translateY(-2px); box-shadow:0 8px 24px var(--shadow2); }
-  .translate-btn:disabled { opacity:.55; cursor:not-allowed; transform:none; }
-  .hint { text-align:center; font-size:.73rem; color:var(--xfaint); margin-top:7px; }
-  .hint kbd { background:var(--primary-bg); border:1px solid var(--border); border-radius:4px; padding:1px 5px; color:var(--primary); font-size:.69rem; }
-
-  /* ═══ LOADING ═══ */
-  .loading { display:none; text-align:center; padding:28px; color:var(--faint); }
-  .loading.show { display:block; }
-  .spinner { display:inline-block; width:34px; height:34px; border:3px solid var(--primary-bg); border-top-color:var(--primary); border-radius:50%; animation:spin .75s linear infinite; }
-  @keyframes spin { to{transform:rotate(360deg);} }
-
-  /* ═══ RESULTS ═══ */
-  .results { display:none; }
-  .results.show { display:block; }
-  .sec-header { display:flex; align-items:center; gap:10px; margin-bottom:13px; font-size:.74rem; color:var(--faint); text-transform:uppercase; letter-spacing:1.2px; font-weight:700; }
-  .sec-header::before,.sec-header::after { content:''; flex:1; height:1px; background:var(--border); }
-  .results-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
-  @media(max-width:600px){ .results-grid{grid-template-columns:1fr;} }
-
-  .result-card { border-radius:16px; padding:20px; border:2px solid; box-shadow:0 2px 12px var(--shadow); }
+  /* ═══ RESULT CARDS ═══ */
   .result-card.formal { border-color:rgba(34,83,203,.28); background:var(--surface2); }
   .result-card.casual { border-color:rgba(234,112,0,.28); background:var(--orange-bg); }
-  .rc-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
   .rc-label { font-size:.71rem; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; }
   .formal .rc-label { color:var(--primary); }
   .casual .rc-label { color:var(--orange); }
-  .rc-actions { display:flex; gap:3px; }
-  .iBtn { background:none; border:none; cursor:pointer; font-size:1rem; opacity:.38; transition:opacity .2s,transform .2s; padding:2px 4px; line-height:1; }
-  .iBtn:hover { opacity:1; transform:scale(1.18); }
-  .iBtn.starred { opacity:1; }
-  .rc-text { font-size:1.05rem; line-height:1.75; color:var(--text); min-height:48px; }
-  .rc-translit { font-size:.8rem; color:var(--faint); margin-top:6px; font-style:italic; }
-  .rc-note { font-size:.74rem; color:var(--xfaint); margin-top:5px; }
 
-  /* ═══ GRAMMAR TIP ═══ */
-  .grammar-tip { display:none; background:var(--primary-bg); border:1px solid var(--border); border-radius:12px; padding:11px 15px; margin-bottom:14px; font-size:.87rem; color:var(--primary); line-height:1.55; }
-  .grammar-tip.show { display:block; }
-
-  /* ═══ SHARE ROW ═══ */
-  .share-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:center; }
-  .share-btn { display:flex; align-items:center; gap:5px; padding:7px 14px; border:1px solid var(--border); border-radius:20px; background:var(--surface); color:var(--muted); font-size:.8rem; cursor:pointer; transition:all .2s; font-weight:500; }
-  .share-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
-  .report-btn { margin-left:auto; display:flex; align-items:center; gap:5px; padding:7px 14px; border:1px solid var(--border); border-radius:20px; background:var(--surface); color:var(--faint); font-size:.78rem; cursor:pointer; transition:all .2s; }
-  .report-btn:hover { border-color:#ef4444; color:#ef4444; }
-
-  /* ═══ BREAKDOWN ═══ */
-  .breakdown-card { border-radius:18px; overflow:hidden; border:1px solid var(--border); background:var(--surface); box-shadow:0 2px 10px var(--shadow); margin-bottom:16px; }
-  .breakdown-title { padding:13px 18px 11px; font-size:.73rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--faint); font-weight:700; border-bottom:1px solid var(--border2); background:var(--surface2); }
-  table { width:100%; border-collapse:collapse; }
-  thead th { padding:9px 16px; text-align:left; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; color:var(--xfaint); background:var(--surface2); border-bottom:1px solid var(--border2); font-weight:700; }
+  /* ═══ BREAKDOWN TABLE ═══ */
+  .breakdown-card { border-radius:18px; border:1px solid var(--border); background:var(--surface); box-shadow:0 2px 10px var(--shadow); margin-bottom:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .breakdown-title { padding:13px 18px 11px; font-size:.73rem; text-transform:uppercase; letter-spacing:1.2px; color:var(--faint); font-weight:700; border-bottom:1px solid var(--border); background:var(--surface2); }
+  table { width:100%; border-collapse:collapse; min-width:430px; }
+  thead th { padding:9px 16px; text-align:left; font-size:.7rem; text-transform:uppercase; letter-spacing:1px; color:var(--xfaint); background:var(--surface2); border-bottom:1px solid var(--border); font-weight:700; }
   tbody tr { transition:background .15s; }
   tbody tr:hover { background:var(--primary-bg); }
-  tbody td { padding:10px 16px; border-bottom:1px solid var(--border2); font-size:.91rem; vertical-align:middle; }
+  tbody td { padding:10px 16px; border-bottom:1px solid var(--border); font-size:.91rem; vertical-align:middle; }
   tbody tr:last-child td { border-bottom:none; }
+
+  /* ═══ TAGS (JS-generated) ═══ */
   .tag { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:20px; font-size:.69rem; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
   .tag-verb   { background:rgba(34,83,203,.1);  color:var(--primary); }
   .tag-noun   { background:rgba(234,112,0,.1);  color:var(--orange); }
@@ -259,9 +202,7 @@
   .trans-word { color:var(--primary); font-weight:700; }
   .note-cell  { color:var(--faint); font-size:.79rem; }
 
-  /* ═══ HISTORY ═══ */
-  .history-section { margin-bottom:16px; }
-  .history-list { display:flex; flex-direction:column; gap:7px; }
+  /* ═══ HISTORY (JS-generated) ═══ */
   .history-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 15px; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:10px; }
   .history-item:hover { border-color:var(--primary); background:var(--primary-bg); }
   .history-text { font-size:.87rem; color:var(--text); font-weight:600; flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -270,172 +211,31 @@
   .history-del { background:none; border:none; color:var(--xfaint); cursor:pointer; font-size:.9rem; flex-shrink:0; padding:2px; }
   .history-del:hover { color:#ef4444; }
 
-  /* ═══ PHRASEBOOK ═══ */
-  .phrasebook-section { margin-bottom:16px; }
-  .tabs { display:flex; gap:6px; margin-bottom:13px; flex-wrap:wrap; }
-  .tab-btn { padding:7px 14px; border:1px solid var(--border); border-radius:20px; background:var(--surface); color:var(--muted); font-size:.81rem; cursor:pointer; transition:all .2s; font-weight:500; }
-  .tab-btn:hover,.tab-btn.active { background:var(--primary-bg); border-color:var(--primary); color:var(--primary); font-weight:700; }
-  .tab-panel { display:none; }
-  .tab-panel.active { display:block; }
+  /* ═══ PHRASEBOOK (JS-generated) ═══ */
   .phrase-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  @media(max-width:600px){ .phrase-grid{grid-template-columns:1fr;} }
+  @media(max-width:600px) { .phrase-grid { grid-template-columns:1fr; } }
   .phrase-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 14px; cursor:pointer; transition:all .2s; }
   .phrase-card:hover { border-color:var(--primary); background:var(--primary-bg); }
   .phrase-en { font-size:.87rem; color:var(--text); font-weight:600; }
   .phrase-ru { font-size:.87rem; color:var(--primary); margin-top:3px; }
   .phrase-tr { font-size:.73rem; color:var(--faint); font-style:italic; margin-top:2px; }
+  .phrase-card-footer { display:flex; justify-content:flex-end; margin-top:7px; }
+  .phrase-copy-btn { background:none; border:1px solid var(--border); border-radius:7px; padding:3px 9px; font-size:.75rem; color:var(--faint); cursor:pointer; transition:all .2s; }
+  .phrase-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
 
-  /* ═══ HOW TO SAY ═══ */
-  .howto-section { margin-bottom:16px; }
-  .search-input { width:100%; padding:10px 15px; background:var(--bg); border:2px solid var(--border); border-radius:12px; color:var(--text); font-size:.94rem; font-family:inherit; outline:none; margin-bottom:12px; transition:border-color .2s; }
-  .search-input:focus { border-color:var(--primary); }
-  .search-input::placeholder { color:var(--xfaint); }
-  .howto-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-  @media(max-width:600px){ .howto-grid{grid-template-columns:1fr;} }
+  /* ═══ HOW TO SAY (JS-generated) ═══ */
   .howto-row { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:9px 13px; display:flex; align-items:center; gap:10px; cursor:pointer; transition:all .15s; font-size:.84rem; }
   .howto-row:hover { border-color:var(--primary); background:var(--primary-bg); }
   .howto-en { color:var(--text); font-weight:600; flex:1; }
   .howto-ru { color:var(--primary); font-weight:700; flex:1; text-align:right; }
-  .howto-hidden { display:none; }
-
-  /* ═══ FAQ ═══ */
-  .faq-section { margin:26px 0 20px; }
-  .faq-main-title { font-size:1.3rem; font-weight:800; color:var(--primary); margin-bottom:14px; text-align:center; }
-  .faq-item { background:var(--surface); border:1px solid var(--border); border-radius:13px; margin-bottom:7px; overflow:hidden; box-shadow:0 1px 6px var(--shadow); }
-  .faq-q { width:100%; background:none; border:none; padding:14px 18px; text-align:left; font-size:.93rem; font-weight:600; color:var(--text); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px; transition:background .2s; }
-  .faq-q:hover { background:var(--bg); }
-  .faq-q.open { color:var(--primary); background:var(--primary-bg); }
-  .faq-icon { font-size:.95rem; flex-shrink:0; transition:transform .25s; color:var(--primary); }
-  .faq-q.open .faq-icon { transform:rotate(45deg); }
-  .faq-a { display:none; padding:0 18px 14px; font-size:.89rem; color:var(--muted); line-height:1.7; border-top:1px solid var(--border2); padding-top:12px; }
-  .faq-a.open { display:block; }
-
-  /* ═══ BOTTOM AD ═══ */
-  .bottom-ad { display:flex; align-items:center; justify-content:center; padding:14px 0; }
-  .bottom-ad .ad-block { width:728px; max-width:100%; height:90px; }
-
-  /* ═══ TOAST ═══ */
-  #toast { position:fixed; bottom:24px; right:24px; background:var(--primary); border-radius:10px; padding:10px 18px; font-size:.87rem; color:#fff; opacity:0; transform:translateY(10px); transition:opacity .25s,transform .25s; pointer-events:none; z-index:9999; box-shadow:0 4px 16px var(--shadow2); }
-  #toast.show { opacity:1; transform:translateY(0); }
-
-  /* ═══ FOOTER ═══ */
-  footer { text-align:center; padding:22px 0 14px; border-top:1px solid var(--border); margin-top:8px; }
-  .footer-brand { font-size:.87rem; font-weight:700; color:var(--primary); letter-spacing:1px; text-transform:uppercase; }
-  .footer-address { font-size:.76rem; color:var(--faint); margin-top:4px; }
-
-  /* ═══ MOBILE RESPONSIVE ═══ */
-
-  /* Tablet fix: header-tools go static at 900px so they never overlap the h1 */
-  @media(max-width:900px){
-    header { padding:14px 0 18px; }
-    .header-tools { position:static; display:flex; justify-content:center; gap:8px; margin-top:10px; flex-wrap:wrap; }
-  }
-
-  @media(max-width:768px){
-    /* Page wrapper horizontal padding */
-    .page-wrap { padding:0 16px; }
-
-    /* App */
-    .app { padding:10px 0 28px; }
-
-    /* Header */
-    header { padding:10px 0 12px; }
-    h1 { font-size:1.28rem; letter-spacing:-.3px; }
-    header p { font-size:.83rem; margin-top:5px; }
-    .tool-btn { font-size:.77rem; padding:5px 11px; }
-
-    /* Card */
-    .card { padding:15px; border-radius:14px; margin-bottom:12px; }
-
-    /* Direction row */
-    .direction-row { gap:8px; margin-bottom:16px; }
-    .lang-pill { min-width:0; flex:1; max-width:160px; padding:9px 10px; font-size:.87rem; }
-    .swap-btn { width:40px; height:40px; font-size:1.05rem; }
-
-    /* Gender row — single column */
-    .gender-row { grid-template-columns:1fr; gap:10px; margin-bottom:14px; }
-
-    /* Textarea */
-    textarea { font-size:1rem; min-height:100px; }
-
-    /* Input footer — allow wrapping so KB buttons don't overflow */
-    .input-footer { flex-wrap:wrap; gap:5px; }
-    .char-count { font-size:.74rem; }
-    .kb-buttons { gap:4px; }
-    .kb-toggle { font-size:.7rem; padding:4px 8px; }
-
-    /* Hint */
-    .hint { font-size:.69rem; }
-
-    /* Virtual keyboard — size keys to fit ~375px screen */
-    .vkeyboard { padding:8px 4px; }
-    .vk-row { gap:2px; }
-    .vk-key { min-width:26px; height:30px; font-size:.75rem; }
-    .vk-wide { min-width:44px; font-size:.67rem; }
-    .vk-space { min-width:65px; }
-
-    /* Results — stack vertically */
-    .results-grid { grid-template-columns:1fr; gap:10px; }
-    .result-card { padding:14px; }
-    .rc-text { font-size:.95rem; }
-
-    /* Share row */
-    .share-row { gap:5px; }
-    .share-btn { padding:6px 10px; font-size:.75rem; }
-    .report-btn { margin-left:0; width:100%; justify-content:center; padding:8px 10px; font-size:.75rem; }
-
-    /* Breakdown — fix overflow:hidden fighting horizontal scroll */
-    .breakdown-card { overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch; border-radius:12px; }
-    table { min-width:430px; }
-
-    /* History */
-    .history-item { padding:9px 12px; }
-    .history-text { font-size:.84rem; }
-
-    /* Phrasebook */
-    .tab-btn { padding:6px 10px; font-size:.76rem; }
-    .phrase-grid { grid-template-columns:1fr; }
-
-    /* How-to — already 1 col; fix row text overflow */
-    .howto-grid { grid-template-columns:1fr; }
-    .howto-row { gap:5px; }
-    .howto-en { font-size:.83rem; }
-    .howto-ru { font-size:.83rem; word-break:break-word; text-align:left; }
-
-    /* FAQ */
-    .faq-q { padding:12px 14px; font-size:.86rem; gap:8px; }
-    .faq-a { padding:10px 14px 12px; font-size:.84rem; }
-    .faq-main-title { font-size:1.05rem; }
-
-    /* Sec header */
-    .sec-header { font-size:.68rem; }
-
-    /* How-to search */
-    .search-input { padding:9px 13px; font-size:.87rem; }
-
-    /* Footer */
-    footer { padding:14px 0 10px; }
-    .footer-brand { font-size:.79rem; }
-    .footer-address { font-size:.71rem; }
-
-    /* Toast */
-    #toast { bottom:12px; right:12px; left:12px; text-align:center; font-size:.82rem; }
-  }
-
-  /* Small phones (≤390px) */
-  @media(max-width:390px){
-    .page-wrap { padding:0 12px; }
-    h1 { font-size:1.08rem; }
-    .lang-pill { padding:8px 8px; font-size:.81rem; }
-    .vk-key { min-width:22px; height:27px; font-size:.67rem; }
-    .vk-wide { min-width:36px; font-size:.62rem; }
-    .vk-space { min-width:48px; }
-    .card { padding:12px; }
-    .share-btn { padding:5px 8px; font-size:.71rem; }
-    .faq-q { padding:11px 12px; font-size:.83rem; }
-    .kb-toggle { font-size:.67rem; padding:3px 7px; }
-  }
+  .howto-copy-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:2px 8px; font-size:.73rem; color:var(--faint); cursor:pointer; transition:all .2s; flex-shrink:0; }
+  .howto-copy-btn:hover { border-color:var(--primary); color:var(--primary); background:var(--primary-bg); }
+  @media(max-width:600px) { .howto-ru { text-align:left; word-break:break-word; } }
   </style>
+
+  <!-- Tailwind CSS -->
+  <script>tailwind.config = { darkMode: ['selector', '[data-theme="dark"]'] }</script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body data-theme="light">
 <!-- Google Tag Manager (noscript) -->
@@ -443,75 +243,81 @@
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<!-- ═══ TOP AD 728×90 ═══ -->
-<div class="top-ad">
-  <div class="ad-block">📢 &nbsp; AdSense / Yandex — 728 × 90 Leaderboard Banner</div>
+<!-- TOP AD -->
+<div class="flex items-center justify-center px-4 py-2.5" style="background:var(--surface);border-bottom:1px solid var(--border)">
+  <div class="flex items-center justify-center gap-2 rounded-xl w-full max-w-2xl h-20 text-xs font-semibold tracking-wide" style="border:2px dashed var(--border);color:var(--xfaint);background:var(--bg)">📢 &nbsp; AdSense / Yandex — 728 × 90 Leaderboard Banner</div>
 </div>
 
-<div class="page-wrap">
+<!-- PAGE WRAPPER -->
+<div class="max-w-[1320px] mx-auto px-3 grid grid-cols-1 lg:grid-cols-[160px_1fr_160px] gap-5 items-start">
 
   <!-- LEFT AD -->
-  <div class="ad-side">
-    <div class="ad-block">
-      <span style="font-size:1.8rem;opacity:.4">📢</span>
-      <span style="text-transform:uppercase;letter-spacing:1px">Ad</span>
+  <div class="hidden lg:block sticky top-5 w-40 mt-6">
+    <div class="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl w-40 min-h-[600px] text-xs font-semibold tracking-wide" style="border:2px dashed var(--border);color:var(--xfaint);background:var(--bg)">
+      <span class="text-3xl opacity-40">📢</span>
+      <span class="uppercase tracking-wider">Ad</span>
       <span>160 × 600</span>
-      <span>AdSense / Yandex</span>
+      <span>AdSense</span>
     </div>
   </div>
 
   <!-- MAIN APP -->
-  <div class="app">
+  <div class="py-5 pb-10 min-w-0">
 
-    <header>
-      <h1>🇬🇧 ↔ 🇷🇺 Best AI English to Russian Translator</h1>
-      <p id="subheading">✨ Smart English to Russian and Russian to English translations with gender context, formality levels &amp; learning breakdowns ✨</p>
-      <div class="header-tools">
-        <a href="/pdf/" class="tool-btn" style="text-decoration:none">📄 PDF Translator</a>
-        <button class="tool-btn" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+    <!-- HEADER -->
+    <header class="text-center pt-4 pb-5 relative">
+      <h1 class="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight" style="color:var(--primary)">🇬🇧 ↔ 🇷🇺 Best AI English to Russian Translator</h1>
+      <p id="subheading" class="mt-2 text-sm max-w-xl mx-auto leading-relaxed" style="color:var(--muted)">✨ Smart English to Russian and Russian to English translations with gender context, formality levels &amp; learning breakdowns ✨</p>
+      <!-- Header tools: stacked on mobile, absolute top-right on sm+ -->
+      <div class="flex gap-2 justify-center mt-3 flex-wrap sm:absolute sm:top-4 sm:right-0 sm:mt-0">
+        <a href="/pdf/" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">📄 PDF Translator</a>
+        <button id="themeBtn" onclick="toggleTheme()" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium transition cursor-pointer" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🌙 Dark</button>
       </div>
     </header>
 
-    <!-- ═══ INPUT CARD ═══ -->
-    <div class="card">
+    <!-- INPUT CARD -->
+    <div class="rounded-2xl p-5 sm:p-6 mb-4 shadow" style="background:var(--surface);border:1px solid var(--border)">
 
-      <div class="direction-row">
-        <div class="lang-pill active-lang" id="srcPill">🇬🇧 English</div>
-        <button class="swap-btn" onclick="swapDirection()" title="Swap">⇄</button>
-        <div class="lang-pill" id="tgtPill">🇷🇺 Russian</div>
-        <div class="detect-pill" id="detectPill">🔍 <span id="detectText">Auto-detected</span></div>
+      <!-- Direction Row -->
+      <div class="flex items-center justify-center gap-3 mb-5 flex-wrap">
+        <div class="lang-pill flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold min-w-[135px] justify-center border-2 transition active-lang" id="srcPill" style="background:var(--bg);border-color:var(--border);color:var(--muted)">🇬🇧 English</div>
+        <button class="swap-btn rounded-full w-11 h-11 text-xl cursor-pointer text-white flex-shrink-0 border-none transition-transform duration-300" onclick="swapDirection()" title="Swap" style="background:var(--primary);box-shadow:0 4px 14px var(--shadow2)">⇄</button>
+        <div class="lang-pill flex items-center gap-2 rounded-full px-5 py-2.5 text-base font-semibold min-w-[135px] justify-center border-2 transition" id="tgtPill" style="background:var(--bg);border-color:var(--border);color:var(--muted)">🇷🇺 Russian</div>
+        <div class="detect-pill items-center gap-1 rounded-full px-3 py-1 text-xs font-bold" id="detectPill" style="background:var(--green-bg);border:1px solid var(--green);color:var(--green)">🔍 <span id="detectText">Auto-detected</span></div>
       </div>
 
-      <div class="gender-row">
-        <div class="gender-box">
-          <label id="speakerLabel">👤 I am speaking as...</label>
-          <div class="gender-btns">
-            <button class="g-btn on" id="sp-m" onclick="setGender('speaker','male')"><span id="mL1">👨 Male</span></button>
-            <button class="g-btn"    id="sp-f" onclick="setGender('speaker','female')"><span id="fL1">👩 Female</span></button>
+      <!-- Gender Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
+        <div>
+          <label id="speakerLabel" class="block text-xs uppercase tracking-widest mb-1.5 font-semibold" style="color:var(--faint)">👤 I am speaking as...</label>
+          <div class="flex gap-2">
+            <button class="g-btn on flex-1 py-2 px-2 border-2 rounded-xl text-sm transition text-center font-medium cursor-pointer" id="sp-m" onclick="setGender('speaker','male')" style="background:var(--bg);border-color:var(--border);color:var(--faint)"><span id="mL1">👨 Male</span></button>
+            <button class="g-btn flex-1 py-2 px-2 border-2 rounded-xl text-sm transition text-center font-medium cursor-pointer" id="sp-f" onclick="setGender('speaker','female')" style="background:var(--bg);border-color:var(--border);color:var(--faint)"><span id="fL1">👩 Female</span></button>
           </div>
         </div>
-        <div class="gender-box">
-          <label id="listenerLabel">🗣️ I am talking to...</label>
-          <div class="gender-btns">
-            <button class="g-btn on" id="ls-m" onclick="setGender('listener','male')"><span id="mL2">👨 Male</span></button>
-            <button class="g-btn"    id="ls-f" onclick="setGender('listener','female')"><span id="fL2">👩 Female</span></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="input-wrap">
-        <textarea id="inputText" placeholder="✍️  Type or paste your text here..." oninput="onInput()"></textarea>
-        <div class="input-footer">
-          <div class="char-count"><span id="charNum">0</span> <span id="charsLabel">characters</span></div>
-          <div class="kb-buttons">
-            <button class="kb-toggle" id="kbToggle" onclick="toggleKB()">⌨️ RU keyboard</button>
-            <button class="kb-toggle" id="enKbToggle" onclick="toggleENKB()">⌨️ EN keyboard</button>
+        <div>
+          <label id="listenerLabel" class="block text-xs uppercase tracking-widest mb-1.5 font-semibold" style="color:var(--faint)">🗣️ I am talking to...</label>
+          <div class="flex gap-2">
+            <button class="g-btn on flex-1 py-2 px-2 border-2 rounded-xl text-sm transition text-center font-medium cursor-pointer" id="ls-m" onclick="setGender('listener','male')" style="background:var(--bg);border-color:var(--border);color:var(--faint)"><span id="mL2">👨 Male</span></button>
+            <button class="g-btn flex-1 py-2 px-2 border-2 rounded-xl text-sm transition text-center font-medium cursor-pointer" id="ls-f" onclick="setGender('listener','female')" style="background:var(--bg);border-color:var(--border);color:var(--faint)"><span id="fL2">👩 Female</span></button>
           </div>
         </div>
       </div>
 
-      <!-- Virtual Russian Keyboard -->
-      <div class="vkeyboard" id="vkeyboard">
+      <!-- Textarea -->
+      <div class="relative">
+        <textarea id="inputText" class="w-full min-h-[120px] rounded-xl p-3.5 text-base resize-y outline-none transition focus:outline-none" placeholder="✍️  Type or paste your text here..." oninput="onInput()" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit;line-height:1.6"></textarea>
+        <div class="flex justify-between items-center mt-1.5 flex-wrap gap-1">
+          <div class="text-xs" style="color:var(--xfaint)"><span id="charNum">0</span> <span id="charsLabel">characters</span></div>
+          <div class="flex gap-1">
+            <button class="kb-toggle border rounded-lg px-2.5 py-1 text-xs cursor-pointer transition" id="kbToggle" onclick="toggleKB()" style="background:none;border-color:var(--border);color:var(--faint)">⌨️ RU keyboard</button>
+            <button class="kb-toggle border rounded-lg px-2.5 py-1 text-xs cursor-pointer transition" id="enKbToggle" onclick="toggleENKB()" style="background:none;border-color:var(--border);color:var(--faint)">⌨️ EN keyboard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Russian Keyboard -->
+      <div class="vkeyboard rounded-xl p-3 mt-2.5" id="vkeyboard" style="background:var(--surface2);border:1px solid var(--border)">
         <div class="vk-row">
           <button class="vk-key" onclick="vk('й')">й</button><button class="vk-key" onclick="vk('ц')">ц</button><button class="vk-key" onclick="vk('у')">у</button><button class="vk-key" onclick="vk('к')">к</button><button class="vk-key" onclick="vk('е')">е</button><button class="vk-key" onclick="vk('н')">н</button><button class="vk-key" onclick="vk('г')">г</button><button class="vk-key" onclick="vk('ш')">ш</button><button class="vk-key" onclick="vk('щ')">щ</button><button class="vk-key" onclick="vk('з')">з</button><button class="vk-key" onclick="vk('х')">х</button><button class="vk-key" onclick="vk('ъ')">ъ</button>
         </div>
@@ -528,8 +334,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <!-- Virtual English Keyboard -->
-      <div class="vkeyboard" id="enkeyboard">
+      <!-- English Keyboard -->
+      <div class="vkeyboard rounded-xl p-3 mt-2.5" id="enkeyboard" style="background:var(--surface2);border:1px solid var(--border)">
         <div class="vk-row">
           <button class="vk-key" onclick="vk('q')">q</button><button class="vk-key" onclick="vk('w')">w</button><button class="vk-key" onclick="vk('e')">e</button><button class="vk-key" onclick="vk('r')">r</button><button class="vk-key" onclick="vk('t')">t</button><button class="vk-key" onclick="vk('y')">y</button><button class="vk-key" onclick="vk('u')">u</button><button class="vk-key" onclick="vk('i')">i</button><button class="vk-key" onclick="vk('o')">o</button><button class="vk-key" onclick="vk('p')">p</button>
         </div>
@@ -549,68 +355,69 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <button class="translate-btn" id="translateBtn" onclick="doTranslate()">
+      <button class="w-full py-4 border-none rounded-xl text-white text-base font-bold tracking-wide cursor-pointer mt-3 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" id="translateBtn" onclick="doTranslate()" style="background:var(--primary)">
         🔄 &nbsp;<span id="translateBtnText">Translate</span>
       </button>
-      <p class="hint">Press <kbd>Enter</kbd> to translate &nbsp;|&nbsp; <kbd>Shift+Enter</kbd> for new line</p>
+      <p class="text-center text-xs mt-1.5" style="color:var(--xfaint)">Press <kbd class="rounded px-1 py-0.5 text-xs" style="background:var(--primary-bg);border:1px solid var(--border);color:var(--primary)">Enter</kbd> to translate &nbsp;|&nbsp; <kbd class="rounded px-1 py-0.5 text-xs" style="background:var(--primary-bg);border:1px solid var(--border);color:var(--primary)">Shift+Enter</kbd> for new line</p>
 
-    </div>
+    </div><!-- /input card -->
 
     <!-- LOADING -->
-    <div class="loading" id="loading">
+    <div class="loading text-center py-7" id="loading" style="color:var(--faint)">
       <div class="spinner"></div>
-      <p style="margin-top:11px" id="loadingText">Translating… 🌐</p>
+      <p class="mt-3" id="loadingText">Translating… 🌐</p>
     </div>
 
-    <!-- ═══ RESULTS ═══ -->
+    <!-- RESULTS -->
     <div class="results" id="results">
 
       <div class="sec-header" id="resultsHeader">✨ Translations</div>
 
-      <div class="results-grid">
+      <!-- Results grid: 1-col mobile, 2-col sm+ -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <!-- FORMAL -->
-        <div class="result-card formal">
-          <div class="rc-head">
+        <div class="result-card formal rounded-2xl p-5 border-2 shadow">
+          <div class="flex items-center justify-between mb-2.5">
             <span class="rc-label" id="formalLabel">🎩 Formal</span>
-            <div class="rc-actions">
+            <div class="flex gap-0.5">
               <button class="iBtn" onclick="speakCard('formalText','formal')" title="Listen">🔊</button>
               <button class="iBtn" id="favFormal" onclick="toggleFav('formal')" title="Favourite">⭐</button>
               <button class="iBtn" onclick="copyCard('formalText')" title="Copy">📋</button>
             </div>
           </div>
-          <div class="rc-text" id="formalText"></div>
-          <div class="rc-translit" id="formalTranslit"></div>
-          <div class="rc-note" id="formalNote"></div>
+          <div class="text-base leading-7 min-h-[48px]" id="formalText" style="color:var(--text)"></div>
+          <div class="text-sm mt-1.5 italic" id="formalTranslit" style="color:var(--faint)"></div>
+          <div class="text-xs mt-1" id="formalNote" style="color:var(--xfaint)"></div>
         </div>
         <!-- CASUAL -->
-        <div class="result-card casual">
-          <div class="rc-head">
+        <div class="result-card casual rounded-2xl p-5 border-2 shadow">
+          <div class="flex items-center justify-between mb-2.5">
             <span class="rc-label" id="casualLabel">😊 Casual</span>
-            <div class="rc-actions">
+            <div class="flex gap-0.5">
               <button class="iBtn" onclick="speakCard('casualText','casual')" title="Listen">🔊</button>
               <button class="iBtn" id="favCasual" onclick="toggleFav('casual')" title="Favourite">⭐</button>
               <button class="iBtn" onclick="copyCard('casualText')" title="Copy">📋</button>
             </div>
           </div>
-          <div class="rc-text" id="casualText"></div>
-          <div class="rc-translit" id="casualTranslit"></div>
-          <div class="rc-note" id="casualNote"></div>
+          <div class="text-base leading-7 min-h-[48px]" id="casualText" style="color:var(--text)"></div>
+          <div class="text-sm mt-1.5 italic" id="casualTranslit" style="color:var(--faint)"></div>
+          <div class="text-xs mt-1" id="casualNote" style="color:var(--xfaint)"></div>
         </div>
       </div>
 
-      <!-- GRAMMAR TIP -->
-      <div class="grammar-tip" id="grammarTip"></div>
+      <!-- Grammar Tip -->
+      <div class="grammar-tip rounded-xl px-4 py-2.5 mb-3.5 text-sm leading-relaxed" id="grammarTip" style="background:var(--primary-bg);border:1px solid var(--border);color:var(--primary)"></div>
 
-      <!-- SHARE ROW -->
-      <div class="share-row">
-        <button class="share-btn" onclick="shareLink()">🔗 Copy link</button>
-        <button class="share-btn" onclick="shareFB()">📘 Facebook</button>
-        <button class="share-btn" onclick="shareWA()">💬 WhatsApp</button>
-        <button class="share-btn" onclick="shareLinkedIn()">💼 LinkedIn</button>
-        <button class="report-btn" onclick="reportBad()">🚩 Report bad translation</button>
+      <!-- Share Row -->
+      <div class="flex gap-2 flex-wrap mb-4 items-center">
+        <button class="flex items-center gap-1 px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="shareLink()" style="background:var(--surface);border-color:var(--border);color:var(--muted)">🔗 Copy link</button>
+        <button class="flex items-center gap-1 px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="shareFB()" style="background:var(--surface);border-color:var(--border);color:var(--muted)">📘 Facebook</button>
+        <button class="flex items-center gap-1 px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="shareWA()" style="background:var(--surface);border-color:var(--border);color:var(--muted)">💬 WhatsApp</button>
+        <button class="flex items-center gap-1 px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="shareLinkedIn()" style="background:var(--surface);border-color:var(--border);color:var(--muted)">💼 LinkedIn</button>
+        <button class="flex items-center gap-1 px-3.5 py-1.5 border rounded-full text-xs cursor-pointer transition w-full sm:w-auto justify-center" onclick="reportBad()" style="background:var(--surface);border-color:var(--border);color:var(--faint)">🚩 Report bad translation</button>
       </div>
 
-      <!-- WORD BREAKDOWN -->
+      <!-- Word Breakdown -->
       <div class="breakdown-card">
         <div class="breakdown-title" id="breakdownTitle">📚 Word &amp; Phrase Breakdown — for learning</div>
         <table>
@@ -630,103 +437,103 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     </div><!-- /results -->
 
-    <!-- ═══ TRANSLATION HISTORY ═══ -->
-    <div class="history-section" id="historySection" style="display:none">
-      <div class="sec-header" id="historyHeader">🕐 Recent Translations &nbsp;<button onclick="clearHistory()" style="background:none;border:none;color:var(--faint);font-size:.75rem;cursor:pointer;font-weight:600;">Clear all</button></div>
-      <div class="history-list" id="historyList"></div>
+    <!-- HISTORY -->
+    <div id="historySection" style="display:none" class="mb-4">
+      <div class="sec-header" id="historyHeader">🕐 Recent Translations &nbsp;<button onclick="clearHistory()" class="cursor-pointer text-xs font-semibold" style="background:none;border:none;color:var(--faint)">Clear all</button></div>
+      <div class="flex flex-col gap-2" id="historyList"></div>
     </div>
 
-    <!-- ═══ PHRASEBOOK ═══ -->
-    <div class="phrasebook-section">
+    <!-- PHRASEBOOK -->
+    <div class="mb-4">
       <div class="sec-header" id="phraseHeader">📖 Phrasebook</div>
-      <div class="tabs" id="phraseTabs">
-        <button class="tab-btn active" onclick="switchTab('business',this)">💼 Business</button>
-        <button class="tab-btn" onclick="switchTab('travel',this)">✈️ Travel</button>
-        <button class="tab-btn" onclick="switchTab('romance',this)">❤️ Romance</button>
-        <button class="tab-btn" onclick="switchTab('medical',this)">🏥 Medical</button>
-        <button class="tab-btn" onclick="switchTab('emergency',this)">🚨 Emergency</button>
+      <div class="flex gap-1.5 mb-3 flex-wrap" id="phraseTabs">
+        <button class="tab-btn px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium active" onclick="switchTab('business',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">💼 Business</button>
+        <button class="tab-btn px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('travel',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">✈️ Travel</button>
+        <button class="tab-btn px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('romance',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">❤️ Romance</button>
+        <button class="tab-btn px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('medical',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">🏥 Medical</button>
+        <button class="tab-btn px-3.5 py-1.5 border rounded-full text-sm cursor-pointer transition font-medium" onclick="switchTab('emergency',this)" style="background:var(--surface);border-color:var(--border);color:var(--muted)">🚨 Emergency</button>
       </div>
       <div id="phraseContent"></div>
     </div>
 
-    <!-- ═══ HOW TO SAY ═══ -->
-    <div class="howto-section">
+    <!-- HOW TO SAY -->
+    <div class="mb-4">
       <div class="sec-header" id="howtoHeader">🗣️ How to Say it in Russian — 50 Essential Phrases</div>
-      <input type="text" class="search-input" placeholder="🔍  Search phrases..." oninput="filterHowTo(this.value)" id="howtoSearch" />
-      <div class="howto-grid" id="howtoGrid"></div>
+      <input type="text" class="w-full px-4 py-2.5 rounded-xl mb-3 text-sm outline-none transition" placeholder="🔍  Search phrases..." oninput="filterHowTo(this.value)" id="howtoSearch" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5" id="howtoGrid"></div>
     </div>
 
-    <!-- ═══ FAQ ═══ -->
-    <div class="faq-section">
-      <div class="faq-main-title" id="faqTitle">❓ Frequently Asked Questions</div>
+    <!-- FAQ -->
+    <div class="my-6">
+      <div class="text-xl font-extrabold text-center mb-3.5" id="faqTitle" style="color:var(--primary)">❓ Frequently Asked Questions</div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🌍 How accurate is this English to Russian translator?</span><span class="faq-icon">+</span></button><div class="faq-a">This translator uses Google's translation engine to deliver high-quality, context-aware results. It handles everyday language, business phrases and conversational text very well. For specialised legal or medical content, professional review is recommended.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🌍 How accurate is this English to Russian translator?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">This translator uses Google's translation engine to deliver high-quality, context-aware results. It handles everyday language, business phrases and conversational text very well. For specialised legal or medical content, professional review is recommended.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🎩 What is the difference between formal and casual Russian?</span><span class="faq-icon">+</span></button><div class="faq-a">Formal Russian uses <strong>Вы</strong> (capitalised "you") when addressing someone with respect — in business, with strangers or elders. Casual Russian uses <strong>ты</strong> with friends and family. Choosing the wrong form can sound rude or overly stiff.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🎩 What is the difference between formal and casual Russian?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Formal Russian uses <strong>Вы</strong> (capitalised "you") when addressing someone with respect — in business, with strangers or elders. Casual Russian uses <strong>ты</strong> with friends and family. Choosing the wrong form can sound rude or overly stiff.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>👩 Why does gender matter in Russian translation?</span><span class="faq-icon">+</span></button><div class="faq-a">Russian past-tense verbs must agree with the speaker's gender. "I went" is <strong>я пошёл</strong> (male) or <strong>я пошла</strong> (female). Selecting your gender ensures the translation is grammatically correct for you personally.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>👩 Why does gender matter in Russian translation?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Russian past-tense verbs must agree with the speaker's gender. "I went" is <strong>я пошёл</strong> (male) or <strong>я пошла</strong> (female). Selecting your gender ensures the translation is grammatically correct for you personally.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🔊 Can I hear the Russian pronunciation?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — click the 🔊 speaker button on any translation card to hear it spoken aloud using your browser's built-in text-to-speech engine. Works in Chrome, Edge, Firefox and Safari.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔊 Can I hear the Russian pronunciation?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — click the 🔊 speaker button on any translation card to hear it spoken aloud using your browser's built-in text-to-speech engine. Works in Chrome, Edge, Firefox and Safari.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🔤 What is transliteration and why is it useful?</span><span class="faq-icon">+</span></button><div class="faq-a">Transliteration converts Russian Cyrillic letters into Latin characters so you can sound out words without knowing the Russian alphabet. For example, "Привет" becomes "Privet". It is shown in italics below each translation.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔤 What is transliteration and why is it useful?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Transliteration converts Russian Cyrillic letters into Latin characters so you can sound out words without knowing the Russian alphabet. For example, "Привет" becomes "Privet". It is shown in italics below each translation.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>💼 Can I use this for business communications?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes. The <strong>Formal</strong> mode uses the polite Вы form, appropriate vocabulary and respectful phrasing for emails, letters and meetings. Always select Formal when writing to clients, managers or official contacts.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>💼 Can I use this for business communications?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes. The <strong>Formal</strong> mode uses the polite Вы form, appropriate vocabulary and respectful phrasing for emails, letters and meetings. Always select Formal when writing to clients, managers or official contacts.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>📚 What does the Word Breakdown section do?</span><span class="faq-icon">+</span></button><div class="faq-a">The Word &amp; Phrase Breakdown translates individual key words and common phrases separately, labelling each as a verb, noun, adjective or phrase. It is a powerful learning tool for anyone studying Russian or English.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>📚 What does the Word Breakdown section do?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">The Word &amp; Phrase Breakdown translates individual key words and common phrases separately, labelling each as a verb, noun, adjective or phrase. It is a powerful learning tool for anyone studying Russian or English.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🔄 Can I translate Russian back to English?</span><span class="faq-icon">+</span></button><div class="faq-a">Absolutely. Click the ⇄ swap button to switch from English→Russian to Russian→English. The entire interface — labels, buttons, breakdown tags — switches to Russian so you always work in your source language.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔄 Can I translate Russian back to English?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Absolutely. Click the ⇄ swap button to switch from English→Russian to Russian→English. The entire interface — labels, buttons, breakdown tags — switches to Russian so you always work in your source language.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>⌨️ What is the virtual Russian keyboard for?</span><span class="faq-icon">+</span></button><div class="faq-a">If you don't have a Cyrillic keyboard layout installed, the built-in virtual keyboard lets you type Russian characters directly by clicking. This is especially useful when translating Russian text back to English.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>⌨️ What is the virtual Russian keyboard for?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">If you don't have a Cyrillic keyboard layout installed, the built-in virtual keyboard lets you type Russian characters directly by clicking. This is especially useful when translating Russian text back to English.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>⚡ How do I translate without clicking the button?</span><span class="faq-icon">+</span></button><div class="faq-a">Press <strong>Enter</strong> after typing to translate instantly. Use <strong>Shift+Enter</strong> to add a new line. You can also use <strong>Ctrl+Enter</strong> from anywhere on the page.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>⚡ How do I translate without clicking the button?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Press <strong>Enter</strong> after typing to translate instantly. Use <strong>Shift+Enter</strong> to add a new line. You can also use <strong>Ctrl+Enter</strong> from anywhere on the page.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🕐 Does this save my translation history?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — your last 15 translations are saved automatically in your browser's local storage. Click any history item to restore it. Your data never leaves your device. Click "Clear all" to remove history anytime.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🕐 Does this save my translation history?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — your last 15 translations are saved automatically in your browser's local storage. Click any history item to restore it. Your data never leaves your device. Click "Clear all" to remove history anytime.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>⭐ How do favourites work?</span><span class="faq-icon">+</span></button><div class="faq-a">Click the ⭐ star button on any translation card to save it as a favourite. Favourites are stored in your browser and persist between sessions. Perfect for saving phrases you use regularly.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>⭐ How do favourites work?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Click the ⭐ star button on any translation card to save it as a favourite. Favourites are stored in your browser and persist between sessions. Perfect for saving phrases you use regularly.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🔗 Can I share a translation with someone?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — click "Copy link" to generate a shareable URL with your translation pre-loaded. Send it via WhatsApp, email or any messenger. You can also use the Facebook, WhatsApp or LinkedIn share buttons.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔗 Can I share a translation with someone?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — click "Copy link" to generate a shareable URL with your translation pre-loaded. Send it via WhatsApp, email or any messenger. You can also use the Facebook, WhatsApp or LinkedIn share buttons.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>📝 Is Russian grammar very different from English?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes, significantly. Russian has 6 grammatical cases, 3 genders, verb aspect (perfective/imperfective) and gender agreement in past tense. This is why context-aware, gender-specific translation matters so much.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>📝 Is Russian grammar very different from English?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes, significantly. Russian has 6 grammatical cases, 3 genders, verb aspect (perfective/imperfective) and gender agreement in past tense. This is why context-aware, gender-specific translation matters so much.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🗣️ Why select who I am talking to?</span><span class="faq-icon">+</span></button><div class="faq-a">Some Russian adjectives and terms of address change depending on the listener's gender. "Dear" is <strong>Дорогой</strong> for a male and <strong>Дорогая</strong> for a female. Selecting the listener's gender ensures these forms are correct.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🗣️ Why select who I am talking to?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Some Russian adjectives and terms of address change depending on the listener's gender. "Dear" is <strong>Дорогой</strong> for a male and <strong>Дорогая</strong> for a female. Selecting the listener's gender ensures these forms are correct.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🌙 Is there a dark mode?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — click the 🌙 Dark button in the top right corner to switch to dark mode. Your preference is saved and remembered between visits.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🌙 Is there a dark mode?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — click the 🌙 Dark button in the top right corner to switch to dark mode. Your preference is saved and remembered between visits.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>📖 What phrases are in the phrasebook?</span><span class="faq-icon">+</span></button><div class="faq-a">The phrasebook contains 50 expert-curated phrases across 5 categories: Business, Travel, Romance, Medical and Emergency. Click any phrase to instantly load it into the translator.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>📖 What phrases are in the phrasebook?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">The phrasebook contains 50 expert-curated phrases across 5 categories: Business, Travel, Romance, Medical and Emergency. Click any phrase to instantly load it into the translator.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🆓 Is this translator free to use?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — completely free, no signup, no usage limits. Developed by <strong>Mytheon Technologies</strong>, based in Almaty, Kazakhstan.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🆓 Is this translator free to use?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — completely free, no signup, no usage limits. Developed by <strong>Mytheon Technologies</strong>, based in Almaty, Kazakhstan.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🚩 What happens when I report a bad translation?</span><span class="faq-icon">+</span></button><div class="faq-a">Clicking "Report bad translation" logs the issue for our team to review. We continuously improve translation quality based on user feedback. Thank you for helping us build a better product.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🚩 What happens when I report a bad translation?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Clicking "Report bad translation" logs the issue for our team to review. We continuously improve translation quality based on user feedback. Thank you for helping us build a better product.</div></div>
 
-      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>🔍 Does it auto-detect the language?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes — when you paste or type text, the translator automatically detects whether it is Russian or English and adjusts the direction accordingly. A green "Auto-detected" badge appears to confirm the switch.</div></div>
+      <div class="rounded-xl mb-2 overflow-hidden shadow-sm" style="background:var(--surface);border:1px solid var(--border)"><button class="faq-q w-full text-left px-4 py-3.5 text-sm font-semibold flex justify-between items-center gap-3 cursor-pointer transition" onclick="toggleFaq(this)" style="background:none;border:none;color:var(--text)"><span>🔍 Does it auto-detect the language?</span><span class="faq-icon">+</span></button><div class="faq-a px-4 pb-3.5 pt-3 text-sm leading-relaxed" style="color:var(--muted);border-top:1px solid var(--border2)">Yes — when you paste or type text, the translator automatically detects whether it is Russian or English and adjusts the direction accordingly. A green "Auto-detected" badge appears to confirm the switch.</div></div>
 
     </div><!-- /faq -->
 
     <!-- BOTTOM AD -->
-    <div class="bottom-ad">
-      <div class="ad-block">📢 &nbsp; AdSense / Yandex — 728 × 90 Leaderboard Banner</div>
+    <div class="flex items-center justify-center py-3.5">
+      <div class="flex items-center justify-center gap-2 rounded-xl w-full max-w-2xl h-20 text-xs font-semibold tracking-wide" style="border:2px dashed var(--border);color:var(--xfaint);background:var(--bg)">📢 &nbsp; AdSense / Yandex — 728 × 90 Leaderboard Banner</div>
     </div>
 
-    <footer>
-      <div class="footer-brand">⚡ Powered by MYTHEON TECHNOLOGIES</div>
-      <div class="footer-address">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+    <footer class="text-center py-5 mt-2" style="border-top:1px solid var(--border)">
+      <div class="text-sm font-bold tracking-widest uppercase" style="color:var(--primary)">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+      <div class="text-xs mt-1" style="color:var(--faint)">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
     </footer>
 
   </div><!-- /app -->
 
   <!-- RIGHT AD -->
-  <div class="ad-side">
-    <div class="ad-block">
-      <span style="font-size:1.8rem;opacity:.4">📢</span>
-      <span style="text-transform:uppercase;letter-spacing:1px">Ad</span>
+  <div class="hidden lg:block sticky top-5 w-40 mt-6">
+    <div class="flex flex-col items-center justify-center gap-1.5 p-4 rounded-2xl w-40 min-h-[600px] text-xs font-semibold tracking-wide" style="border:2px dashed var(--border);color:var(--xfaint);background:var(--bg)">
+      <span class="text-3xl opacity-40">📢</span>
+      <span class="uppercase tracking-wider">Ad</span>
       <span>160 × 600</span>
-      <span>AdSense / Yandex</span>
+      <span>AdSense</span>
     </div>
   </div>
 
 </div><!-- /page-wrap -->
 
-<div id="toast"></div>
+<div id="toast" class="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-5 sm:w-auto text-sm text-white rounded-xl px-4 py-2.5 z-[9999] shadow-lg text-center sm:text-left" style="background:var(--primary)"></div>
 
 <script>
 /* ════════════════════════════════════════
@@ -794,20 +601,6 @@ const t = k => (LANG[direction][k] || LANG['en-ru'][k] || '');
    UPDATE UI TEXT
 ════════════════════════════════════════ */
 function updateUI() {
-  const ids = {
-    speakerLabel:['speakerLabel','textContent'],listenerLabel:['listenerLabel','textContent'],
-    male:['mL1','textContent'],female:['fL1','textContent'],
-    male:['mL2','textContent'],female:['fL2','textContent'],
-    charsLabel:['charsLabel','textContent'],translateBtn:['translateBtnText','textContent'],
-    loading:['loadingText','textContent'],resultsHeader:['resultsHeader','textContent'],
-    formalLabel:['formalLabel','textContent'],casualLabel:['casualLabel','textContent'],
-    breakdownTitle:['breakdownTitle','textContent'],
-    thType:['thType','textContent'],thOrig:['thOrig','textContent'],
-    thTrans:['thTrans','textContent'],thNotes:['thNotes','textContent'],
-    historyHeader:['historyHeader','textContent'],phraseHeader:['phraseHeader','textContent'],
-    howtoHeader:['howtoHeader','textContent'],faqTitle:['faqTitle','textContent'],
-    detectText:['detectText','textContent'],
-  };
   document.getElementById('speakerLabel').textContent  = t('speakerLabel');
   document.getElementById('listenerLabel').textContent = t('listenerLabel');
   document.getElementById('mL1').textContent = t('male');
@@ -914,7 +707,6 @@ function toggleKB() {
   const btn = document.getElementById('kbToggle');
   const enKb = document.getElementById('enkeyboard');
   const enBtn = document.getElementById('enKbToggle');
-  // close english if open
   enKb.classList.remove('show'); enBtn.classList.remove('on');
   kb.classList.toggle('show');
   btn.classList.toggle('on');
@@ -924,7 +716,6 @@ function toggleENKB() {
   const enBtn = document.getElementById('enKbToggle');
   const ruKb = document.getElementById('vkeyboard');
   const ruBtn = document.getElementById('kbToggle');
-  // close russian if open
   ruKb.classList.remove('show'); ruBtn.classList.remove('on');
   enKb.classList.toggle('show');
   enBtn.classList.toggle('on');
@@ -979,7 +770,6 @@ function speakCard(id, type) {
   showToast('🔊 Speaking…');
 }
 function toggleFav(type) {
-  const key = 'fav_' + type;
   const btn = document.getElementById('fav' + (type === 'formal' ? 'Formal' : 'Casual'));
   const txt = document.getElementById(type + 'Text').textContent;
   const stored = JSON.parse(localStorage.getItem('favourites') || '[]');
@@ -1126,7 +916,6 @@ async function doTranslate() {
     document.getElementById('formalText').textContent = formal;
     document.getElementById('casualText').textContent = casual;
 
-    // Reset fav buttons
     document.getElementById('favFormal').classList.remove('starred');
     document.getElementById('favCasual').classList.remove('starred');
 
