@@ -11,10 +11,6 @@
   })(window,document,'script','dataLayer','GTM-NRZ5N9GV');</script>
   <!-- End Google Tag Manager -->
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5220550180754289"
-       crossorigin="anonymous"></script>
-
   <title>PDF & Word Translator — English ↔ Russian | Mytheon Technologies</title>
   <meta name="description" content="Upload a PDF or Word document in English or Russian and download the translation instantly. Free online document translator — no signup, no limits."/>
   <link rel="canonical" href="https://englishtorussian.ai/pdf/"/>
@@ -74,17 +70,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="max-w-2xl mx-auto px-4 pb-16">
 
   <!-- ═══ TOP BAR ═══ -->
-  <div class="flex items-center justify-between pt-4 pb-0 gap-2 flex-wrap">
+  <div class="flex items-center justify-between pt-5 pb-0 gap-2 flex-wrap">
     <a href="/"
        class="flex items-center gap-1.5 text-sm font-semibold text-blue-600 dark:text-blue-400
-              border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1.5
+              border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2
               bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700
               hover:border-blue-400 transition-all no-underline">
       ← Text Translator
     </a>
     <button id="themeBtn" onclick="toggleTheme()"
             class="flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400
-                   border border-slate-200 dark:border-slate-700 rounded-full px-3 py-1.5
+                   border border-slate-200 dark:border-slate-700 rounded-full px-4 py-2
                    bg-white dark:bg-slate-800 hover:bg-blue-50 hover:border-blue-400
                    hover:text-blue-600 transition-all cursor-pointer">
       🌙 Dark
@@ -105,20 +101,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="flex items-center justify-center gap-3 mb-6 flex-wrap">
     <div id="srcPill" onclick="swapDir()"
          class="active-lang flex items-center justify-center gap-2 border-2 font-semibold
-                rounded-full px-5 py-2.5 text-sm cursor-pointer flex-1 max-w-[155px]
+                rounded-full px-6 py-3 text-base cursor-pointer flex-1 max-w-[165px]
                 transition-all select-none">
       🇬🇧 English
     </div>
     <button onclick="swapDir()"
             class="swap-btn bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600
-                   text-white rounded-full w-11 h-11 flex items-center justify-center
-                   text-lg flex-shrink-0 shadow-md cursor-pointer border-none">
+                   text-white rounded-full w-12 h-12 flex items-center justify-center
+                   text-xl flex-shrink-0 shadow-md cursor-pointer border-none">
       ⇄
     </button>
     <div id="tgtPill" onclick="swapDir()"
          class="flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-600
                 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-semibold
-                rounded-full px-5 py-2.5 text-sm cursor-pointer flex-1 max-w-[155px]
+                rounded-full px-6 py-3 text-base cursor-pointer flex-1 max-w-[165px]
                 transition-all select-none">
       🇷🇺 Russian
     </div>
@@ -280,7 +276,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button onclick="downloadPDF()"
               class="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700
                      dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-bold rounded-xl
-                     py-3.5 px-6 text-sm shadow hover:-translate-y-0.5 transition-all
+                     py-4 px-6 text-base shadow hover:-translate-y-0.5 transition-all
                      border-none cursor-pointer">
         ⬇️ Download as PDF
       </button>
@@ -288,14 +284,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               class="flex items-center justify-center gap-2 bg-white dark:bg-slate-800
                      hover:bg-blue-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300
                      font-semibold border border-slate-200 dark:border-slate-600
-                     hover:border-blue-400 rounded-xl py-3 px-5 text-sm transition-all cursor-pointer">
+                     hover:border-blue-400 rounded-xl py-4 px-5 text-base transition-all cursor-pointer">
         📋 Copy translation
       </button>
       <button onclick="resetAll()"
               class="flex items-center justify-center gap-2 bg-white dark:bg-slate-800
                      hover:bg-red-50 dark:hover:bg-slate-700 text-slate-400 dark:text-slate-500
                      hover:text-red-500 font-semibold border border-slate-200 dark:border-slate-600
-                     hover:border-red-300 rounded-xl py-3 px-5 text-sm transition-all cursor-pointer">
+                     hover:border-red-300 rounded-xl py-4 px-5 text-base transition-all cursor-pointer">
         🔄 Translate another
       </button>
     </div>
