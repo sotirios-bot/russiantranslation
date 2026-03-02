@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Аудирование — практика английского языка | englishtorussian.ai</title>
+  <meta name="description" content="Улучшайте навыки аудирования на английском языке с текстами и вопросами на понимание. Уровни A1–B1." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://englishtorussian.ai/ru/listening/" />
+  <link rel="alternate" hreflang="en" href="https://englishtorussian.ai/listening/" />
+  <link rel="alternate" hreflang="ru" href="https://englishtorussian.ai/ru/listening/" />
+  <link rel="alternate" hreflang="x-default" href="https://englishtorussian.ai/listening/" />
+  <meta property="og:title" content="Аудирование — практика английского языка" />
+  <meta property="og:description" content="Слушайте английские тексты и отвечайте на вопросы. Уровни A1–B1." />
+  <meta property="og:url" content="https://englishtorussian.ai/ru/listening/" />
+  <meta property="og:type" content="website" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  :root {
+    --bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;
+    --text:#1a1a2e;--muted:#5570a0;--faint:#9aadcc;--xfaint:#b0bcd8;
+    --primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;
+    --orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;
+    --shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);
+  }
+  [data-theme="dark"] {
+    --bg:#080c18;--surface:#0f1520;--surface2:#0a1020;--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.05);
+    --text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;--xfaint:#4b5563;
+    --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--primary-dk:#7599ff;
+    --orange:#fb923c;--orange-bg:rgba(251,146,60,0.08);--green:#34d399;--green-bg:rgba(52,211,153,0.08);
+    --shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
+  a{color:var(--primary);}
+  .t-pill{background:var(--bg);border:2px solid var(--border);color:var(--faint);border-radius:10px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
+  .t-pill.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .t-pill:hover{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .opt-btn{width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--border);background:var(--bg);color:var(--text);font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit;}
+  .opt-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-bg);color:var(--primary);}
+  .opt-btn.correct{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;}
+  .opt-btn.wrong{border-color:#ef4444!important;background:rgba(239,68,68,.08)!important;color:#ef4444!important;}
+  .opt-btn:disabled{cursor:default;opacity:.85;}
+  @keyframes ls-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.7;transform:scale(1.08)}}
+  .ls-playing{animation:ls-pulse .9s ease-in-out infinite;}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:50px;font-size:.85rem;font-weight:700;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  </style>
+</head>
+<body data-theme="light">
+<div id="toast"></div>
+<div class="max-w-2xl mx-auto px-4">
+
+  <!-- HEADER -->
+  <header class="text-center pt-6 pb-4">
+    <div class="flex gap-2 justify-center mb-4 flex-wrap">
+      <a href="/ru/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">← Переводчик</a>
+      <a href="/ru/flip-card/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🃏 Карточки</a>
+      <a href="/ru/gap-fill/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">📝 Пропуски</a>
+      <a href="/listening/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🇬🇧 EN</a>
+      <button id="themeBtn" onclick="toggleTheme()" class="px-4 py-2 rounded-full text-sm font-medium transition cursor-pointer" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🌙 Тёмная</button>
+    </div>
+    <h1 class="text-2xl font-black tracking-tight mb-1" style="color:var(--text)">🎧 Аудирование</h1>
+    <p class="text-sm" style="color:var(--muted)">Слушайте тексты на английском и отвечайте на вопросы</p>
+  </header>
+
+  <!-- LISTENING TOOL -->
+  <div class="mb-8">
+    <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+      <div id="lsSetup">
+        <p class="text-xs mb-4" style="color:var(--muted)">Прослушайте текст и ответьте на вопросы. Используется синтез речи браузера.</p>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Уровень</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setLsPill('level','A1',this)">A1 Beginner</button>
+            <button class="t-pill" onclick="setLsPill('level','A2',this)">A2 Elementary</button>
+            <button class="t-pill" onclick="setLsPill('level','B1',this)">B1 Intermediate</button>
+          </div>
+        </div>
+        <div class="mb-5">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Длина текста</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setLsPill('length','short',this)">⚡ Короткий</button>
+            <button class="t-pill" onclick="setLsPill('length','medium',this)">📄 Средний</button>
+            <button class="t-pill" onclick="setLsPill('length','long',this)">📜 Длинный</button>
+          </div>
+        </div>
+        <button onclick="generateListening()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🎧 Создать и слушать</button>
+      </div>
+      <div id="lsPlayer" style="display:none">
+        <div class="flex items-center gap-3 mb-4 p-4 rounded-xl" style="background:var(--bg);border:1px solid var(--border)">
+          <button id="lsPlayBtn" onclick="toggleListen()" class="w-12 h-12 rounded-full text-white border-none cursor-pointer flex-shrink-0 text-xl font-bold" style="background:var(--primary)">▶</button>
+          <div style="flex:1">
+            <div class="text-sm font-bold" id="lsTitle" style="color:var(--text)">Упражнение на аудирование</div>
+            <div class="text-xs mt-0.5" id="lsSubtitle" style="color:var(--faint)"></div>
+          </div>
+          <button onclick="toggleLsText()" class="text-xs px-3 py-1.5 rounded-lg cursor-pointer border" style="background:var(--surface);border-color:var(--border);color:var(--muted)">📄 Текст</button>
+        </div>
+        <div id="lsText" style="display:none;margin-bottom:16px;padding:14px;border-radius:12px;font-size:.88rem;line-height:1.75;color:var(--text);background:var(--bg);border:1px solid var(--border)"></div>
+        <div class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--faint)">Вопросы на понимание</div>
+        <div id="lsQList" class="flex flex-col gap-4"></div>
+        <button onclick="checkListening()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm mt-4" style="background:var(--green)">✅ Проверить ответы</button>
+        <div id="lsScore" style="display:none;text-align:center;margin-top:12px;padding:12px;border-radius:12px;font-weight:700;font-size:.95rem"></div>
+        <div class="flex gap-2 justify-center mt-3 flex-wrap">
+          <button onclick="generateListening()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 Новый текст</button>
+          <button onclick="resetLsSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Настройки</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-5 mt-2" style="border-top:1px solid var(--border)">
+    <div class="text-sm font-bold tracking-widest uppercase" style="color:var(--primary)">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+    <div class="text-xs mt-1" style="color:var(--faint)">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+    <div class="text-sm mt-3" style="color:var(--muted)">Этот проект посвящён казахской принцессе, которая украла моё сердце ❤️</div>
+    <div class="text-sm font-semibold mt-1" style="color:#e53e3e">Зайка, ты лучшая! ⭐✨</div>
+  </footer>
+
+</div>
+<script>
+let direction = 'ru-en';
+
+function toggleTheme() {
+  const isDark = document.body.dataset.theme === 'dark';
+  document.body.dataset.theme = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', document.body.dataset.theme);
+  document.getElementById('themeBtn').textContent = isDark ? '🌙 Тёмная' : '☀️ Светлая';
+}
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.body.dataset.theme = saved;
+  const isDark = document.body.dataset.theme === 'dark';
+  document.getElementById('themeBtn').textContent = isDark ? '☀️ Светлая' : '🌙 Тёмная';
+}
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+const LISTEN_DATA = {
+  A1:{
+    short:{
+      ru:'Это Анна. Она живёт в Москве. У неё есть кошка. Её зовут Мурка. Каждое утро Анна пьёт кофе и читает книгу. Она любит гулять в парке.',
+      en:'This is Anna. She lives in Moscow. She has a cat. Its name is Murka. Every morning Anna drinks coffee and reads a book. She loves walking in the park.',
+      qs:[{q:'Where does Anna live?',opts:['Moscow','London','Paris','Berlin'],c:0},
+          {q:'What does Anna have?',opts:['A dog','A cat','A rabbit','A bird'],c:1},
+          {q:'What does Anna love doing?',opts:['Swimming','Cooking','Walking in the park','Watching TV'],c:2}]},
+    medium:{
+      ru:'Привет! Меня зовут Дмитрий. Мне 25 лет. Я живу в Санкт-Петербурге. Я работаю программистом. Каждый день я езжу на работу на метро. Вечером я занимаюсь спортом. В выходные я люблю ходить в кино или встречаться с друзьями.',
+      en:'Hi! My name is Dmitry. I am 25 years old. I live in Saint Petersburg. I work as a programmer. Every day I go to work by metro. In the evening I do sport. At weekends I like going to the cinema or meeting friends.',
+      qs:[{q:'How old is Dmitry?',opts:['20','25','30','35'],c:1},
+          {q:'What is Dmitry\'s job?',opts:['Doctor','Teacher','Programmer','Driver'],c:2},
+          {q:'How does Dmitry travel to work?',opts:['By car','By bus','By metro','On foot'],c:2},
+          {q:'What does Dmitry do at weekends?',opts:['Works extra','Sleeps all day','Cinema or friends','Travels abroad'],c:2}]},
+    long:{
+      ru:'Добрый день! Меня зовут Мария. Мне 32 года. Я живу недалеко от Москвы. По профессии я учитель английского языка. Я работаю в школе уже восемь лет. Мне очень нравится моя работа. Каждое утро я встаю в семь часов и готовлю завтрак для своей семьи. У меня есть муж и двое детей — сын и дочь. В свободное время я люблю читать книги и заниматься йогой. Летом мы всей семьёй едем на дачу.',
+      en:'Good afternoon! My name is Maria. I am 32 years old. I live near Moscow. My profession is English teacher. I have been working at a school for eight years. I really like my job. Every morning I wake up at seven and cook breakfast for my family. I have a husband and two children — a son and a daughter. In my free time I love reading and doing yoga. In summer our whole family goes to the dacha.',
+      qs:[{q:'What is Maria\'s job?',opts:['Doctor','English teacher','Programmer','Chef'],c:1},
+          {q:'How many years has Maria worked at school?',opts:['Three','Five','Eight','Ten'],c:2},
+          {q:'What time does Maria wake up?',opts:['Six','Seven','Eight','Nine'],c:1},
+          {q:'How many children does Maria have?',opts:['One','Two','Three','Four'],c:1},
+          {q:'What does Maria do in summer?',opts:['Travels abroad','Goes to the dacha','Stays in the city','Visits friends'],c:1}]}
+  },
+  A2:{
+    short:{
+      ru:'Вчера я ходил в ресторан с коллегами. Мы заказали много вкусных блюд. Я взял суп и стейк. На десерт мы ели шоколадный торт. Счёт разделили поровну. Вечер прошёл отлично!',
+      en:'Yesterday I went to a restaurant with my colleagues. We ordered lots of delicious dishes. I had soup and steak. For dessert we ate chocolate cake. We split the bill equally. It was a great evening!',
+      qs:[{q:'Who did the speaker go to the restaurant with?',opts:['Friends','Family','Colleagues','Neighbours'],c:2},
+          {q:'What did the speaker have for dessert?',opts:['Ice cream','Fruit','Chocolate cake','Nothing'],c:2},
+          {q:'How did they pay?',opts:['One person paid','Split equally','Boss paid','Did not pay'],c:1}]},
+    medium:{
+      ru:'На прошлой неделе я начал изучать русский язык. Каждый день я занимаюсь по два часа. Сначала это было очень сложно, потому что русский алфавит сильно отличается от латинского. Но теперь я уже могу читать простые слова. Мой учитель говорит, что у меня хорошее произношение. Моя цель — говорить по-русски свободно через год.',
+      en:'Last week I started learning Russian. Every day I study for two hours. At first it was very difficult because the Russian alphabet is so different from the Latin one. But now I can already read simple words. My teacher says I have good pronunciation. My goal is to speak Russian fluently in a year.',
+      qs:[{q:'How long does the speaker study each day?',opts:['One hour','Two hours','Three hours','Four hours'],c:1},
+          {q:'What was difficult at first?',opts:['Grammar','The alphabet','Pronunciation','Writing'],c:1},
+          {q:'What does the teacher say?',opts:['Study more','Good pronunciation','Too slow','Wrong method'],c:1},
+          {q:'What is the speaker\'s goal?',opts:['Visit Russia','Teach Russian','Speak fluently in a year','Read literature'],c:2}]},
+    long:{
+      ru:'Сегодня я хочу рассказать о поездке в Санкт-Петербург. Я поехал туда с женой. Мы провели там четыре дня. В первый день мы ходили в Эрмитаж — один из самых знаменитых музеев мира. Во второй день мы гуляли по Невскому проспекту. На третий день мы поехали в Петергоф — там удивительные фонтаны. В последний день мы купили сувениры и поехали домой. Это было незабываемое путешествие!',
+      en:'Today I want to tell you about my trip to Saint Petersburg. I went there with my wife. We spent four days there. On the first day we visited the Hermitage — one of the most famous museums in the world. On the second day we walked along Nevsky Prospect. On the third day we went to Peterhof — there are amazing fountains there. On the last day we bought souvenirs and went home. It was an unforgettable trip!',
+      qs:[{q:'How many days did they spend in Saint Petersburg?',opts:['Three','Four','Five','A week'],c:1},
+          {q:'What did they do on the first day?',opts:['Walk Nevsky','Visit the Hermitage','Go to Peterhof','Shop for souvenirs'],c:1},
+          {q:'What is special about Peterhof?',opts:['Paintings','Fountains','Palace rooms','Market'],c:1},
+          {q:'What did they do last?',opts:['Museum visit','Boat trip','Bought souvenirs and went home','Had a party'],c:2}]}
+  },
+  B1:{
+    short:{
+      ru:'В последние годы всё больше людей предпочитают работать удалённо. Это имеет плюсы и минусы. С одной стороны, экономится время на дорогу и можно работать из любой точки мира. С другой стороны, дома бывает сложно сосредоточиться.',
+      en:'In recent years more and more people prefer to work remotely. This has advantages and disadvantages. On one hand, it saves commute time and you can work from anywhere in the world. On the other hand, it can be hard to concentrate at home.',
+      qs:[{q:'What is the topic?',opts:['New technology','Remote work','Office culture','Transport'],c:1},
+          {q:'What is an advantage?',opts:['Better pay','Saving commute time','More colleagues','Bigger office'],c:1},
+          {q:'What is a disadvantage?',opts:['Longer hours','Lower pay','Difficulty concentrating','Bad internet'],c:2}]},
+    medium:{
+      ru:'Исследования показывают, что чтение книг полезно для здоровья. Во-первых, оно снижает уровень стресса — уже шесть минут чтения помогают расслабиться. Во-вторых, чтение улучшает память и концентрацию. В-третьих, книги расширяют словарный запас. Эксперты рекомендуют читать хотя бы тридцать минут в день. Причём неважно — на бумаге или с экрана.',
+      en:'Research shows that reading books is beneficial for health. Firstly, it reduces stress — just six minutes of reading helps you relax. Secondly, reading improves memory and concentration. Thirdly, books expand vocabulary. Experts recommend reading at least thirty minutes a day. It does not matter whether you read on paper or on a screen.',
+      qs:[{q:'How many minutes of reading reduces stress?',opts:['Three','Six','Ten','Twenty'],c:1},
+          {q:'How long should you read daily?',opts:['Ten minutes','Twenty minutes','Thirty minutes','An hour'],c:2},
+          {q:'Does paper vs screen matter?',opts:['Yes, paper is better','Yes, screen is better','No, it doesn\'t matter','Text doesn\'t say'],c:2},
+          {q:'What is NOT mentioned as a benefit?',opts:['Reduces stress','Improves memory','Expands vocabulary','Improves fitness'],c:3}]},
+    long:{
+      ru:'Искусственный интеллект стремительно меняет нашу жизнь. Сегодня он используется в медицине для диагностики, в образовании для персонализации обучения, в транспорте для создания автономных автомобилей. Многие эксперты считают, что ИИ заменит часть профессий. Под угрозой — рутинные профессии. Однако творческие и социальные профессии останутся за человеком. Важно развивать навыки, которые сложно автоматизировать: критическое мышление и эмоциональный интеллект.',
+      en:'Artificial intelligence is rapidly changing our lives. Today it is used in medicine for diagnostics, in education for personalising learning, and in transport for autonomous vehicles. Many experts believe AI will replace some professions. Routine professions are most at risk. However, creative and social professions will remain human. It is important to develop skills that are hard to automate: critical thinking and emotional intelligence.',
+      qs:[{q:'Where is AI used for diagnostics?',opts:['Education','Medicine','Transport','Finance'],c:1},
+          {q:'Which professions are most at risk?',opts:['Creative','Social','Routine data-processing','Technical'],c:2},
+          {q:'What should people develop?',opts:['Coding','Critical thinking and emotional intelligence','Data skills','Foreign languages'],c:1},
+          {q:'What is the author\'s tone?',opts:['Very negative','Completely positive','Balanced','Indifferent'],c:2}]}
+  },
+};
+
+let lsState = {level:'A1',length:'short',utt:null,playing:false};
+function setLsPill(grp,val,btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  lsState[grp]=val;
+}
+function generateListening() {
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  if(!data){showToast('Текст не найден.');return;}
+  const isEnRu=direction==='en-ru';
+  const text=isEnRu?data.ru:data.en;
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  lsState.playing=false;
+  document.getElementById('lsSetup').style.display='none';
+  document.getElementById('lsPlayer').style.display='block';
+  document.getElementById('lsScore').style.display='none';
+  document.getElementById('lsText').style.display='none';
+  document.getElementById('lsText').textContent=text;
+  document.getElementById('lsTitle').textContent=`Уровень ${lsState.level} — ${lsState.length==='short'?'Короткий':lsState.length==='medium'?'Средний':'Длинный'} текст`;
+  document.getElementById('lsSubtitle').textContent=isEnRu?'Аудирование на русском':'Аудирование на английском';
+  document.getElementById('lsPlayBtn').textContent='▶';
+  const qList=document.getElementById('lsQList');
+  qList.innerHTML='';
+  data.qs.forEach((q,i)=>{
+    const div=document.createElement('div');
+    div.style='background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px';
+    div.innerHTML=`<div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:8px">${i+1}. ${q.q}</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">${q.opts.map((o,j)=>`<button class="opt-btn" data-lsq="${i}" data-correct="${q.c}" data-idx="${j}" onclick="selectLsAnswer(this)">${o}</button>`).join('')}</div>`;
+    qList.appendChild(div);
+  });
+  setTimeout(()=>startListen(text,isEnRu?'ru-RU':'en-US'),400);
+}
+function startListen(text,lang) {
+  if(!window.speechSynthesis){showToast('🔇 TTS недоступен в этом браузере');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang; u.rate=0.88;
+  u.onstart=()=>{lsState.playing=true;document.getElementById('lsPlayBtn').textContent='⏸';document.getElementById('lsPlayBtn').classList.add('ls-playing');};
+  u.onend=u.onerror=()=>{lsState.playing=false;document.getElementById('lsPlayBtn').textContent='▶';document.getElementById('lsPlayBtn').classList.remove('ls-playing');};
+  lsState.utt=u;
+  window.speechSynthesis.speak(u);
+}
+function toggleListen() {
+  if(!window.speechSynthesis){showToast('🔇 TTS недоступен');return;}
+  const isEnRu=direction==='en-ru';
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  const text=isEnRu?data.ru:data.en;
+  const lang=isEnRu?'ru-RU':'en-US';
+  if(lsState.playing){window.speechSynthesis.cancel();lsState.playing=false;document.getElementById('lsPlayBtn').textContent='▶';document.getElementById('lsPlayBtn').classList.remove('ls-playing');}
+  else{startListen(text,lang);}
+}
+function toggleLsText() {
+  const el=document.getElementById('lsText');
+  el.style.display=el.style.display==='none'?'block':'none';
+}
+function selectLsAnswer(btn) {
+  btn.closest('.grid').querySelectorAll('.opt-btn').forEach(b=>{
+    b.disabled=true;
+    if(parseInt(b.dataset.idx)===parseInt(b.dataset.correct)) b.classList.add('correct');
+  });
+  if(parseInt(btn.dataset.idx)!==parseInt(btn.dataset.correct)) btn.classList.add('wrong');
+}
+function checkListening() {
+  const data=(LISTEN_DATA[lsState.level]||LISTEN_DATA.A1)[lsState.length];
+  let score=0;
+  data.qs.forEach((q,i)=>{
+    const corrBtn=document.querySelector(`button[data-lsq="${i}"].correct`);
+    if(corrBtn) score++;
+  });
+  const n=data.qs.length, pct=Math.round(score/n*100);
+  const el=document.getElementById('lsScore');
+  el.style.display='block';
+  el.style.background=pct>=80?'var(--green-bg)':pct>=50?'var(--primary-bg)':'rgba(239,68,68,.08)';
+  el.style.color=pct>=80?'var(--green)':pct>=50?'var(--primary)':'#ef4444';
+  el.textContent=`${score} / ${n} правильно — ${pct}%  ${pct>=80?'🏆':pct>=50?'📚':'💪'}`;
+}
+function resetLsSetup() {
+  window.speechSynthesis&&window.speechSynthesis.cancel();
+  lsState.playing=false;
+  document.getElementById('lsPlayer').style.display='none';
+  document.getElementById('lsSetup').style.display='block';
+}
+
+window.addEventListener('load', loadTheme);
+</script>
+</body>
+</html>

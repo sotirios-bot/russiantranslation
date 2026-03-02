@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Заполнить пропуски — практика английской грамматики | englishtorussian.ai</title>
+  <meta name="description" content="Практикуйте английскую грамматику с упражнениями на заполнение пропусков. Глаголы, лексика и падежи. Уровни A1–B2." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://englishtorussian.ai/ru/gap-fill/" />
+  <link rel="alternate" hreflang="en" href="https://englishtorussian.ai/gap-fill/" />
+  <link rel="alternate" hreflang="ru" href="https://englishtorussian.ai/ru/gap-fill/" />
+  <link rel="alternate" hreflang="x-default" href="https://englishtorussian.ai/gap-fill/" />
+  <meta property="og:title" content="Заполнить пропуски — практика английской грамматики" />
+  <meta property="og:description" content="Упражнения на заполнение пропусков для английской грамматики. Уровни A1–B2." />
+  <meta property="og:url" content="https://englishtorussian.ai/ru/gap-fill/" />
+  <meta property="og:type" content="website" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  :root {
+    --bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;
+    --text:#1a1a2e;--muted:#5570a0;--faint:#9aadcc;--xfaint:#b0bcd8;
+    --primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;
+    --orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;
+    --shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);
+  }
+  [data-theme="dark"] {
+    --bg:#080c18;--surface:#0f1520;--surface2:#0a1020;--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.05);
+    --text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;--xfaint:#4b5563;
+    --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--primary-dk:#7599ff;
+    --orange:#fb923c;--orange-bg:rgba(251,146,60,0.08);--green:#34d399;--green-bg:rgba(52,211,153,0.08);
+    --shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
+  a{color:var(--primary);}
+  .t-pill{background:var(--bg);border:2px solid var(--border);color:var(--faint);border-radius:10px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
+  .t-pill.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .t-pill:hover{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .opt-btn{width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--border);background:var(--bg);color:var(--text);font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit;}
+  .opt-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-bg);color:var(--primary);}
+  .opt-btn.correct{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;}
+  .opt-btn.wrong{border-color:#ef4444!important;background:rgba(239,68,68,.08)!important;color:#ef4444!important;}
+  .opt-btn:disabled{cursor:default;opacity:.85;}
+  .gap-input{background:none;border:none;border-bottom:2px solid var(--primary);min-width:64px;text-align:center;font-size:.92rem;color:var(--primary);font-family:inherit;outline:none;padding:2px 6px;}
+  .gap-input.correct{border-color:var(--green);color:var(--green);}
+  .gap-input.wrong{border-color:#ef4444;color:#ef4444;}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:50px;font-size:.85rem;font-weight:700;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  </style>
+</head>
+<body data-theme="light">
+<div id="toast"></div>
+<div class="max-w-2xl mx-auto px-4">
+
+  <!-- HEADER -->
+  <header class="text-center pt-6 pb-4">
+    <div class="flex gap-2 justify-center mb-4 flex-wrap">
+      <a href="/ru/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">← Переводчик</a>
+      <a href="/ru/flip-card/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🃏 Карточки</a>
+      <a href="/ru/listening/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🎧 Аудирование</a>
+      <a href="/gap-fill/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🇬🇧 EN</a>
+      <button id="themeBtn" onclick="toggleTheme()" class="px-4 py-2 rounded-full text-sm font-medium transition cursor-pointer" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🌙 Тёмная</button>
+    </div>
+    <h1 class="text-2xl font-black tracking-tight mb-1" style="color:var(--text)">📝 Заполнить пропуски</h1>
+    <p class="text-sm" style="color:var(--muted)">Практикуйте английскую грамматику — глаголы, лексика и конструкции</p>
+  </header>
+
+  <!-- GAP-FILL TOOL -->
+  <div class="mb-8">
+    <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+      <div id="gfSetup">
+        <p class="text-xs mb-4" style="color:var(--muted)">Заполните пропуски в предложениях. Выберите вариант с множественным выбором или введите ответ.</p>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Уровень</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setGfPill('level','A1',this)">A1</button>
+            <button class="t-pill" onclick="setGfPill('level','A2',this)">A2</button>
+            <button class="t-pill" onclick="setGfPill('level','B1',this)">B1</button>
+            <button class="t-pill" onclick="setGfPill('level','B2',this)">B2</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Тема</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setGfPill('theme','verbs',this)">⚡ Глаголы</button>
+            <button class="t-pill" onclick="setGfPill('theme','vocabulary',this)">📖 Лексика</button>
+            <button class="t-pill" onclick="setGfPill('theme','cases',this)">🔤 Конструкции</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Количество пропусков</div>
+          <div class="flex gap-2 flex-wrap items-center">
+            <button class="t-pill on" onclick="setGfPill('count',5,this)">5</button>
+            <button class="t-pill" onclick="setGfPill('count',10,this)">10</button>
+            <button class="t-pill" onclick="setGfPill('count',20,this)">20</button>
+            <input type="number" id="gfCountCustom" placeholder="другое…" min="1" max="30" class="px-3 py-2 rounded-xl text-sm outline-none w-24" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" oninput="gfState.count=Math.min(30,parseInt(this.value)||5);document.querySelectorAll('#gfSetup .t-pill').forEach(b=>b.classList.remove('on'))" />
+          </div>
+        </div>
+        <div class="mb-5">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Режим ответа</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setGfPill('mode','mc',this)">☑️ Множественный выбор</button>
+            <button class="t-pill" onclick="setGfPill('mode','fill',this)">✏️ Ввод ответа</button>
+          </div>
+        </div>
+        <button onclick="generateGapFill()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">📝 Создать упражнение</button>
+      </div>
+      <div id="gfExercise" style="display:none">
+        <div id="gfQList" class="flex flex-col gap-4"></div>
+        <button onclick="checkGapFill()" id="gfCheckBtn" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm mt-4" style="background:var(--green)">✅ Проверить ответы</button>
+        <div id="gfScore" style="display:none;text-align:center;margin-top:12px;padding:12px;border-radius:12px;font-weight:700;font-size:.95rem"></div>
+        <div class="flex gap-2 justify-center mt-3 flex-wrap">
+          <button onclick="generateGapFill()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 Новое упражнение</button>
+          <button onclick="resetGfSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Настройки</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-5 mt-2" style="border-top:1px solid var(--border)">
+    <div class="text-sm font-bold tracking-widest uppercase" style="color:var(--primary)">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+    <div class="text-xs mt-1" style="color:var(--faint)">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+    <div class="text-sm mt-3" style="color:var(--muted)">Этот проект посвящён казахской принцессе, которая украла моё сердце ❤️</div>
+    <div class="text-sm font-semibold mt-1" style="color:#e53e3e">Зайка, ты лучшая! ⭐✨</div>
+  </footer>
+
+</div>
+<script>
+let direction = 'ru-en';
+
+function toggleTheme() {
+  const isDark = document.body.dataset.theme === 'dark';
+  document.body.dataset.theme = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', document.body.dataset.theme);
+  document.getElementById('themeBtn').textContent = isDark ? '🌙 Тёмная' : '☀️ Светлая';
+}
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.body.dataset.theme = saved;
+  const isDark = document.body.dataset.theme === 'dark';
+  document.getElementById('themeBtn').textContent = isDark ? '☀️ Светлая' : '🌙 Тёмная';
+}
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2000);
+}
+function shuffleArr(a) { return a.slice().sort(()=>Math.random()-.5); }
+
+const GF_DATA = {
+  verbs:[
+    {rus:'Я ___ кофе каждое утро.',ans:'пью',ane:'drink',tip:'to drink',eng:'I ___ coffee every morning.'},
+    {rus:'Она ___ на работу автобусом.',ans:'едет',ane:'goes',tip:'to go (transport)',eng:'She ___ to work by bus.'},
+    {rus:'Мы ___ в кино вчера.',ans:'ходили',ane:'went',tip:'to go (past)',eng:'We ___ to the cinema yesterday.'},
+    {rus:'Он ___ русский язык уже два года.',ans:'изучает',ane:'has been learning',tip:'to study/learn',eng:'He ___ Russian for two years.'},
+    {rus:'Дети ___ в парке каждый день.',ans:'играют',ane:'play',tip:'to play',eng:'Children ___ in the park every day.'},
+    {rus:'Я ___ домой в шесть часов.',ans:'прихожу',ane:'come',tip:'to come home',eng:'I ___ home at six o\'clock.'},
+    {rus:'Она ___ письмо своей подруге.',ans:'пишет',ane:'writes',tip:'to write',eng:'She ___ a letter to her friend.'},
+    {rus:'Мы ___ ужин вместе каждый вечер.',ans:'готовим',ane:'cook',tip:'to cook',eng:'We ___ dinner together every evening.'},
+    {rus:'Он ___ книгу уже три часа.',ans:'читает',ane:'has been reading',tip:'to read',eng:'He ___ the book for three hours.'},
+    {rus:'Они ___ в Москву завтра.',ans:'летят',ane:'are flying',tip:'to fly',eng:'They ___ to Moscow tomorrow.'},
+    {rus:'Мы ___ по-русски на уроке.',ans:'говорим',ane:'speak',tip:'to speak',eng:'We ___ Russian in class.'},
+    {rus:'Я ___ купить новый телефон.',ans:'хочу',ane:'want',tip:'to want',eng:'I ___ to buy a new phone.'},
+    {rus:'Он ___ открытку своей маме.',ans:'отправил',ane:'sent',tip:'to send (past)',eng:'He ___ a card to his mother.'},
+    {rus:'Она ___ новое платье на вечеринку.',ans:'надела',ane:'put on',tip:'to put on (past)',eng:'She ___ a new dress for the party.'},
+    {rus:'Я ___ за границей три года.',ans:'работал',ane:'worked',tip:'to work (past)',eng:'I ___ abroad for three years.'},
+  ],
+  vocabulary:[
+    {rus:'Мне нравится читать ___.',ans:'книги',ane:'books',tip:'books',eng:'I like reading ___.'},
+    {rus:'На столе стоит красивая ___.',ans:'ваза',ane:'vase',tip:'vase',eng:'There is a beautiful ___ on the table.'},
+    {rus:'У меня есть ___ кошка.',ans:'пушистая',ane:'fluffy',tip:'fluffy (adj)',eng:'I have a ___ cat.'},
+    {rus:'В нашем городе есть большой ___.',ans:'парк',ane:'park',tip:'park',eng:'There is a big ___ in our city.'},
+    {rus:'Она работает ___ в больнице.',ans:'врачом',ane:'doctor',tip:'doctor (instr.)',eng:'She works as a ___ in a hospital.'},
+    {rus:'Каждое лето мы едем на ___.',ans:'море',ane:'sea',tip:'sea',eng:'Every summer we go to the ___.'},
+    {rus:'Он живёт в маленькой ___.',ans:'квартире',ane:'apartment',tip:'apartment (prep.)',eng:'He lives in a small ___.'},
+    {rus:'На урок нужно принести ___.',ans:'тетрадь',ane:'notebook',tip:'notebook',eng:'You need to bring a ___ to class.'},
+    {rus:'Дети любят есть ___ на десерт.',ans:'мороженое',ane:'ice cream',tip:'ice cream',eng:'Children love eating ___ for dessert.'},
+    {rus:'Он купил красивый ___ на день рождения.',ans:'подарок',ane:'gift',tip:'gift',eng:'He bought a beautiful ___ for the birthday.'},
+    {rus:'Её ___ — самый добрый человек.',ans:'дедушка',ane:'grandfather',tip:'grandfather',eng:'Her ___ is the kindest person.'},
+    {rus:'Мы купили новую ___ для кухни.',ans:'мебель',ane:'furniture',tip:'furniture',eng:'We bought new ___ for the kitchen.'},
+    {rus:'Сегодня очень плохая ___.',ans:'погода',ane:'weather',tip:'weather',eng:'The ___ is very bad today.'},
+    {rus:'Мой ___ живёт в другом городе.',ans:'друг',ane:'friend',tip:'friend',eng:'My ___ lives in another city.'},
+    {rus:'В ресторане мы заказали вкусный ___.',ans:'суп',ane:'soup',tip:'soup',eng:'At the restaurant we ordered delicious ___.'},
+  ],
+  cases:[
+    {rus:'Я думаю о своём ___.',ans:'друге',ane:'friend',tip:'Prep. case',eng:'I think about my ___.'},
+    {rus:'Она пошла к ___.',ans:'врачу',ane:'doctor',tip:'Dat. case',eng:'She went to the ___.'},
+    {rus:'Мы живём без ___.',ans:'машины',ane:'car',tip:'Gen. case',eng:'We live without a ___.'},
+    {rus:'Он пишет письмо своей ___.',ans:'сестре',ane:'sister',tip:'Dat. case',eng:'He writes a letter to his ___.'},
+    {rus:'Я вижу красивый ___.',ans:'парк',ane:'park',tip:'Acc. case',eng:'I see a beautiful ___.'},
+    {rus:'Мы говорим о погоде в ___.',ans:'Москве',ane:'Moscow',tip:'Prep. case',eng:'We talk about the weather in ___.'},
+    {rus:'Дети играют с ___.',ans:'собакой',ane:'dog',tip:'Instr. case',eng:'The children play with the ___.'},
+    {rus:'Я иду к ___.',ans:'маме',ane:'mum',tip:'Dat. case',eng:'I am going to my ___.'},
+    {rus:'Без ___ невозможно жить.',ans:'воды',ane:'water',tip:'Gen. case',eng:'It is impossible to live without ___.'},
+    {rus:'Он работает ___.',ans:'учителем',ane:'teacher',tip:'Instr. case',eng:'He works as a ___.'},
+    {rus:'Я иду в ___.',ans:'магазин',ane:'shop',tip:'Acc. case',eng:'I am going to the ___.'},
+    {rus:'Мы живём в красивом ___.',ans:'городе',ane:'city',tip:'Prep. case',eng:'We live in a beautiful ___.'},
+    {rus:'Она рада своему ___.',ans:'успеху',ane:'success',tip:'Dat. case',eng:'She is happy about her ___.'},
+    {rus:'Я горжусь своими ___.',ans:'детьми',ane:'children',tip:'Instr. case',eng:'I am proud of my ___.'},
+    {rus:'У ___ есть красивые глаза.',ans:'неё',ane:'her',tip:'Gen. after у',eng:'___ has beautiful eyes.'},
+  ],
+};
+
+let gfState = {level:'A1',theme:'verbs',count:5,mode:'mc',sentences:[]};
+function setGfPill(grp,val,btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  gfState[grp]=val;
+}
+function generateGapFill() {
+  const pool = GF_DATA[gfState.theme]||GF_DATA.verbs;
+  const isEnRu = direction==='en-ru';
+  gfState.sentences = shuffleArr(pool).slice(0,Math.min(gfState.count,pool.length));
+  document.getElementById('gfSetup').style.display='none';
+  document.getElementById('gfExercise').style.display='block';
+  document.getElementById('gfScore').style.display='none';
+  document.getElementById('gfCheckBtn').style.display='block';
+  const list = document.getElementById('gfQList');
+  list.innerHTML='';
+  gfState.sentences.forEach((s,i)=>{
+    const sentence = isEnRu ? s.rus : s.eng;
+    const answer   = isEnRu ? s.ans : s.ane;
+    const allAnswers = gfState.sentences.map(x=>isEnRu?x.ans:x.ane);
+    const wrongs = shuffleArr(allAnswers.filter(a=>a!==answer)).slice(0,3);
+    const opts = shuffleArr([answer,...wrongs]);
+    const div = document.createElement('div');
+    div.style='background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:12px 14px';
+    div.innerHTML=`<div style="font-size:.7rem;color:var(--faint);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">${i+1}. ${s.tip}</div>
+      <div style="font-size:.95rem;color:var(--text);line-height:1.7;margin-bottom:${gfState.mode==='mc'?'8px':'0'}">${sentence.replace('___',gfState.mode==='fill'?`<input class="gap-input" id="gf_${i}" type="text" placeholder="…" />`:`<strong style="color:var(--primary)">[___]</strong>`)}</div>
+      ${gfState.mode==='mc'?`<div class="grid grid-cols-2 gap-1.5 mt-2">${opts.map(o=>`<button class="opt-btn" data-gfi="${i}" data-ans="${answer}" onclick="selectGfAnswer(this)">${o}</button>`).join('')}</div>`:''}`;
+    list.appendChild(div);
+  });
+}
+function selectGfAnswer(btn) {
+  const correct = btn.dataset.ans;
+  btn.closest('.grid').querySelectorAll('.opt-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===correct) b.classList.add('correct');
+  });
+  if(btn.textContent!==correct) btn.classList.add('wrong');
+}
+function checkGapFill() {
+  const isEnRu = direction==='en-ru';
+  let score=0;
+  gfState.sentences.forEach((s,i)=>{
+    const ans = isEnRu?s.ans:s.ane;
+    if(gfState.mode==='fill') {
+      const inp = document.getElementById('gf_'+i);
+      if(!inp) return;
+      const val = inp.value.trim().toLowerCase();
+      if(val===ans.toLowerCase()||ans.toLowerCase().split('/').map(x=>x.trim()).includes(val)){
+        inp.classList.add('correct'); score++;
+      } else { inp.classList.add('wrong'); inp.value+=' → '+ans; }
+    } else {
+      const corrBtn = document.querySelector(`button[data-gfi="${i}"][data-ans="${ans}"]`);
+      if(corrBtn&&corrBtn.classList.contains('correct')) score++;
+    }
+  });
+  const n=gfState.sentences.length;
+  const el=document.getElementById('gfScore');
+  el.style.display='block';
+  const pct=Math.round(score/n*100);
+  el.style.background=pct>=80?'var(--green-bg)':pct>=50?'var(--primary-bg)':'rgba(239,68,68,.08)';
+  el.style.color=pct>=80?'var(--green)':pct>=50?'var(--primary)':'#ef4444';
+  el.textContent=`${score} / ${n} правильно — ${pct}%  ${pct>=80?'🏆':pct>=50?'📚':'💪'}`;
+  document.getElementById('gfCheckBtn').style.display='none';
+}
+function resetGfSetup() {
+  document.getElementById('gfExercise').style.display='none';
+  document.getElementById('gfSetup').style.display='block';
+}
+
+window.addEventListener('load', loadTheme);
+</script>
+</body>
+</html>
