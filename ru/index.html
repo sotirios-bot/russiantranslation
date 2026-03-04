@@ -307,6 +307,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="/ru/flip-card/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🃏 Карточки</a>
         <a href="/ru/gap-fill/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">📝 Пропуски</a>
         <a href="/ru/listening/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">🎧 Аудирование</a>
+        <a href="/ru/verb-conjugator/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">⚡ Спряжение</a>
+        <a href="/ru/case-explainer/" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium no-underline transition" style="background:var(--surface);border:1px solid var(--border);color:var(--muted)">📚 Падежи</a>
       </div>
       <h1 class="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight" style="color:var(--primary)">🇷🇺 ↔ 🇬🇧 Переводчик с русского на английский</h1>
       <p id="subheading" class="mt-3 text-sm max-w-xl mx-auto leading-relaxed" style="color:var(--muted)">✨ Умный перевод с русского на английский и с английского на русский — с учётом рода, стиля речи и разбором слов ✨</p>
@@ -513,40 +515,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="font-bold text-sm" style="color:var(--text)">Аудирование</div>
           <div class="text-xs" style="color:var(--muted)">Слушай и отвечай на вопросы</div>
         </a>
-      </div>
-    </div>
-
-    <!-- VERB CONJUGATOR -->
-    <div class="mb-5">
-      <div class="sec-header">⚡ Verb Conjugator</div>
-      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
-        <p class="text-xs mb-3" style="color:var(--muted)">Enter a verb in English or Russian — get past, present &amp; future conjugations.</p>
-        <div class="flex gap-2 mb-4">
-          <input type="text" id="verbInput" placeholder="e.g. speak, говорить, go, писать…"
-                 class="flex-1 px-4 py-3 rounded-xl outline-none transition text-sm"
-                 style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit"
-                 onkeydown="if(event.key==='Enter') doConjugate()" />
-          <button onclick="doConjugate()" class="px-5 py-3 rounded-xl text-white font-bold border-none cursor-pointer transition text-sm flex-shrink-0" style="background:var(--primary)">Conjugate</button>
-        </div>
-        <div id="conjugateLoading" style="display:none" class="text-center py-4"><div class="spinner"></div></div>
-        <div id="conjugateResult" style="display:none"></div>
-      </div>
-    </div>
-
-    <!-- CASE EXPLAINER -->
-    <div class="mb-5">
-      <div class="sec-header">📚 Case Explainer</div>
-      <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
-        <p class="text-xs mb-3" style="color:var(--muted)">Enter a noun or adjective — see all 6 Russian cases with usage explained.</p>
-        <div class="flex gap-2 mb-4">
-          <input type="text" id="caseInput" placeholder="e.g. book, студент, красивый…"
-                 class="flex-1 px-4 py-3 rounded-xl outline-none transition text-sm"
-                 style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit"
-                 onkeydown="if(event.key==='Enter') doDecline()" />
-          <button onclick="doDecline()" class="px-5 py-3 rounded-xl text-white font-bold border-none cursor-pointer transition text-sm flex-shrink-0" style="background:var(--primary)">Explain</button>
-        </div>
-        <div id="caseLoading" style="display:none" class="text-center py-4"><div class="spinner"></div></div>
-        <div id="caseResult" style="display:none"></div>
+        <a href="/ru/verb-conjugator/" class="rounded-2xl p-5 flex flex-col gap-2 no-underline transition hover:shadow-md" style="background:var(--surface);border:1px solid var(--border);text-decoration:none">
+          <div style="font-size:2rem">⚡</div>
+          <div class="font-bold text-sm" style="color:var(--text)">Спряжение</div>
+          <div class="text-xs" style="color:var(--muted)">Все времена — наст., прош., буд.</div>
+        </a>
+        <a href="/ru/case-explainer/" class="rounded-2xl p-5 flex flex-col gap-2 no-underline transition hover:shadow-md" style="background:var(--surface);border:1px solid var(--border);text-decoration:none">
+          <div style="font-size:2rem">📚</div>
+          <div class="font-bold text-sm" style="color:var(--text)">Падежи</div>
+          <div class="text-xs" style="color:var(--muted)">Все 6 падежей с примерами</div>
+        </a>
       </div>
     </div>
 
@@ -1229,151 +1207,6 @@ function loadPhrase(en) {
   onInput();
   doTranslate();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* ════════════════════════════════════════
-   VERB CONJUGATOR
-════════════════════════════════════════ */
-async function doConjugate() {
-  const raw = document.getElementById('verbInput').value.trim();
-  if (!raw) { showToast('✍️ Enter a verb first'); return; }
-  document.getElementById('conjugateLoading').style.display = 'block';
-  document.getElementById('conjugateResult').style.display  = 'none';
-  try {
-    let enVerb = raw;
-    if (/[а-яёА-ЯЁ]/.test(raw)) {
-      enVerb = await fetchGoogle(raw, 'ru', 'en');
-    }
-    enVerb = enVerb.toLowerCase().replace(/^to\s+/, '').trim();
-
-    const pronouns = {
-      present: [
-        {ru:'Я',   en:`I ${enVerb} every day`},
-        {ru:'Ты',  en:`you ${enVerb} every day`},
-        {ru:'Он',  en:`he ${enVerb}s every day`},
-        {ru:'Она', en:`she ${enVerb}s every day`},
-        {ru:'Мы',  en:`we ${enVerb} every day`},
-        {ru:'Вы',  en:`you all ${enVerb} every day`},
-        {ru:'Они', en:`they ${enVerb} every day`},
-      ],
-      past: [
-        {ru:'Он',  en:`he used to ${enVerb}`},
-        {ru:'Она', en:`she used to ${enVerb}`},
-        {ru:'Они', en:`they used to ${enVerb}`},
-      ],
-      future: [
-        {ru:'Я',   en:`I will ${enVerb}`},
-        {ru:'Ты',  en:`you will ${enVerb}`},
-        {ru:'Он',  en:`he will ${enVerb}`},
-        {ru:'Она', en:`she will ${enVerb}`},
-        {ru:'Мы',  en:`we will ${enVerb}`},
-        {ru:'Вы',  en:`you all will ${enVerb}`},
-        {ru:'Они', en:`they will ${enVerb}`},
-      ],
-    };
-
-    async function conjugateSentence(sentence, pronoun) {
-      const full = await fetchGoogle(sentence, 'en', 'ru');
-      let form = full.replace(/[.!?]$/, '').trim();
-      const preLower = pronoun.toLowerCase() + ' ';
-      if (form.toLowerCase().startsWith(preLower)) form = form.slice(preLower.length);
-      form = form.replace(/\s+каждый день\.?$/i, '').trim();
-      return form.charAt(0).toUpperCase() + form.slice(1);
-    }
-
-    const results = {};
-    for (const [tense, rows] of Object.entries(pronouns)) {
-      results[tense] = [];
-      for (const row of rows) {
-        const form = await conjugateSentence(row.en, row.ru);
-        results[tense].push({ pronoun: row.ru, form });
-        await delay(80);
-      }
-    }
-    document.getElementById('conjugateLoading').style.display = 'none';
-    document.getElementById('conjugateResult').style.display  = 'block';
-    document.getElementById('conjugateResult').innerHTML = renderConjugation(enVerb, results);
-  } catch(err) {
-    document.getElementById('conjugateLoading').style.display = 'none';
-    document.getElementById('conjugateResult').style.display  = 'block';
-    document.getElementById('conjugateResult').innerHTML = `<p style="color:#ef4444;font-size:.88rem">❌ Error: ${err.message}</p>`;
-  }
-}
-function renderConjugation(verb, results) {
-  const tenseLabels = { present:'🕐 Present', past:'📅 Past', future:'🔮 Future' };
-  let html = `<div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Conjugations for: <strong style="color:var(--primary)">${verb}</strong></div>`;
-  for (const [tense, rows] of Object.entries(results)) {
-    html += `<div style="margin-bottom:12px">
-      <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-weight:700;margin-bottom:6px">${tenseLabels[tense]}</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px">`;
-    for (const {pronoun, form} of rows) {
-      html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:7px 10px">
-        <span style="font-size:.72rem;color:var(--faint)">${pronoun}</span>
-        <div style="font-size:.92rem;color:var(--primary);font-weight:700;margin-top:1px">${form}</div>
-      </div>`;
-    }
-    html += `</div></div>`;
-  }
-  return html;
-}
-
-/* ════════════════════════════════════════
-   CASE EXPLAINER
-════════════════════════════════════════ */
-async function doDecline() {
-  const raw = document.getElementById('caseInput').value.trim();
-  if (!raw) { showToast('✍️ Enter a word first'); return; }
-  document.getElementById('caseLoading').style.display = 'block';
-  document.getElementById('caseResult').style.display  = 'none';
-  try {
-    let enWord = raw, ruWord = raw;
-    if (/[а-яёА-ЯЁ]/.test(raw)) {
-      enWord = await fetchGoogle(raw, 'ru', 'en');
-      ruWord = raw;
-    } else {
-      ruWord = await fetchGoogle(raw, 'en', 'ru');
-    }
-    enWord = enWord.toLowerCase().trim();
-
-    const CASES = [
-      { name:'Nominative',   ru:'Именительный',  q:'Кто? Что?',    en:`This is ${enWord}`,          usage:'Subject of the sentence' },
-      { name:'Genitive',     ru:'Родительный',   q:'Кого? Чего?',  en:`without ${enWord}`,           usage:'Possession, absence, negation' },
-      { name:'Dative',       ru:'Дательный',     q:'Кому? Чему?',  en:`give to ${enWord}`,           usage:'Indirect object — to/for whom' },
-      { name:'Accusative',   ru:'Винительный',   q:'Кого? Что?',   en:`I see ${enWord}`,             usage:'Direct object of action' },
-      { name:'Instrumental', ru:'Творительный',  q:'Кем? Чем?',   en:`with ${enWord}`,              usage:'By means of, together with' },
-      { name:'Prepositional',ru:'Предложный',    q:'О ком? О чём?',en:`thinking about ${enWord}`,   usage:'Location, topic of speech' },
-    ];
-
-    const caseResults = [];
-    for (const c of CASES) {
-      const translated = await fetchGoogle(c.en, 'en', 'ru');
-      const words = translated.replace(/[.!?]/g,'').trim().split(/\s+/);
-      const form = words[words.length - 1];
-      caseResults.push({ ...c, form });
-      await delay(80);
-    }
-    document.getElementById('caseLoading').style.display = 'none';
-    document.getElementById('caseResult').style.display  = 'block';
-    document.getElementById('caseResult').innerHTML = renderCases(enWord, ruWord, caseResults);
-  } catch(err) {
-    document.getElementById('caseLoading').style.display = 'none';
-    document.getElementById('caseResult').style.display  = 'block';
-    document.getElementById('caseResult').innerHTML = `<p style="color:#ef4444;font-size:.88rem">❌ Error: ${err.message}</p>`;
-  }
-}
-function renderCases(enWord, ruWord, cases) {
-  let html = `<div style="font-size:.78rem;color:var(--muted);margin-bottom:10px">Cases for: <strong style="color:var(--primary)">${enWord}</strong> / <strong style="color:var(--primary)">${ruWord}</strong></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">`;
-  for (const c of cases) {
-    html += `<div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:9px 11px">
-      <div style="font-size:.7rem;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.8px">${c.name}</div>
-      <div style="font-size:.71rem;color:var(--muted);margin-top:1px">${c.ru} · ${c.q}</div>
-      <div style="font-size:1.05rem;color:var(--primary);font-weight:700;margin:4px 0">${c.form}</div>
-      <div style="font-size:.71rem;color:var(--faint)">${c.usage}</div>
-    </div>`;
-  }
-  html += `</div>`;
-  return html;
 }
 
 /* ════════════════════════════════════════
