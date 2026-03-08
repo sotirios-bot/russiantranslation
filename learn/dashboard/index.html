@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Russian Dashboard — Learn Russian AI</title>
+  <meta name="robots" content="noindex" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #070b14; font-family: 'Inter', system-ui, sans-serif; }
+
+    /* Day cards */
+    .day-card {
+      transition: all .2s ease;
+      border: 1.5px solid rgba(255,255,255,0.07);
+    }
+    .day-card.unlocked:hover {
+      border-color: rgba(230,57,70,0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .day-card.locked { opacity: 0.45; cursor: not-allowed; }
+    .day-card.completed { border-color: rgba(16,185,129,0.3); }
+    .day-card.active { border-color: #e63946; box-shadow: 0 0 20px rgba(230,57,70,0.15); }
+
+    /* Progress ring */
+    .ring-bg { stroke: rgba(255,255,255,0.08); }
+    .ring-fill { stroke: #e63946; stroke-linecap: round; transition: stroke-dashoffset .8s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+    /* XP bar */
+    .xp-fill { background: linear-gradient(90deg, #e63946, #f59e0b); transition: width .6s ease; }
+
+    /* Streak fire */
+    @keyframes flicker { 0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.08)} }
+    .flicker { display:inline-block; animation: flicker 0.9s ease-in-out infinite; }
+
+    /* Success banner */
+    .success-banner { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.25); }
+
+    /* Confetti */
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(120vh) rotate(720deg); opacity: 0; }
+    }
+    .confetti-piece { position: fixed; width: 10px; height: 10px; pointer-events: none; animation: fall linear forwards; }
+
+    /* Nav blur */
+    .nav-blur { backdrop-filter: blur(12px); background: rgba(7,11,20,0.9); }
+
+    /* Glow */
+    .glow-red { box-shadow: 0 0 25px rgba(230,57,70,0.2); }
+  </style>
+</head>
+<body class="text-white min-h-screen">
+
+<!-- ── NAV ── -->
+<header class="nav-blur border-b border-white/5 sticky top-0 z-50">
+  <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/learn/" class="flex items-center gap-2 font-bold">
+      <span class="text-xl">🇷🇺</span>
+      <span class="text-white text-sm">Russian<span class="text-red-400">AI</span></span>
+    </a>
+    <div class="flex items-center gap-3">
+      <div class="hidden sm:flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 rounded-full px-3 py-1 text-xs text-orange-400 font-semibold">
+        <span class="flicker">🔥</span>
+        <span id="nav-streak">0 day streak</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1 text-xs text-blue-400 font-semibold">
+        ⚡ <span id="nav-xp">0 XP</span>
+      </div>
+      <button onclick="logout()" class="text-xs text-gray-500 hover:text-gray-300 transition">Log out</button>
+    </div>
+  </div>
+</header>
+
+<!-- ── SUCCESS BANNER ── -->
+<div id="success-banner" class="hidden px-4 py-3">
+  <div class="max-w-4xl mx-auto success-banner rounded-2xl px-5 py-4 flex items-center gap-3">
+    <span class="text-2xl">🎉</span>
+    <div>
+      <div class="font-bold text-green-300 text-sm">Payment successful! Welcome aboard.</div>
+      <div class="text-green-400/70 text-xs mt-0.5">Your challenge is unlocked. Day 1 is waiting for you below.</div>
+    </div>
+    <button onclick="this.closest('#success-banner').remove()" class="ml-auto text-green-500 hover:text-green-300 text-lg">×</button>
+  </div>
+</div>
+
+<main class="max-w-4xl mx-auto px-4 py-8">
+
+  <!-- ── WELCOME + STATS ── -->
+  <div class="mb-8">
+    <div class="flex items-start justify-between mb-6">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-black text-white" id="welcome-msg">Welcome back! 👋</h1>
+        <p class="text-gray-400 mt-1 text-sm" id="plan-label">Loading your plan…</p>
+      </div>
+      <!-- Progress ring -->
+      <div class="flex-shrink-0 flex flex-col items-center">
+        <svg width="70" height="70" viewBox="0 0 70 70">
+          <circle class="ring-bg" cx="35" cy="35" r="28" fill="none" stroke-width="6"/>
+          <circle class="ring-fill" id="ring" cx="35" cy="35" r="28" fill="none" stroke-width="6" stroke-dasharray="175.9" stroke-dashoffset="175.9"/>
+        </svg>
+        <div class="text-xs text-gray-500 mt-1" id="ring-label">0%</div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <div class="bg-[#0f1629] rounded-xl p-4 text-center border border-white/5">
+        <div class="text-2xl font-black text-orange-400 flicker" id="stat-streak">🔥 0</div>
+        <div class="text-xs text-gray-500 mt-1">Day streak</div>
+      </div>
+      <div class="bg-[#0f1629] rounded-xl p-4 text-center border border-white/5">
+        <div class="text-2xl font-black text-blue-400" id="stat-xp">0</div>
+        <div class="text-xs text-gray-500 mt-1">Total XP</div>
+      </div>
+      <div class="bg-[#0f1629] rounded-xl p-4 text-center border border-white/5">
+        <div class="text-2xl font-black text-green-400" id="stat-done">0</div>
+        <div class="text-xs text-gray-500 mt-1">Days done</div>
+      </div>
+    </div>
+
+    <!-- XP bar -->
+    <div class="bg-[#0f1629] rounded-xl p-4 border border-white/5">
+      <div class="flex justify-between text-xs text-gray-400 mb-2">
+        <span>Level <span id="xp-level">1</span></span>
+        <span><span id="xp-current">0</span> / <span id="xp-next">500</span> XP</span>
+      </div>
+      <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+        <div class="xp-fill h-full rounded-full" id="xp-bar" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TODAY'S LESSON CTA ── -->
+  <div id="today-cta" class="hidden bg-gradient-to-r from-red-900/30 to-orange-900/20 border border-red-500/25 rounded-2xl p-5 mb-8 glow-red">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">📖</div>
+      <div class="flex-1 min-w-0">
+        <div class="text-xs text-red-400 font-semibold uppercase tracking-wide mb-0.5">Today's lesson</div>
+        <div class="font-bold text-white text-lg" id="today-title">—</div>
+        <div class="text-sm text-gray-400" id="today-sub">—</div>
+      </div>
+      <a id="today-link" href="#" class="flex-shrink-0 bg-red-500 hover:bg-red-600 text-white font-bold px-5 py-3 rounded-xl text-sm transition">
+        Start →
+      </a>
+    </div>
+  </div>
+
+  <!-- ── DAY LIST ── -->
+  <div>
+    <h2 class="text-lg font-bold text-white mb-4">Your curriculum</h2>
+    <div class="space-y-3" id="day-list">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+</main>
+
+<!-- ── NO ACCESS MODAL ── -->
+<div id="no-access-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4 hidden">
+  <div class="bg-[#0f1629] rounded-2xl p-8 max-w-sm w-full text-center border border-white/10">
+    <div class="text-5xl mb-4">🔒</div>
+    <h3 class="text-xl font-black text-white mb-2">Access Required</h3>
+    <p class="text-gray-400 text-sm mb-6">You need to complete the quiz and select a challenge to access lessons.</p>
+    <a href="/learn/quiz/" class="block bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition">
+      Take the Quiz →
+    </a>
+    <a href="/learn/" class="block mt-3 text-gray-500 hover:text-gray-300 text-sm transition">Back to homepage</a>
+  </div>
+</div>
+
+<!-- ── LOCKED MODAL ── -->
+<div id="locked-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4 hidden" onclick="this.classList.add('hidden')">
+  <div class="bg-[#0f1629] rounded-2xl p-8 max-w-sm w-full text-center border border-white/10" onclick="event.stopPropagation()">
+    <div class="text-5xl mb-4">🔒</div>
+    <h3 class="text-xl font-black text-white mb-2" id="locked-title">Day locked</h3>
+    <p class="text-gray-400 text-sm mb-6" id="locked-body">Complete the previous day first to unlock this lesson.</p>
+    <button onclick="document.getElementById('locked-modal').classList.add('hidden')" class="block w-full bg-white/10 hover:bg-white/15 text-white font-semibold py-3 rounded-xl transition">
+      Got it
+    </button>
+  </div>
+</div>
+
+<script>
+  // ── Curriculum ──
+  const CURRICULUM = {
+    '7':  [1,2,3,4,5,6,7],
+    '14': [1,2,3,4,5,6,7,8,9,10,11,12,13,14],
+    'unlimited': Array.from({length:21},(_,i)=>i+1)
+  };
+
+  const DAY_META = {
+    1:  { title: 'Russian Alphabet Part 1',    sub: 'А–З · Letters, sounds & recognition',          icon: '🔤', xp: 100 },
+    2:  { title: 'Russian Alphabet Part 2',    sub: 'И–П · Reading practice & audio drills',          icon: '🔡', xp: 100 },
+    3:  { title: 'Greetings & Introductions',  sub: 'Привет, меня зовут… · Meet & greet',             icon: '👋', xp: 120 },
+    4:  { title: 'Numbers 1–20 & Time',        sub: 'Один, два, три… · Count & tell time',            icon: '🔢', xp: 120 },
+    5:  { title: 'Food & Restaurants',         sub: 'Я хочу… · Order food like a local',              icon: '🍽️', xp: 130 },
+    6:  { title: 'Getting Around',             sub: 'Directions, transport & maps',                    icon: '🗺️', xp: 130 },
+    7:  { title: 'Emergency Russian',          sub: 'Помогите! · Safety phrases & review',             icon: '🆘', xp: 150 },
+    8:  { title: 'Family & Relationships',     sub: 'Семья · Talk about your people',                  icon: '👨‍👩‍👧', xp: 130 },
+    9:  { title: 'Days, Months & Seasons',     sub: 'Calendar Russian & seasonal phrases',             icon: '📅', xp: 120 },
+    10: { title: 'Transport & Travel',         sub: 'Train, metro, taxi · Getting places',             icon: '🚆', xp: 140 },
+    11: { title: 'Hobbies & Free Time',        sub: 'What do you like to do? · Everyday chat',        icon: '🎨', xp: 130 },
+    12: { title: 'Hotels & Accommodation',     sub: 'Check-in, rooms, requests',                       icon: '🏨', xp: 130 },
+    13: { title: 'Feelings & Emotions',        sub: 'Я счастлив/a · Express yourself',                icon: '😊', xp: 140 },
+    14: { title: 'Russian Culture & Review',   sub: 'History, traditions & final challenge',           icon: '🎭', xp: 200 },
+    15: { title: 'Advanced Verbs',             sub: 'Perfective vs imperfective aspect',               icon: '📚', xp: 180 },
+    16: { title: 'Russian Cases Deep Dive',    sub: 'Nominative, accusative, dative & more',           icon: '🧩', xp: 180 },
+    17: { title: 'Shopping & Money',           sub: 'Рубли, цены, скидки · Shop confidently',         icon: '🛍️', xp: 140 },
+    18: { title: 'Russian Slang & Idioms',     sub: 'Speak like a native — informal expressions',     icon: '😎', xp: 160 },
+    19: { title: 'Business Russian',           sub: 'Meetings, emails & professional phrases',         icon: '💼', xp: 160 },
+    20: { title: 'Russian Literature & Film',  sub: 'Culture, famous phrases & references',            icon: '🎬', xp: 150 },
+    21: { title: 'Conversation Practice',      sub: 'AI-powered dialogue simulation',                  icon: '🤖', xp: 200 },
+  };
+
+  // ── Load user data ──
+  const userData = JSON.parse(localStorage.getItem('ru_user') || 'null');
+  const plan = localStorage.getItem('ru_plan') || (userData && userData.plan) || null;
+  const progress = JSON.parse(localStorage.getItem('ru_progress') || '{}');
+  // progress[day] = { completed: bool, score: 0-100, xp: N }
+
+  // ── Check URL params ──
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    document.getElementById('success-banner').classList.remove('hidden');
+    confetti();
+    // Clean URL
+    history.replaceState({}, '', '/learn/dashboard/');
+  }
+
+  // ── No access guard ──
+  if (!plan) {
+    document.getElementById('no-access-modal').classList.remove('hidden');
+  }
+
+  // ── Compute stats ──
+  const days = CURRICULUM[plan] || CURRICULUM['14'];
+  const completedDays = days.filter(d => progress[d] && progress[d].completed);
+  const totalXP = Object.values(progress).reduce((s, d) => s + (d.xp || 0), 0);
+  const streak = computeStreak();
+
+  function computeStreak() {
+    // Simple: count consecutive completed days from day 1
+    let s = 0;
+    for (let i = 0; i < days.length; i++) {
+      if (progress[days[i]] && progress[days[i]].completed) s++;
+      else break;
+    }
+    return s;
+  }
+
+  // ── Render welcome ──
+  const name = userData ? userData.name.split(' ')[0] : 'there';
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('welcome-msg').textContent = `${greeting}, ${name}! 👋`;
+
+  const planLabels = { '7':'🏃 7-Day Sprint', '14':'🚀 14-Day Journey', 'unlimited':'♾️ Unlimited Mastery' };
+  document.getElementById('plan-label').textContent = (planLabels[plan] || '14-Day Journey') + ' · Keep your streak going!';
+
+  // ── Stats ──
+  const pct = Math.round((completedDays.length / days.length) * 100);
+  document.getElementById('stat-streak').textContent = '🔥 ' + streak;
+  document.getElementById('stat-xp').textContent = totalXP;
+  document.getElementById('stat-done').textContent = completedDays.length;
+  document.getElementById('nav-streak').textContent = streak + ' day streak';
+  document.getElementById('nav-xp').textContent = totalXP + ' XP';
+
+  // Ring
+  const circ = 175.9;
+  document.getElementById('ring').style.strokeDashoffset = circ - (circ * pct / 100);
+  document.getElementById('ring-label').textContent = pct + '%';
+
+  // XP level
+  const level = Math.floor(totalXP / 500) + 1;
+  const xpInLevel = totalXP % 500;
+  document.getElementById('xp-level').textContent = level;
+  document.getElementById('xp-current').textContent = xpInLevel;
+  document.getElementById('xp-next').textContent = 500;
+  document.getElementById('xp-bar').style.width = (xpInLevel / 5) + '%';
+
+  // ── Today CTA ──
+  const nextDay = days.find(d => !progress[d] || !progress[d].completed);
+  if (nextDay && DAY_META[nextDay]) {
+    const m = DAY_META[nextDay];
+    document.getElementById('today-cta').classList.remove('hidden');
+    document.getElementById('today-title').textContent = `Day ${nextDay}: ${m.title}`;
+    document.getElementById('today-sub').textContent = m.sub;
+    document.getElementById('today-link').href = `/learn/lesson/?day=${nextDay}`;
+  }
+
+  // ── Render day list ──
+  const list = document.getElementById('day-list');
+  days.forEach((d, idx) => {
+    const meta = DAY_META[d] || { title: `Day ${d}`, sub: 'Coming soon', icon: '📖', xp: 100 };
+    const done = progress[d] && progress[d].completed;
+    const isNext = d === nextDay;
+    const locked = !done && !isNext && idx > 0 && !(progress[days[idx-1]] && progress[days[idx-1]].completed) && idx !== 0;
+    const score = progress[d] ? progress[d].score : null;
+    const earnedXP = progress[d] ? progress[d].xp : null;
+
+    const cardClass = done ? 'completed' : isNext ? 'active' : locked ? 'locked' : 'unlocked';
+    const statusBadge = done
+      ? `<div class="flex items-center gap-1.5 text-xs text-green-400 font-semibold"><span>✓</span><span>${score || 100}%</span></div>`
+      : isNext
+      ? `<div class="text-xs text-red-400 font-semibold bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full">Today</div>`
+      : locked
+      ? `<div class="text-xs text-gray-600 font-medium">🔒 Locked</div>`
+      : `<div class="text-xs text-gray-500">Available</div>`;
+
+    const xpBadge = earnedXP
+      ? `<span class="text-xs text-yellow-500 font-semibold">+${earnedXP} XP</span>`
+      : `<span class="text-xs text-gray-600">${meta.xp} XP</span>`;
+
+    const el = document.createElement('div');
+    el.className = `day-card bg-[#0f1629] rounded-xl p-4 ${cardClass}`;
+    el.innerHTML = `
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 ${done ? 'bg-green-500/15' : isNext ? 'bg-red-500/15' : 'bg-white/5'} rounded-xl flex items-center justify-center text-xl flex-shrink-0">
+          ${done ? '✅' : meta.icon}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-xs text-gray-600 font-medium">Day ${d}</span>
+            ${statusBadge}
+            ${xpBadge}
+          </div>
+          <div class="font-semibold text-white text-sm mt-0.5 truncate">${meta.title}</div>
+          <div class="text-xs text-gray-500 truncate">${meta.sub}</div>
+        </div>
+        <div class="flex-shrink-0">
+          ${done
+            ? `<a href="/learn/lesson/?day=${d}" class="text-xs text-gray-500 hover:text-gray-300 transition">Review</a>`
+            : !locked
+            ? `<a href="/learn/lesson/?day=${d}" class="bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition">${isNext ? 'Start' : 'Go'} →</a>`
+            : `<span class="text-gray-700 text-xs">🔒</span>`
+          }
+        </div>
+      </div>`;
+
+    if (locked) {
+      el.querySelector('.w-11').addEventListener('click', () => showLocked(d));
+    }
+    list.appendChild(el);
+  });
+
+  // ── Locked modal ──
+  function showLocked(day) {
+    const prev = day - 1;
+    document.getElementById('locked-title').textContent = `Day ${day} is locked`;
+    document.getElementById('locked-body').textContent = `Complete Day ${prev} first to unlock this lesson.`;
+    document.getElementById('locked-modal').classList.remove('hidden');
+  }
+
+  // ── Logout ──
+  function logout() {
+    if (confirm('Log out? Your progress is saved locally and will be here when you return.')) {
+      localStorage.removeItem('ru_user');
+      localStorage.removeItem('ru_plan');
+      window.location.href = '/learn/';
+    }
+  }
+
+  // ── Confetti ──
+  function confetti() {
+    const colors = ['#e63946','#f59e0b','#10b981','#3b82f6','#a78bfa','#f472b6'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.cssText = `left:${Math.random()*100}vw; top:-10px; background:${colors[Math.floor(Math.random()*colors.length)]}; border-radius:${Math.random()>0.5?'50%':'2px'}; animation-duration:${2+Math.random()*2}s; animation-delay:${Math.random()*0.5}s; width:${6+Math.random()*8}px; height:${6+Math.random()*8}px;`;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 4500);
+    }
+  }
+</script>
+</body>
+</html>

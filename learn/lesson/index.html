@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Russian Lesson — Learn Russian AI</title>
+  <meta name="robots" content="noindex" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { background: #070b14; font-family: 'Inter', system-ui, sans-serif; }
+
+    /* ── Flip card ── */
+    .flip-wrap { perspective: 900px; cursor: pointer; user-select: none; }
+    .flip-inner { position:relative; width:100%; height:100%; transition: transform .55s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; }
+    .flip-wrap.flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-face { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+    .flip-back { transform: rotateY(180deg); }
+
+    /* ── MC options ── */
+    .mc-opt {
+      cursor: pointer; transition: all .18s;
+      border: 1.5px solid rgba(255,255,255,0.1);
+    }
+    .mc-opt:hover:not(:disabled) { border-color: rgba(230,57,70,0.5); background: rgba(230,57,70,0.07); }
+    .mc-opt.correct  { border-color:#10b981 !important; background:rgba(16,185,129,0.12) !important; }
+    .mc-opt.wrong    { border-color:#ef4444 !important; background:rgba(239,68,68,0.1) !important; }
+    .mc-opt:disabled { cursor:default; }
+
+    /* ── Progress bar ── */
+    .prog-fill { background: linear-gradient(90deg,#e63946,#f59e0b); transition: width .35s ease; }
+
+    /* ── Slide transitions ── */
+    .slide-out { animation: sOut .25s ease forwards; }
+    .slide-in  { animation: sIn  .25s ease forwards; }
+    @keyframes sOut { from{opacity:1;transform:translateX(0)} to{opacity:0;transform:translateX(-30px)} }
+    @keyframes sIn  { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+
+    /* ── Completion ── */
+    @keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+    .pop-in { animation: popIn .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+    /* ── Confetti ── */
+    @keyframes fall { 0%{transform:translateY(-20px) rotate(0);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0} }
+    .cf { position:fixed; pointer-events:none; animation:fall linear forwards; }
+
+    /* ── Glow ── */
+    .glow { box-shadow: 0 0 30px rgba(230,57,70,0.25); }
+
+    /* ── Nav blur ── */
+    .nav-blur { backdrop-filter:blur(12px); background:rgba(7,11,20,.9); }
+
+    /* ── Listening pulse ── */
+    @keyframes wave { 0%,100%{transform:scaleY(1)}50%{transform:scaleY(2)} }
+    .wave-bar { width:4px; border-radius:2px; background:#e63946; animation:wave ease-in-out infinite; transform-origin:bottom; }
+
+    /* ── Keyboard ── */
+    .key { cursor:pointer; transition:all .15s; border:1px solid rgba(255,255,255,0.12); }
+    .key:hover { background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.25); }
+    .key:active { transform:scale(.92); }
+
+    /* ── Answer feedback ── */
+    .shake { animation: shake .4s ease; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+    /* ── Gap input ── */
+    .gap-input:focus { outline:none; border-color:#e63946; }
+  </style>
+</head>
+<body class="text-white min-h-screen flex flex-col">
+
+<!-- ── NAV ── -->
+<header class="nav-blur border-b border-white/5 sticky top-0 z-50">
+  <div class="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/learn/dashboard/" class="flex items-center gap-2 text-gray-400 hover:text-white transition text-sm">
+      ← Dashboard
+    </a>
+    <div class="flex items-center gap-2">
+      <span class="text-orange-400 text-sm font-semibold" id="nav-xp">+0 XP</span>
+      <span class="text-gray-600">·</span>
+      <span class="text-sm text-gray-400" id="nav-day">Day —</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── PROGRESS BAR ── -->
+<div class="h-1.5 bg-white/5 sticky top-14 z-40">
+  <div class="prog-fill h-full" id="prog-bar" style="width:0%"></div>
+</div>
+
+<!-- ── EXERCISE AREA ── -->
+<main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8" id="exercise-area">
+
+  <!-- Exercise counter -->
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2">
+      <span class="text-sm font-medium text-gray-400" id="ex-count">Exercise 1 of 10</span>
+    </div>
+    <div class="flex items-center gap-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-3 py-1 text-xs text-yellow-400 font-semibold">
+      ⚡ <span id="xp-earned">0</span> XP
+    </div>
+  </div>
+
+  <!-- Type badge -->
+  <div class="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 bg-white/5 border border-white/8 rounded-full px-3 py-1.5 mb-4" id="type-badge">
+    🃏 Flip Card
+  </div>
+
+  <!-- ── EXERCISE CONTAINERS ── -->
+
+  <!-- FLIP CARD -->
+  <div id="ex-flip" class="hidden">
+    <p class="text-gray-400 text-sm mb-4" id="flip-instruction">Tap the card to reveal the meaning</p>
+    <div class="flip-wrap mb-5" id="flip-card" style="height:200px" onclick="flipCard()">
+      <div class="flip-inner">
+        <div class="flip-face" style="background:linear-gradient(135deg,#1a2340,#0f1629);border:1.5px solid rgba(255,255,255,0.1)">
+          <div class="text-5xl font-black mb-3 text-center" id="flip-front">—</div>
+          <div class="text-sm text-gray-500" id="flip-front-sub">Russian</div>
+        </div>
+        <div class="flip-face flip-back" style="background:linear-gradient(135deg,#1a1a35,#0f1a30);border:1.5px solid rgba(99,102,241,0.25)">
+          <div class="text-3xl font-bold text-blue-300 mb-1 text-center" id="flip-back-main">—</div>
+          <div class="text-sm text-gray-400 mb-3 text-center" id="flip-back-note">—</div>
+          <button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition" onclick="speakWord(event)">🔊 Hear it</button>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-gray-600 mb-6" id="flip-hint">Tap to flip</div>
+    <div class="grid grid-cols-2 gap-3" id="flip-actions">
+      <button onclick="rateCard('hard')" class="bg-red-900/30 hover:bg-red-900/50 border border-red-500/20 text-red-400 font-semibold py-3.5 rounded-xl transition text-sm">
+        😬 Hard
+      </button>
+      <button onclick="rateCard('easy')" class="bg-green-900/20 hover:bg-green-900/40 border border-green-500/20 text-green-400 font-semibold py-3.5 rounded-xl transition text-sm">
+        😊 Got it!
+      </button>
+    </div>
+    <div id="flip-rating-btns" class="hidden text-center mt-3">
+      <button onclick="nextExercise()" class="text-sm text-gray-400 hover:text-white transition">Next →</button>
+    </div>
+  </div>
+
+  <!-- MULTIPLE CHOICE -->
+  <div id="ex-mc" class="hidden">
+    <h2 class="text-xl font-bold text-white mb-2" id="mc-question">Question?</h2>
+    <p class="text-sm text-gray-500 mb-6" id="mc-sub">Choose the correct answer</p>
+    <div class="space-y-3 mb-4" id="mc-options-wrap"></div>
+    <div id="mc-feedback-wrap" class="hidden">
+      <div class="rounded-xl p-4 mb-4 text-sm font-medium" id="mc-feedback"></div>
+      <button onclick="nextExercise()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition">
+        Next →
+      </button>
+    </div>
+  </div>
+
+  <!-- FILL THE GAP -->
+  <div id="ex-gap" class="hidden">
+    <h2 class="text-xl font-bold text-white mb-2" id="gap-sentence-display">Sentence here</h2>
+    <p class="text-sm text-gray-400 mb-6" id="gap-translation">Translation</p>
+    <div class="mb-5">
+      <label class="block text-sm text-gray-400 mb-2">Type the missing word in Russian:</label>
+      <input id="gap-answer" type="text" autocomplete="off" autocorrect="off" spellcheck="false"
+        class="gap-input w-full bg-white/5 border border-white/15 rounded-xl px-4 py-4 text-white text-lg placeholder-gray-700 transition"
+        placeholder="Type here…" onkeydown="if(event.key==='Enter')checkGap()" />
+    </div>
+    <!-- Russian keyboard -->
+    <div id="ru-keyboard" class="mb-5">
+      <div class="flex flex-wrap gap-1.5 justify-center mb-1.5" id="kb-row1"></div>
+      <div class="flex flex-wrap gap-1.5 justify-center mb-1.5" id="kb-row2"></div>
+      <div class="flex flex-wrap gap-1.5 justify-center" id="kb-row3"></div>
+      <div class="flex gap-2 justify-center mt-2">
+        <button class="key bg-white/5 text-gray-300 px-5 py-2 rounded-lg text-sm" onclick="kbType(' ')">Space</button>
+        <button class="key bg-white/5 text-red-400 px-5 py-2 rounded-lg text-sm" onclick="kbBackspace()">⌫</button>
+      </div>
+    </div>
+    <div id="gap-feedback-wrap" class="hidden">
+      <div class="rounded-xl p-4 mb-4 text-sm font-medium" id="gap-feedback"></div>
+      <button onclick="nextExercise()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition">
+        Next →
+      </button>
+    </div>
+    <div id="gap-check-wrap">
+      <button onclick="checkGap()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition">
+        Check →
+      </button>
+    </div>
+  </div>
+
+  <!-- LISTENING -->
+  <div id="ex-listen" class="hidden">
+    <h2 class="text-xl font-bold text-white mb-2" id="listen-q">Listen and choose what you hear</h2>
+    <p class="text-sm text-gray-500 mb-6" id="listen-sub">Press play, then pick the answer</p>
+    <!-- Waveform visual -->
+    <div class="flex items-center justify-center gap-8 mb-6">
+      <button id="play-btn" onclick="playAudio()" class="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 flex items-center justify-center text-3xl transition glow flex-shrink-0">
+        ▶️
+      </button>
+      <div class="flex items-end gap-1 h-12" id="waveform">
+        <div class="wave-bar h-3" style="animation-duration:.7s;animation-delay:0s"></div>
+        <div class="wave-bar h-5" style="animation-duration:.9s;animation-delay:.1s"></div>
+        <div class="wave-bar h-8" style="animation-duration:.6s;animation-delay:.2s"></div>
+        <div class="wave-bar h-10" style="animation-duration:.8s;animation-delay:.1s"></div>
+        <div class="wave-bar h-6" style="animation-duration:.7s;animation-delay:.3s"></div>
+        <div class="wave-bar h-9" style="animation-duration:.9s;animation-delay:.05s"></div>
+        <div class="wave-bar h-4" style="animation-duration:.6s;animation-delay:.2s"></div>
+      </div>
+    </div>
+    <div class="text-xs text-center text-gray-600 mb-5" id="listen-played-text"></div>
+    <div class="grid grid-cols-2 gap-3 mb-4" id="listen-options-wrap"></div>
+    <div id="listen-feedback-wrap" class="hidden">
+      <div class="rounded-xl p-4 mb-4 text-sm font-medium" id="listen-feedback"></div>
+      <button onclick="nextExercise()" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition">
+        Next →
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── COMPLETION SCREEN ── -->
+<div id="completion" class="hidden fixed inset-0 bg-[#070b14] flex items-center justify-center px-4 z-50">
+  <div class="max-w-sm w-full text-center pop-in">
+    <div class="text-7xl mb-4">🎉</div>
+    <h2 class="text-3xl font-black text-white mb-2">Lesson Complete!</h2>
+    <p class="text-gray-400 mb-6" id="completion-sub">You crushed Day 1</p>
+    <!-- Score card -->
+    <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 mb-6">
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <div class="text-2xl font-black text-yellow-400" id="comp-xp">+0</div>
+          <div class="text-xs text-gray-500 mt-1">XP earned</div>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-green-400" id="comp-score">0%</div>
+          <div class="text-xs text-gray-500 mt-1">Accuracy</div>
+        </div>
+        <div>
+          <div class="text-2xl font-black text-orange-400">🔥</div>
+          <div class="text-xs text-gray-500 mt-1">Streak +1</div>
+        </div>
+      </div>
+    </div>
+    <div id="comp-next-wrap">
+      <a id="comp-next-btn" href="/learn/dashboard/" class="block bg-red-500 hover:bg-red-600 text-white font-bold py-4 rounded-xl text-lg transition mb-3">
+        Next Day →
+      </a>
+    </div>
+    <a href="/learn/dashboard/" class="text-sm text-gray-500 hover:text-gray-300 transition">Back to dashboard</a>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// CURRICULUM DATA
+// ══════════════════════════════════════════════════════════
+const CURRICULUM = {
+  1: {
+    title: 'Russian Alphabet Part 1',
+    exercises: [
+      { type:'flip', front:'А а', back:'A', note:'Like "a" in "father"', ru:'А' },
+      { type:'flip', front:'Б б', back:'B', note:'Like "b" in "ball"', ru:'Б' },
+      { type:'flip', front:'В в', back:'V', note:'Like "v" in "vine"', ru:'В' },
+      { type:'flip', front:'Г г', back:'G', note:'Like "g" in "go"', ru:'Г' },
+      { type:'flip', front:'Д д', back:'D', note:'Like "d" in "dog"', ru:'Д' },
+      { type:'mc', question:'Which letter makes the sound "YE" as in "yes"?', options:['Е','Ж','З','И'], answer:0, xp:15 },
+      { type:'mc', question:'What sound does «Ж» make?', options:['Z','SH','ZH (like treasure)','V'], answer:2, xp:15 },
+      { type:'listen', word:'Да', translation:'Yes', distractors:['Нет','Привет','Пока'], xp:20 },
+      { type:'listen', word:'Нет', translation:'No', distractors:['Да','Может','Хорошо'], xp:20 },
+      { type:'gap', sentence:'___ — первая буква русского алфавита.', translation:'___ is the first letter of the Russian alphabet.', answer:'А', hint:'Hint: It sounds like English "A"', xp:25 },
+    ]
+  },
+  2: {
+    title: 'Russian Alphabet Part 2',
+    exercises: [
+      { type:'flip', front:'З з', back:'Z', note:'Like "z" in "zoo"', ru:'З' },
+      { type:'flip', front:'И и', back:'I / EE', note:'Like "ee" in "see"', ru:'И' },
+      { type:'flip', front:'К к', back:'K', note:'Like "k" in "kit"', ru:'К' },
+      { type:'flip', front:'Л л', back:'L', note:'Like "l" in "lamp"', ru:'Л' },
+      { type:'flip', front:'М м', back:'M', note:'Like "m" in "map"', ru:'М' },
+      { type:'mc', question:'«Н» sounds most like which English letter?', options:['M','N','H','R'], answer:1, xp:15 },
+      { type:'listen', word:'Мама', translation:'Mum / Mom', distractors:['Папа','Дядя','Тётя'], xp:20 },
+      { type:'listen', word:'Молоко', translation:'Milk', distractors:['Вода','Сок','Чай'], xp:20 },
+      { type:'gap', sentence:'Меня ___ Иван.', translation:'My name ___ Ivan.', answer:'зовут', hint:'зовут = "is called"', xp:25 },
+      { type:'mc', question:'How do you write "NO" in Russian?', options:['Да','Нет','Ну','Не'], answer:1, xp:15 },
+    ]
+  },
+  3: {
+    title: 'Greetings & Introductions',
+    exercises: [
+      { type:'flip', front:'Привет', back:'Hi / Hello', note:'Informal greeting', ru:'Привет' },
+      { type:'flip', front:'Здравствуйте', back:'Hello (formal)', note:'Use with strangers & elders', ru:'Здравствуйте' },
+      { type:'flip', front:'Как дела?', back:'How are you?', note:'Informal', ru:'Как дела?' },
+      { type:'flip', front:'Хорошо, спасибо', back:'Good, thank you', note:'Standard response', ru:'Хорошо, спасибо' },
+      { type:'mc', question:'You meet your boss for the first time. Which do you say?', options:['Привет!','Здравствуйте!','Пока!','Ладно'], answer:1, xp:20 },
+      { type:'mc', question:'What does «Меня зовут» mean?', options:['How are you?','Where are you from?','My name is','Nice to meet you'], answer:2, xp:15 },
+      { type:'gap', sentence:'___ зовут Анна. Я из Москвы.', translation:'My name ___ Anna. I am from Moscow.', answer:'Меня', hint:'Меня = My (in this phrase)', xp:25 },
+      { type:'listen', word:'Привет', translation:'Hi', distractors:['Пока','Спасибо','Да'], xp:20 },
+      { type:'listen', word:'До свидания', translation:'Goodbye', distractors:['Привет','Спасибо','Извините'], xp:20 },
+      { type:'flip', front:'До свидания', back:'Goodbye (formal)', note:'Lit: "Until the meeting"', ru:'До свидания' },
+      { type:'gap', sentence:'Рада познакомиться. Меня ___ Наташа.', translation:'Nice to meet you. My ___ is Natasha.', answer:'зовут', hint:'зовут = name (in "my name is")', xp:25 },
+    ]
+  },
+  4: {
+    title: 'Numbers 1–20 & Time',
+    exercises: [
+      { type:'flip', front:'1 — Один', back:'One', note:'Masculine form', ru:'Один' },
+      { type:'flip', front:'2 — Два', back:'Two', note:'Masculine / neuter', ru:'Два' },
+      { type:'flip', front:'3 — Три', back:'Three', note:'', ru:'Три' },
+      { type:'flip', front:'5 — Пять', back:'Five', note:'Numbers 5-20 take genitive plural', ru:'Пять' },
+      { type:'mc', question:'How do you say "ten" in Russian?', options:['Девять','Восемь','Десять','Семь'], answer:2, xp:15 },
+      { type:'mc', question:'«Сколько времени?» means…', options:['How far is it?','What time is it?','How old are you?','How much does it cost?'], answer:1, xp:20 },
+      { type:'listen', word:'Три', translation:'Three', distractors:['Один','Пять','Семь'], xp:20 },
+      { type:'listen', word:'Десять', translation:'Ten', distractors:['Пять','Двадцать','Четыре'], xp:20 },
+      { type:'gap', sentence:'Мне ___ лет. Я молодой.', translation:'I am ___ years old. I am young.', answer:'двадцать', hint:'двадцать = twenty', xp:25 },
+      { type:'mc', question:'Which number means "seven"?', options:['Шесть','Семь','Восемь','Девять'], answer:1, xp:15 },
+    ]
+  },
+  5: {
+    title: 'Food & Restaurants',
+    exercises: [
+      { type:'flip', front:'Хлеб', back:'Bread', note:'Essential Russian staple', ru:'Хлеб' },
+      { type:'flip', front:'Вода', back:'Water', note:'Вода / воды', ru:'Вода' },
+      { type:'flip', front:'Я хочу…', back:'I want…', note:'Use to order food', ru:'Я хочу' },
+      { type:'flip', front:'Счёт, пожалуйста', back:'The bill, please', note:'Essential phrase', ru:'Счёт, пожалуйста' },
+      { type:'mc', question:'You want to order coffee. Which phrase works best?', options:['Я не знаю','Мне кофе, пожалуйста','Спасибо за кофе','Кофе очень вкусный'], answer:1, xp:20 },
+      { type:'mc', question:'"Борщ" is a famous Russian/Ukrainian…', options:['Dessert','Main dish','Soup','Salad'], answer:2, xp:15 },
+      { type:'listen', word:'Вкусно', translation:'Delicious', distractors:['Плохо','Дорого','Быстро'], xp:20 },
+      { type:'listen', word:'Пожалуйста', translation:'Please / You\'re welcome', distractors:['Спасибо','Извините','Здравствуйте'], xp:20 },
+      { type:'gap', sentence:'Мне ___, пожалуйста. Я очень голоден.', translation:'I\'d like ___, please. I\'m very hungry.', answer:'борщ', hint:'борщ = the famous beet soup', xp:25 },
+      { type:'flip', front:'Вкусно!', back:'Delicious!', note:'Compliment the cook', ru:'Вкусно' },
+    ]
+  },
+  6: {
+    title: 'Getting Around',
+    exercises: [
+      { type:'flip', front:'Где…?', back:'Where is…?', note:'Key question word', ru:'Где' },
+      { type:'flip', front:'Налево / Направо', back:'Left / Right', note:'Essential directions', ru:'Налево' },
+      { type:'flip', front:'Метро', back:'Metro / Subway', note:'Same word in Russian!', ru:'Метро' },
+      { type:'mc', question:'How do you ask "Where is the station?"', options:['Как станция?','Где станция?','Это станция?','Когда станция?'], answer:1, xp:20 },
+      { type:'mc', question:'"Прямо" means…', options:['Left','Right','Straight ahead','Behind'], answer:2, xp:15 },
+      { type:'listen', word:'Направо', translation:'Turn right', distractors:['Налево','Прямо','Назад'], xp:20 },
+      { type:'listen', word:'Остановите', translation:'Stop (command)', distractors:['Едьте','Поверните','Подождите'], xp:20 },
+      { type:'gap', sentence:'Скажите, пожалуйста, ___ здесь аэропорт?', translation:'Excuse me, ___ is the airport from here?', answer:'где', hint:'где = where', xp:25 },
+      { type:'mc', question:'You need a taxi. Which do you say?', options:['Мне нужно такси','Я иду пешком','Дайте билет','Закройте дверь'], answer:0, xp:15 },
+      { type:'flip', front:'Помогите!', back:'Help!', note:'Emergency phrase', ru:'Помогите' },
+    ]
+  },
+  7: {
+    title: 'Emergency Russian & Review',
+    exercises: [
+      { type:'flip', front:'Помогите!', back:'Help!', note:'Emergency', ru:'Помогите' },
+      { type:'flip', front:'Вызовите скорую!', back:'Call an ambulance!', note:'Medical emergency', ru:'Вызовите скорую' },
+      { type:'flip', front:'Я не понимаю', back:'I don\'t understand', note:'Very useful phrase', ru:'Я не понимаю' },
+      { type:'mc', question:'You\'re lost. Which phrase do you use?', options:['Я не голоден','Я заблудился','Я устал','Я не знаю'], answer:1, xp:20 },
+      { type:'listen', word:'Помогите', translation:'Help!', distractors:['Спасибо','Пожалуйста','Хорошо'], xp:20 },
+      { type:'gap', sentence:'Я не ___. Говорите медленнее, пожалуйста.', translation:'I don\'t ___. Please speak slower.', answer:'понимаю', hint:'понимаю = understand', xp:30 },
+      { type:'mc', question:'How do you say "I don\'t speak Russian well"?', options:['Я не говорю по-русски хорошо','Я говорю по-русски хорошо','Я понимаю по-русски','Я учу русский язык'], answer:0, xp:20 },
+      { type:'listen', word:'Извините', translation:'Excuse me / Sorry', distractors:['Спасибо','Пожалуйста','Здравствуйте'], xp:20 },
+      { type:'mc', question:'«Где туалет?» means…', options:['Where is the exit?','Where is the toilet?','Where is the taxi?','Where is the hotel?'], answer:1, xp:15 },
+      { type:'flip', front:'Говорите медленнее', back:'Speak slower', note:'Ask anyone to slow down', ru:'Говорите медленнее' },
+    ]
+  },
+  8: {
+    title: 'Family & Relationships',
+    exercises: [
+      { type:'flip', front:'Семья', back:'Family', note:'Core vocabulary', ru:'Семья' },
+      { type:'flip', front:'Мама / Папа', back:'Mum / Dad', note:'Informal, same as English!', ru:'Мама' },
+      { type:'flip', front:'Брат / Сестра', back:'Brother / Sister', note:'', ru:'Брат' },
+      { type:'mc', question:'"Муж" means…', options:['Son','Brother','Husband','Father'], answer:2, xp:15 },
+      { type:'mc', question:'How do you say "I have two children"?', options:['У меня двое детей','Я дети','Мне два ребёнок','У меня детей два'], answer:0, xp:20 },
+      { type:'listen', word:'Бабушка', translation:'Grandmother', distractors:['Дедушка','Тётя','Дядя'], xp:20 },
+      { type:'listen', word:'Дедушка', translation:'Grandfather', distractors:['Бабушка','Папа','Брат'], xp:20 },
+      { type:'gap', sentence:'У меня есть старший ___. Его зовут Алексей.', translation:'I have an older ___. His name is Alexei.', answer:'брат', hint:'брат = brother', xp:25 },
+      { type:'mc', question:'"Жена" means…', options:['Daughter','Sister','Mother','Wife'], answer:3, xp:15 },
+      { type:'flip', front:'У меня есть…', back:'I have…', note:'Use to talk about family', ru:'У меня есть' },
+    ]
+  },
+  9: {
+    title: 'Days, Months & Seasons',
+    exercises: [
+      { type:'flip', front:'Понедельник', back:'Monday', note:'First day of the week in Russia', ru:'Понедельник' },
+      { type:'flip', front:'Пятница', back:'Friday', note:'Beloved day worldwide 😄', ru:'Пятница' },
+      { type:'flip', front:'Январь / Февраль', back:'January / February', note:'Winter months', ru:'Январь' },
+      { type:'mc', question:'Which month is «Июль»?', options:['June','July','August','January'], answer:1, xp:15 },
+      { type:'mc', question:'"Осень" is…', options:['Spring','Summer','Autumn','Winter'], answer:2, xp:15 },
+      { type:'listen', word:'Суббота', translation:'Saturday', distractors:['Воскресенье','Пятница','Среда'], xp:20 },
+      { type:'listen', word:'Зима', translation:'Winter', distractors:['Лето','Весна','Осень'], xp:20 },
+      { type:'gap', sentence:'Сегодня ___. Я отдыхаю.', translation:'Today is ___. I am resting.', answer:'воскресенье', hint:'воскресенье = Sunday', xp:25 },
+      { type:'mc', question:'Which season is «Весна»?', options:['Autumn','Winter','Spring','Summer'], answer:2, xp:15 },
+      { type:'flip', front:'Сегодня / Завтра', back:'Today / Tomorrow', note:'Key time words', ru:'Сегодня' },
+    ]
+  },
+  10: {
+    title: 'Transport & Travel',
+    exercises: [
+      { type:'flip', front:'Самолёт', back:'Airplane', note:'Lit: "self-flyer"', ru:'Самолёт' },
+      { type:'flip', front:'Поезд', back:'Train', note:'Very common in Russia', ru:'Поезд' },
+      { type:'flip', front:'Билет', back:'Ticket', note:'Same root as French "billet"', ru:'Билет' },
+      { type:'mc', question:'You want to buy a ticket. What do you say?', options:['Дайте мне билет, пожалуйста','Когда поезд отправляется?','Где вокзал?','Сколько стоит?'], answer:0, xp:20 },
+      { type:'mc', question:'"Вокзал" is…', options:['Airport','Train station','Bus stop','Hotel'], answer:1, xp:15 },
+      { type:'listen', word:'Автобус', translation:'Bus', distractors:['Метро','Такси','Поезд'], xp:20 },
+      { type:'listen', word:'Аэропорт', translation:'Airport', distractors:['Вокзал','Гостиница','Музей'], xp:20 },
+      { type:'gap', sentence:'Один ___ до Москвы, пожалуйста.', translation:'One ___ to Moscow, please.', answer:'билет', hint:'билет = ticket', xp:25 },
+      { type:'mc', question:'«Когда отправляется поезд?» means…', options:['Where does the train go?','How much is the train?','When does the train depart?','What number train?'], answer:2, xp:15 },
+      { type:'flip', front:'Мне нужно в…', back:'I need to go to…', note:'Use for getting directions', ru:'Мне нужно в' },
+    ]
+  },
+  11: {
+    title: 'Hobbies & Free Time',
+    exercises: [
+      { type:'flip', front:'Хобби', back:'Hobby', note:'Borrowed from English!', ru:'Хобби' },
+      { type:'flip', front:'Читать', back:'To read', note:'Читаю = I read', ru:'Читать' },
+      { type:'flip', front:'Слушать музыку', back:'To listen to music', note:'Я слушаю = I\'m listening', ru:'Слушать' },
+      { type:'mc', question:'"Я люблю спорт" means…', options:['I play sport','I love sport','I watch sport','I hate sport'], answer:1, xp:15 },
+      { type:'mc', question:'You want to say "I like cooking". Which is correct?', options:['Я люблю готовить','Я умею готовить','Я хочу готовить','Я читаю готовить'], answer:0, xp:20 },
+      { type:'listen', word:'Путешествовать', translation:'To travel', distractors:['Читать','Петь','Рисовать'], xp:20 },
+      { type:'listen', word:'Смотреть фильмы', translation:'To watch films', distractors:['Слушать музыку','Читать книги','Играть в игры'], xp:20 },
+      { type:'gap', sentence:'В свободное время я люблю ___ книги.', translation:'In my free time I love to ___ books.', answer:'читать', hint:'читать = to read', xp:25 },
+      { type:'mc', question:'"Я не умею плавать" means…', options:['I don\'t like swimming','I can\'t swim','I don\'t want to swim','I never swim'], answer:1, xp:15 },
+      { type:'flip', front:'Я умею / Я не умею', back:'I can / I can\'t', note:'For skills & abilities', ru:'Я умею' },
+    ]
+  },
+  12: {
+    title: 'Hotels & Accommodation',
+    exercises: [
+      { type:'flip', front:'Гостиница / Отель', back:'Hotel', note:'Both words are used', ru:'Гостиница' },
+      { type:'flip', front:'Номер', back:'Room / Number', note:'Двойной номер = double room', ru:'Номер' },
+      { type:'flip', front:'Заселение / Выселение', back:'Check-in / Check-out', note:'Essential hotel words', ru:'Заселение' },
+      { type:'mc', question:'You want to book a single room. What do you say?', options:['Мне нужен одноместный номер','Мне нужен двухместный номер','Где лифт?','Когда завтрак?'], answer:0, xp:20 },
+      { type:'mc', question:'"Завтрак включён?" means…', options:['Is there a pool?','Is breakfast included?','What\'s the checkout time?','Is there Wi-Fi?'], answer:1, xp:15 },
+      { type:'listen', word:'Полотенце', translation:'Towel', distractors:['Подушка','Одеяло','Мыло'], xp:20 },
+      { type:'listen', word:'Ключ', translation:'Key', distractors:['Дверь','Окно','Лифт'], xp:20 },
+      { type:'gap', sentence:'Мне нужен ___ на три ночи.', translation:'I need a ___ for three nights.', answer:'номер', hint:'номер = room', xp:25 },
+      { type:'mc', question:'"Лифт" is…', options:['Lobby','Restaurant','Elevator','Exit'], answer:2, xp:15 },
+      { type:'flip', front:'Можно попросить…?', back:'Could I have…? / Could I ask…?', note:'Polite request form', ru:'Можно попросить' },
+    ]
+  },
+  13: {
+    title: 'Feelings & Emotions',
+    exercises: [
+      { type:'flip', front:'Счастливый/ая', back:'Happy', note:'М/Ж endings: -ый/-ая', ru:'Счастливый' },
+      { type:'flip', front:'Грустный/ая', back:'Sad', note:'', ru:'Грустный' },
+      { type:'flip', front:'Я устал/а', back:'I\'m tired', note:'М: устал · Ж: устала', ru:'Устал' },
+      { type:'mc', question:'"Мне скучно" means…', options:['I\'m angry','I\'m scared','I\'m bored','I\'m confused'], answer:2, xp:15 },
+      { type:'mc', question:'You\'re nervous before a presentation. You say…', options:['Мне грустно','Я злой','Я волнуюсь','Мне скучно'], answer:2, xp:20 },
+      { type:'listen', word:'Влюблённый', translation:'In love', distractors:['Счастливый','Грустный','Злой'], xp:20 },
+      { type:'listen', word:'Удивлённый', translation:'Surprised', distractors:['Испуганный','Злой','Счастливый'], xp:20 },
+      { type:'gap', sentence:'Я ___ потому что завтра каникулы!', translation:'I am ___ because tomorrow is vacation!', answer:'счастлив', hint:'счастлив = happy (male form)', xp:25 },
+      { type:'mc', question:'"Мне больно" means…', options:['I\'m cold','I\'m hot','It hurts / I\'m in pain','I\'m sick'], answer:2, xp:15 },
+      { type:'flip', front:'Мне нравится', back:'I like it', note:'Lit: "It pleases me"', ru:'Мне нравится' },
+    ]
+  },
+  14: {
+    title: 'Russian Culture & Final Review',
+    exercises: [
+      { type:'flip', front:'Масленица', back:'Butter Week (Pancake Festival)', note:'Spring celebration with блины', ru:'Масленица' },
+      { type:'flip', front:'Блины', back:'Thin pancakes', note:'Traditional Russian food', ru:'Блины' },
+      { type:'mc', question:'What is the capital of Russia?', options:['Санкт-Петербург','Москва','Сочи','Казань'], answer:1, xp:10 },
+      { type:'mc', question:'"На здоровье!" is said when…', options:['Greeting someone','Saying goodbye','Toasting / wishing health','Asking for help'], answer:2, xp:20 },
+      { type:'listen', word:'Родина', translation:'Motherland / Homeland', distractors:['Страна','Город','Деревня'], xp:20 },
+      { type:'listen', word:'Душа', translation:'Soul', distractors:['Сердце','Голова','Тело'], xp:20 },
+      { type:'gap', sentence:'В России говорят: "___ — мать порядка".', translation:'In Russia they say: "___ is the mother of order" (meaning: repetition is the key to learning).', answer:'Повторение', hint:'Повторение = Repetition', xp:30 },
+      { type:'mc', question:'Великий русский писатель — это…', options:['Пушкин','Моцарт','Шопен','Рембрандт'], answer:0, xp:15 },
+      { type:'flip', front:'Молодец!', back:'Well done! / Good job!', note:'High praise in Russian', ru:'Молодец' },
+      { type:'mc', question:'The famous Russian chess player is…', options:['Каспаров','Овечкин','Нуреев','Чайковский'], answer:0, xp:10 },
+    ]
+  }
+};
+
+// Default days 15-21 with generic exercises
+for (let d = 15; d <= 21; d++) {
+  CURRICULUM[d] = {
+    title: `Advanced Day ${d}`,
+    exercises: [
+      { type:'flip', front:'Продолжайте', back:'Continue', note:'Keep going!', ru:'Продолжайте' },
+      { type:'mc', question:'Advanced lesson coming soon. Which means "I am learning Russian"?', options:['Я учу русский язык','Я знаю русский','Я забыл русский','Русский трудный'], answer:0, xp:20 },
+      { type:'listen', word:'Молодец', translation:'Well done!', distractors:['Плохо','Ничего','Отлично'], xp:20 },
+      { type:'gap', sentence:'Я каждый день ___ русский язык.', translation:'I ___ Russian every day.', answer:'учу', hint:'учу = study/learn (I)', xp:25 },
+    ]
+  };
+}
+
+// ══════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════
+const urlP = new URLSearchParams(window.location.search);
+const DAY = parseInt(urlP.get('day') || '1', 10);
+const lesson = CURRICULUM[DAY] || CURRICULUM[1];
+const exercises = lesson.exercises;
+
+let idx = 0;
+let flipped = false;
+let xpEarned = 0;
+let correct = 0;
+let answered = 0;
+let currentWord = '';
+
+// ── Init ──
+document.getElementById('nav-day').textContent = `Day ${DAY}`;
+renderExercise();
+
+// ══════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════
+function renderExercise() {
+  if (idx >= exercises.length) { showCompletion(); return; }
+  const ex = exercises[idx];
+  const pct = (idx / exercises.length) * 100;
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('ex-count').textContent = `Exercise ${idx+1} of ${exercises.length}`;
+  document.getElementById('xp-earned').textContent = xpEarned;
+
+  // Hide all panels
+  ['flip','mc','gap','listen'].forEach(t => document.getElementById('ex-'+t).classList.add('hidden'));
+
+  const area = document.getElementById('exercise-area');
+  area.classList.add('slide-in');
+  setTimeout(() => area.classList.remove('slide-in'), 300);
+
+  if (ex.type === 'flip') renderFlip(ex);
+  else if (ex.type === 'mc') renderMC(ex);
+  else if (ex.type === 'gap') renderGap(ex);
+  else if (ex.type === 'listen') renderListen(ex);
+
+  const badges = { flip:'🃏 Flip Card', mc:'❓ Multiple Choice', gap:'✍️ Fill the Gap', listen:'🎧 Listening' };
+  document.getElementById('type-badge').textContent = badges[ex.type];
+}
+
+// ── Flip Card ──
+function renderFlip(ex) {
+  flipped = false;
+  currentWord = ex.ru || ex.front;
+  document.getElementById('flip-card').classList.remove('flipped');
+  document.getElementById('flip-front').textContent = ex.front;
+  document.getElementById('flip-front-sub').textContent = ex.note ? 'Tap to see meaning' : 'Russian';
+  document.getElementById('flip-back-main').textContent = ex.back;
+  document.getElementById('flip-back-note').textContent = ex.note || '';
+  document.getElementById('flip-hint').textContent = '👆 Tap to flip';
+  document.getElementById('flip-actions').classList.add('hidden');
+  document.getElementById('ex-flip').classList.remove('hidden');
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('flip-card').classList.toggle('flipped', flipped);
+  document.getElementById('flip-hint').textContent = flipped ? '👆 Tap to flip back' : '👆 Tap to flip';
+  if (flipped) document.getElementById('flip-actions').classList.remove('hidden');
+}
+
+function rateCard(rating) {
+  const xp = rating === 'easy' ? 15 : 5;
+  xpEarned += xp;
+  if (rating === 'easy') correct++;
+  answered++;
+  nextExercise();
+}
+
+function speakWord(e) {
+  e.stopPropagation();
+  speak(currentWord);
+}
+
+// ── Multiple Choice ──
+function renderMC(ex) {
+  document.getElementById('mc-question').textContent = ex.question;
+  document.getElementById('mc-sub').textContent = 'Choose the correct answer';
+  document.getElementById('mc-feedback-wrap').classList.add('hidden');
+  const wrap = document.getElementById('mc-options-wrap');
+  wrap.innerHTML = '';
+  ex.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-opt w-full text-left px-4 py-3.5 rounded-xl bg-white/[0.03] text-gray-300 text-sm transition';
+    btn.textContent = opt;
+    btn.onclick = () => checkMC(btn, i === ex.answer, ex, i);
+    wrap.appendChild(btn);
+  });
+  document.getElementById('ex-mc').classList.remove('hidden');
+}
+
+function checkMC(btn, isCorrect, ex, chosen) {
+  document.querySelectorAll('#mc-options-wrap button').forEach(b => b.disabled = true);
+  const correct_opt = document.querySelectorAll('#mc-options-wrap button')[ex.answer];
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) correct_opt.classList.add('correct');
+  const fb = document.getElementById('mc-feedback');
+  if (isCorrect) {
+    xpEarned += (ex.xp || 15);
+    correct++;
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-green-900/20 border border-green-500/20 text-green-400';
+    fb.textContent = '✅ Correct! ' + ex.options[ex.answer];
+  } else {
+    xpEarned += 2;
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-red-900/20 border border-red-500/20 text-red-400';
+    fb.textContent = '❌ The answer is: ' + ex.options[ex.answer];
+  }
+  answered++;
+  document.getElementById('xp-earned').textContent = xpEarned;
+  document.getElementById('mc-feedback-wrap').classList.remove('hidden');
+}
+
+// ── Fill the Gap ──
+const KB_ROWS = [
+  ['й','ц','у','к','е','н','г','ш','щ','з','х','ъ'],
+  ['ф','ы','в','а','п','р','о','л','д','ж','э'],
+  ['я','ч','с','м','и','т','ь','б','ю','ё'],
+];
+
+function renderGap(ex) {
+  const parts = ex.sentence.split('___');
+  document.getElementById('gap-sentence-display').innerHTML =
+    `${parts[0]}<span class="text-red-400 font-bold border-b-2 border-red-400 px-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${parts[1] || ''}`;
+  document.getElementById('gap-translation').textContent = ex.translation;
+  document.getElementById('gap-answer').value = '';
+  document.getElementById('gap-answer').dataset.hint = ex.hint || '';
+  document.getElementById('gap-answer').dataset.answer = ex.answer;
+  document.getElementById('gap-answer').dataset.xp = ex.xp || 20;
+  document.getElementById('gap-feedback-wrap').classList.add('hidden');
+  document.getElementById('gap-check-wrap').classList.remove('hidden');
+  document.getElementById('gap-answer').classList.remove('shake');
+
+  // Build keyboard
+  KB_ROWS.forEach((row, ri) => {
+    const rowEl = document.getElementById('kb-row' + (ri+1));
+    rowEl.innerHTML = '';
+    row.forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'key bg-white/5 text-white rounded-lg px-2.5 py-2 text-sm min-w-[32px]';
+      btn.textContent = ch.toUpperCase();
+      btn.addEventListener('mousedown', e => { e.preventDefault(); kbType(ch); });
+      rowEl.appendChild(btn);
+    });
+  });
+
+  document.getElementById('ex-gap').classList.remove('hidden');
+  setTimeout(() => document.getElementById('gap-answer').focus(), 100);
+}
+
+function kbType(ch) {
+  const inp = document.getElementById('gap-answer');
+  inp.value += ch;
+  inp.focus();
+}
+function kbBackspace() {
+  const inp = document.getElementById('gap-answer');
+  inp.value = inp.value.slice(0, -1);
+  inp.focus();
+}
+
+function checkGap() {
+  const inp = document.getElementById('gap-answer');
+  const userAns = inp.value.trim().toLowerCase();
+  const correctAns = inp.dataset.answer.toLowerCase();
+  const xp = parseInt(inp.dataset.xp, 10) || 20;
+  const fb = document.getElementById('gap-feedback');
+  document.getElementById('gap-check-wrap').classList.add('hidden');
+
+  if (userAns === correctAns || userAns.includes(correctAns) || correctAns.includes(userAns)) {
+    xpEarned += xp;
+    correct++;
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-green-900/20 border border-green-500/20 text-green-400';
+    fb.textContent = `✅ Correct! "${inp.dataset.answer}"`;
+  } else {
+    xpEarned += 3;
+    inp.classList.add('shake');
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-red-900/20 border border-red-500/20 text-red-400';
+    fb.textContent = `❌ Correct answer: "${inp.dataset.answer}" — ${inp.dataset.hint}`;
+  }
+  answered++;
+  document.getElementById('xp-earned').textContent = xpEarned;
+  document.getElementById('gap-feedback-wrap').classList.remove('hidden');
+}
+
+// ── Listening ──
+function renderListen(ex) {
+  currentWord = ex.word;
+  document.getElementById('listen-q').textContent = 'Listen and choose what you hear';
+  document.getElementById('listen-sub').textContent = 'Press play, then pick the correct word';
+  document.getElementById('listen-played-text').textContent = '';
+  document.getElementById('listen-feedback-wrap').classList.add('hidden');
+  document.getElementById('play-btn').textContent = '▶️';
+  document.getElementById('play-btn').disabled = false;
+
+  // Shuffle options
+  const opts = shuffleArray([{ text: ex.word, correct: true }, ...ex.distractors.map(d => ({ text:d, correct:false }))]);
+  const wrap = document.getElementById('listen-options-wrap');
+  wrap.innerHTML = '';
+  opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'mc-opt px-4 py-3.5 rounded-xl bg-white/[0.03] text-gray-300 text-sm text-center transition';
+    btn.textContent = o.text;
+    btn.onclick = () => checkListen(btn, o.correct, ex);
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('ex-listen').classList.remove('hidden');
+}
+
+function playAudio() {
+  const btn = document.getElementById('play-btn');
+  const status = document.getElementById('listen-played-text');
+  btn.textContent = '⏸️';
+  btn.disabled = true;
+  speak(currentWord);
+  status.textContent = `Playing… (now choose)`;
+  setTimeout(() => { btn.textContent = '▶️'; btn.disabled = false; }, 2500);
+}
+
+function checkListen(btn, isCorrect, ex) {
+  document.querySelectorAll('#listen-options-wrap button').forEach(b => b.disabled = true);
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    document.querySelectorAll('#listen-options-wrap button').forEach(b => {
+      if (b.textContent === ex.word) b.classList.add('correct');
+    });
+  }
+  const fb = document.getElementById('listen-feedback');
+  if (isCorrect) {
+    xpEarned += (ex.xp || 20);
+    correct++;
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-green-900/20 border border-green-500/20 text-green-400';
+    fb.textContent = `✅ Correct! «${ex.word}» = "${ex.translation}"`;
+  } else {
+    xpEarned += 3;
+    fb.className = 'rounded-xl p-4 mb-4 text-sm font-medium bg-red-900/20 border border-red-500/20 text-red-400';
+    fb.textContent = `❌ You heard «${ex.word}» — "${ex.translation}"`;
+  }
+  answered++;
+  document.getElementById('xp-earned').textContent = xpEarned;
+  document.getElementById('listen-feedback-wrap').classList.remove('hidden');
+}
+
+// ══════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════
+function nextExercise() {
+  idx++;
+  renderExercise();
+}
+
+// ══════════════════════════════════════════════════════════
+// COMPLETION
+// ══════════════════════════════════════════════════════════
+function showCompletion() {
+  const score = answered > 0 ? Math.round((correct / answered) * 100) : 100;
+  document.getElementById('comp-xp').textContent = '+' + xpEarned;
+  document.getElementById('comp-score').textContent = score + '%';
+  document.getElementById('completion-sub').textContent = `You crushed Day ${DAY}: ${lesson.title}`;
+
+  // Save progress
+  const progress = JSON.parse(localStorage.getItem('ru_progress') || '{}');
+  progress[DAY] = { completed: true, score, xp: xpEarned, completedAt: Date.now() };
+  localStorage.setItem('ru_progress', JSON.stringify(progress));
+
+  // Next day link
+  const nextDay = DAY + 1;
+  const plan = localStorage.getItem('ru_plan') || '14';
+  const maxDay = plan === '7' ? 7 : plan === '14' ? 14 : 21;
+  if (nextDay <= maxDay && CURRICULUM[nextDay]) {
+    document.getElementById('comp-next-btn').href = `/learn/lesson/?day=${nextDay}`;
+    document.getElementById('comp-next-btn').textContent = `Day ${nextDay}: ${CURRICULUM[nextDay].title} →`;
+  } else {
+    document.getElementById('comp-next-btn').textContent = '🏆 View my progress →';
+    document.getElementById('comp-next-btn').href = '/learn/dashboard/';
+  }
+
+  document.getElementById('completion').classList.remove('hidden');
+  document.getElementById('prog-bar').style.width = '100%';
+  confetti();
+}
+
+// ══════════════════════════════════════════════════════════
+// UTILITIES
+// ══════════════════════════════════════════════════════════
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'ru-RU';
+  utt.rate = 0.82;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function confetti() {
+  const cols = ['#e63946','#f59e0b','#10b981','#3b82f6','#a78bfa','#f472b6'];
+  for (let i = 0; i < 70; i++) {
+    const el = document.createElement('div');
+    el.className = 'cf';
+    el.style.cssText = `left:${Math.random()*100}vw;top:-12px;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${2.5+Math.random()*2}s;animation-delay:${Math.random()*.6}s;width:${7+Math.random()*7}px;height:${7+Math.random()*7}px;`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+}
+</script>
+</body>
+</html>
