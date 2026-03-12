@@ -12,11 +12,11 @@
 <style>
   :root {
     --bg:#f5f7fb;--surface:#ffffff;--border:#e5e7eb;--text:#111827;--muted:#6b7280;--faint:#9ca3af;
-    --primary:#4f6ef7;--primary-bg:rgba(79,110,247,0.08);--shadow:rgba(0,0,0,0.08);
+    --primary:#4f6ef7;--primary-bg:rgba(79,110,247,0.08);--shadow:rgba(0,0,0,0.08);--shadow2:rgba(79,110,247,0.22);
   }
   [data-theme=dark] {
     --bg:#0f1117;--surface:#1a1d27;--border:#2d3148;--text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;
-    --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--shadow:rgba(0,0,0,0.35);
+    --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.6);
   }
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
@@ -25,22 +25,69 @@
   .pill:hover{border-color:var(--primary);color:var(--primary);}
   .spinner{width:26px;height:26px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
   @keyframes spin{to{transform:rotate(360deg);}}
+  /* ═══ SITE NAV ═══ */
+  .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
+  .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
+  .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--primary);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
+  .nav-logo:hover{opacity:.85;}
+  .nav-link{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;font-family:inherit;white-space:nowrap;}
+  .nav-link:hover,.nav-link.active{background:var(--primary-bg);color:var(--primary);}
+  .nav-drop-wrap{position:relative;}
+  .nav-drop-menu{position:absolute;top:calc(100% + 4px);left:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px var(--shadow2);padding:6px;min-width:185px;display:none;z-index:300;}
+  .nav-drop-menu.open{display:block;}
+  .nav-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;white-space:nowrap;}
+  .nav-dd-item:hover{background:var(--primary-bg);color:var(--primary);}
+  .nav-spacer{flex:1;}
+  .nav-theme-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+  .nav-theme-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg);}
+  .nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:1rem;flex-shrink:0;}
+  .nav-mobile{display:none;border-top:1px solid var(--border);background:var(--surface);padding:8px 16px 12px;}
+  .nav-mobile.open{display:block;}
+  .nav-m-link{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;}
+  .nav-m-link:hover{background:var(--primary-bg);color:var(--primary);}
+  .nav-m-sect{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);padding:8px 12px 2px;}
+  @media(max-width:768px){.nav-desktop-links{display:none!important;}.nav-hamburger{display:inline-flex;}}
 </style>
 </head>
 <body>
+
+<!-- SITE NAV -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-logo">🇷🇺 englishtorussian.ai</a>
+    <div class="nav-desktop-links" style="display:flex;align-items:center;gap:2px;">
+      <a href="/translate/" class="nav-link">🌐 Translate</a>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navDropBtn" onclick="navToggleDrop(event)">Practice Russian <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navDropMenu">
+          <a href="/pdf/" class="nav-dd-item">📄 PDF Translator</a>
+          <a href="/flip-card/" class="nav-dd-item">🃏 Flip Cards</a>
+          <a href="/gap-fill/" class="nav-dd-item">📝 Gap Fill</a>
+          <a href="/listening/" class="nav-dd-item">🎧 Listening</a>
+        </div>
+      </div>
+      <a href="/verb-conjugator/" class="nav-link">⚡ Verb Conjugator</a>
+      <a href="/case-explainer/" class="nav-link active">📚 Case Explainer</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+    <button class="nav-hamburger" id="navHamBtn" onclick="navToggleMobile()">☰</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/translate/" class="nav-m-link">🌐 Translate</a>
+    <div class="nav-m-sect">Practice Russian</div>
+    <a href="/pdf/" class="nav-m-link">📄 PDF Translator</a>
+    <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
+    <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
+    <a href="/listening/" class="nav-m-link">🎧 Listening</a>
+    <a href="/verb-conjugator/" class="nav-m-link">⚡ Verb Conjugator</a>
+    <a href="/case-explainer/" class="nav-m-link">📚 Case Explainer</a>
+  </div>
+</nav>
+
 <div class="max-w-2xl mx-auto px-4 py-6">
 
-  <div class="flex gap-2 flex-wrap mb-6">
-    <a href="/" class="pill">← Translator</a>
-    <a href="/verb-conjugator/" class="pill">⚡ Verb Conjugator</a>
-    <a href="/flip-card/" class="pill">🃏 Flip Cards</a>
-    <a href="/gap-fill/" class="pill">📝 Gap Fill</a>
-    <a href="/listening/" class="pill">🎧 Listening</a>
-    <a href="/ru/case-explainer/" class="pill">🇷🇺 RU</a>
-    <button id="themeBtn" onclick="toggleTheme()" class="pill" style="border:none;cursor:pointer">🌙 Dark</button>
-  </div>
-
-  <h1 class="text-2xl font-extrabold mb-1" style="color:var(--primary)">📚 Russian Case Explainer</h1>
+  <h1 class="text-2xl font-extrabold mb-1 mt-6" style="color:var(--primary)">📚 Russian Case Explainer</h1>
   <p class="text-sm mb-6" style="color:var(--muted)">Enter a noun or adjective — see all 6 Russian cases with usage explained.</p>
 
   <div class="rounded-2xl p-5 sm:p-6 shadow mb-4" style="background:var(--surface);border:1px solid var(--border)">
@@ -105,6 +152,9 @@ function renderCases(enWord, ruWord, cases) {
   }
   return html+'</div>';
 }
+function navToggleDrop(e){e.stopPropagation();document.getElementById('navDropMenu').classList.toggle('open');}
+function navToggleMobile(){document.getElementById('navMobile').classList.toggle('open');}
+document.addEventListener('click',()=>document.getElementById('navDropMenu')?.classList.remove('open'));
 </script>
 </body>
 </html>
