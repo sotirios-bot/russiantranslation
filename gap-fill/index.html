@@ -79,17 +79,22 @@
     <a href="/" class="nav-logo">🇷🇺 englishtorussian.ai</a>
     <div class="nav-desktop-links" style="display:flex;align-items:center;gap:2px;">
       <a href="/translate/" class="nav-link">🌐 Translate</a>
+      <a href="/pdf/" class="nav-link">📄 PDF Translator</a>
       <div class="nav-drop-wrap">
-        <button class="nav-link active" id="navDropBtn" onclick="navToggleDrop(event)">Practice Russian <span style="font-size:.7em">▾</span></button>
-        <div class="nav-drop-menu" id="navDropMenu">
-          <a href="/pdf/" class="nav-dd-item">📄 PDF Translator</a>
+        <button class="nav-link" id="navExercisesBtn" onclick="navToggleDrop(event,'navExercisesMenu')">Exercises <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navExercisesMenu">
           <a href="/flip-card/" class="nav-dd-item">🃏 Flip Cards</a>
           <a href="/gap-fill/" class="nav-dd-item">📝 Gap Fill</a>
           <a href="/listening/" class="nav-dd-item">🎧 Listening</a>
         </div>
       </div>
-      <a href="/verb-conjugator/" class="nav-link">⚡ Verb Conjugator</a>
-      <a href="/case-explainer/" class="nav-link">📚 Case Explainer</a>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navLearnBtn" onclick="navToggleDrop(event,'navLearnMenu')">Learn Russian <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navLearnMenu">
+          <a href="/verb-conjugator/" class="nav-dd-item">⚡ Verb Conjugator</a>
+          <a href="/case-explainer/" class="nav-dd-item">📚 Case Explainer</a>
+        </div>
+      </div>
     </div>
     <div class="nav-spacer"></div>
     <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
@@ -97,11 +102,12 @@
   </div>
   <div class="nav-mobile" id="navMobile">
     <a href="/translate/" class="nav-m-link">🌐 Translate</a>
-    <div class="nav-m-sect">Practice Russian</div>
     <a href="/pdf/" class="nav-m-link">📄 PDF Translator</a>
+    <div class="nav-m-sect">Exercises</div>
     <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
     <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
     <a href="/listening/" class="nav-m-link">🎧 Listening</a>
+    <div class="nav-m-sect">Learn Russian</div>
     <a href="/verb-conjugator/" class="nav-m-link">⚡ Verb Conjugator</a>
     <a href="/case-explainer/" class="nav-m-link">📚 Case Explainer</a>
   </div>
@@ -330,9 +336,15 @@ function resetGfSetup() {
 }
 
 window.addEventListener('load', loadTheme);
-function navToggleDrop(e){e.stopPropagation();document.getElementById('navDropMenu').classList.toggle('open');}
+function navToggleDrop(e, menuId) {
+  e.stopPropagation();
+  const menu = document.getElementById(menuId);
+  const wasOpen = menu.classList.contains('open');
+  document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open'));
+  if (!wasOpen) menu.classList.add('open');
+}
 function navToggleMobile(){document.getElementById('navMobile').classList.toggle('open');}
-document.addEventListener('click',()=>document.getElementById('navDropMenu')?.classList.remove('open'));
+document.addEventListener('click', () => document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open')));
 </script>
 </body>
 </html>
