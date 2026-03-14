@@ -56,10 +56,10 @@
     #toast.show  { opacity: 1 !important; transform: translateY(0) !important; }
     .swap-btn    { transition: transform 0.35s ease, background-color 0.2s; }
     .swap-btn:hover { transform: rotate(180deg); }
-    body { overflow-x: hidden; }
-    /* ── CSS vars for shared nav ── */
-    :root{--surface:#ffffff;--border:#e2e8f0;--shadow:rgba(0,0,0,0.07);--shadow2:rgba(0,0,0,0.18);--primary:#2253cb;--primary-bg:#eaf0ff;--muted:#64748b;--faint:#94a3b8;--text:#1e293b;}
-    [data-theme="dark"]{--surface:#1e293b;--border:rgba(255,255,255,0.09);--shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);--primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--muted:#9ca3af;--faint:#6b7280;--text:#e5e7eb;}
+    body { overflow-x: hidden; background:var(--bg); color:var(--text); font-family:'Inter','Segoe UI',system-ui,sans-serif; transition:background .3s,color .3s; }
+    /* ── CSS vars ── */
+    :root{--bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;--text:#1a1a2e;--muted:#5570a0;--faint:#4b5e84;--xfaint:#6b7ba0;--primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;--orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;--shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);}
+    [data-theme="dark"]{--bg:#080c18;--surface:#0f1520;--surface2:#0a1020;--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.05);--text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;--xfaint:#4b5563;--primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--primary-dk:#7599ff;--orange:#fb923c;--orange-bg:rgba(251,146,60,0.08);--green:#34d399;--green-bg:rgba(52,211,153,0.08);--shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);}
     /* ── site nav ── */
     .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
     .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
@@ -85,8 +85,7 @@
   </style>
 </head>
 
-<body data-theme="light"
-      class="bg-slate-100 dark:bg-slate-900 min-h-screen text-slate-800 dark:text-slate-100 transition-colors duration-300">
+<body data-theme="light" class="min-h-screen">
 
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRZ5N9GV"
@@ -108,13 +107,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
       <div class="nav-drop-wrap">
-        <button class="nav-link" id="navLearnBtn" onclick="navToggleDrop(event,'navLearnMenu')">Learn Russian <span style="font-size:.7em">▾</span></button>
-        <div class="nav-drop-menu" id="navLearnMenu">
+        <button class="nav-link" id="navGrammarBtn" onclick="navToggleDrop(event,'navGrammarMenu')">Grammar <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navGrammarMenu">
           <a href="/verb-conjugator/" class="nav-dd-item">⚡ Verb Conjugator</a>
           <a href="/case-explainer/" class="nav-dd-item">📚 Case Explainer</a>
         </div>
       </div>
     </div>
+    <a href="/" class="nav-link" style="background:rgba(230,57,70,0.12);color:#e63946;border:1px solid rgba(230,57,70,0.3);border-radius:8px;font-weight:700;">🎓 Learn Russian</a>
     <div class="nav-spacer"></div>
     <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
     <button class="nav-hamburger" id="navHamBtn" onclick="navToggleMobile()">☰</button>
@@ -126,9 +126,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
     <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
     <a href="/listening/" class="nav-m-link">🎧 Listening</a>
-    <div class="nav-m-sect">Learn Russian</div>
+    <div class="nav-m-sect">Grammar</div>
     <a href="/verb-conjugator/" class="nav-m-link">⚡ Verb Conjugator</a>
     <a href="/case-explainer/" class="nav-m-link">📚 Case Explainer</a>
+    <div class="nav-m-sect">Course</div>
+    <a href="/" class="nav-m-link" style="color:#e63946;font-weight:700;">🎓 Learn Russian with AI →</a>
   </div>
 </nav>
 
