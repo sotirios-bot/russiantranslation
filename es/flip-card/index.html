@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjetas — practica vocabulario inglés | englishtorussian.ai</title>
+  <meta name="description" content="Practica vocabulario inglés con tarjetas interactivas. Niveles A1–B2, filtro por tema, adivina la traducción correcta." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://englishtorussian.ai/es/flip-card/" />
+  <link rel="alternate" hreflang="en" href="https://englishtorussian.ai/flip-card/" />
+  <link rel="alternate" hreflang="es" href="https://englishtorussian.ai/es/flip-card/" />
+  <link rel="alternate" hreflang="x-default" href="https://englishtorussian.ai/flip-card/" />
+  <meta property="og:title" content="Tarjetas — practica vocabulario inglés" />
+  <meta property="og:description" content="Practica vocabulario inglés con tarjetas. Niveles A1–B2." />
+  <meta property="og:url" content="https://englishtorussian.ai/es/flip-card/" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  :root {
+    --bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;
+    --text:#1a1a2e;--muted:#5570a0;--faint:#4b5e84;--xfaint:#6b7ba0;
+    --primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;
+    --orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;
+    --shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);
+  }
+  [data-theme="dark"] {
+    --bg:#080c18;--surface:#0f1520;--surface2:#0a1020;--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.05);
+    --text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;--xfaint:#4b5563;
+    --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--primary-dk:#7599ff;
+    --orange:#fb923c;--orange-bg:rgba(251,146,60,0.08);--green:#34d399;--green-bg:rgba(52,211,153,0.08);
+    --shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
+  a{color:var(--primary);}
+  .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
+  .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
+  .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--text);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
+  .nav-logo:hover{opacity:.85;}
+  .nav-link{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;font-family:inherit;white-space:nowrap;}
+  .nav-link:hover,.nav-link.active{background:var(--primary-bg);color:var(--primary);}
+  .nav-drop-wrap{position:relative;}
+  .nav-drop-menu{position:absolute;top:calc(100% + 4px);left:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px var(--shadow2);padding:6px;min-width:185px;display:none;z-index:300;}
+  .nav-drop-menu.open{display:block;}
+  .nav-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;white-space:nowrap;}
+  .nav-dd-item:hover{background:var(--primary-bg);color:var(--primary);}
+  .nav-spacer{flex:1;}
+  .nav-theme-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+  .nav-theme-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg);}
+  .nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:1rem;flex-shrink:0;}
+  .nav-mobile{display:none;border-top:1px solid var(--border);background:var(--surface);padding:8px 16px 12px;}
+  .nav-mobile.open{display:block;}
+  .nav-m-link{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;}
+  .nav-m-link:hover{background:var(--primary-bg);color:var(--primary);}
+  .nav-m-sect{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);padding:8px 12px 2px;}
+  @media(max-width:768px){.nav-desktop-links{display:none!important;}.nav-hamburger{display:inline-flex;}}
+  .t-pill{background:var(--bg);border:2px solid var(--border);color:var(--faint);border-radius:10px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
+  .t-pill.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .t-pill:hover{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
+  .fc-inner{transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);border-radius:16px;}
+  .fc-inner.flipped{transform:rotateY(180deg);}
+  .fc-face{-webkit-backface-visibility:hidden;backface-visibility:hidden;border-radius:16px;}
+  .fc-back-face{transform:rotateY(180deg);}
+  @keyframes fc-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+  .fc-wrong-shake{animation:fc-shake .35s ease;}
+  .opt-btn{width:100%;padding:10px 14px;border-radius:12px;border:2px solid var(--border);background:var(--bg);color:var(--text);font-size:.88rem;font-weight:600;cursor:pointer;text-align:left;transition:all .15s;font-family:inherit;}
+  .opt-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-bg);color:var(--primary);}
+  .opt-btn.correct{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;}
+  .opt-btn.wrong{border-color:#ef4444!important;background:rgba(239,68,68,.08)!important;color:#ef4444!important;}
+  .opt-btn:disabled{cursor:default;opacity:.85;}
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:50px;font-size:.85rem;font-weight:700;opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap;}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  </style>
+</head>
+<body data-theme="light">
+<div id="toast"></div>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-logo">🇷🇺 englishtorussian.ai</a>
+    <div class="nav-desktop-links" style="display:flex;align-items:center;gap:2px;">
+      <a href="/translate/" class="nav-link">🌐 Traducir</a>
+      <a href="/pdf/" class="nav-link">📄 Traductor PDF</a>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navExercisesBtn" onclick="navToggleDrop(event,'navExercisesMenu')">Ejercicios <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navExercisesMenu">
+          <a href="/flip-card/" class="nav-dd-item">🃏 Tarjetas</a>
+          <a href="/gap-fill/" class="nav-dd-item">📝 Rellenar</a>
+          <a href="/listening/" class="nav-dd-item">🎧 Comprensión</a>
+        </div>
+      </div>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navGrammarBtn" onclick="navToggleDrop(event,'navGrammarMenu')">Gramática <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navGrammarMenu">
+          <a href="/verb-conjugator/" class="nav-dd-item">⚡ Conjugador</a>
+          <a href="/case-explainer/" class="nav-dd-item">📚 Casos</a>
+        </div>
+      </div>
+    </div>
+    <a href="/" class="nav-link" style="background:rgba(230,57,70,0.12);color:#e63946;border:1px solid rgba(230,57,70,0.3);border-radius:8px;font-weight:700;">🎓 Aprender Ruso</a>
+    <div class="nav-spacer"></div>
+    <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">🌙 Oscuro</button>
+    <button class="nav-hamburger" id="navHamBtn" onclick="navToggleMobile()">☰</button>
+  </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/translate/" class="nav-m-link">🌐 Traducir</a>
+    <a href="/pdf/" class="nav-m-link">📄 Traductor PDF</a>
+    <div class="nav-m-sect">Ejercicios</div>
+    <a href="/flip-card/" class="nav-m-link">🃏 Tarjetas</a>
+    <a href="/gap-fill/" class="nav-m-link">📝 Rellenar</a>
+    <a href="/listening/" class="nav-m-link">🎧 Comprensión</a>
+    <div class="nav-m-sect">Gramática</div>
+    <a href="/verb-conjugator/" class="nav-m-link">⚡ Conjugador</a>
+    <a href="/case-explainer/" class="nav-m-link">📚 Casos</a>
+    <div class="nav-m-sect">Curso</div>
+    <a href="/" class="nav-m-link" style="color:#e63946;font-weight:700;">🎓 Aprender Ruso con IA →</a>
+  </div>
+</nav>
+
+<div class="max-w-2xl mx-auto px-4">
+
+  <!-- HEADER -->
+  <header class="text-center pt-6 pb-4">
+    <h1 class="text-2xl font-black tracking-tight mb-1" style="color:var(--text)">🃏 Tarjetas</h1>
+    <p class="text-sm" style="color:var(--muted)">Practica vocabulario ruso con tarjetas interactivas — niveles A1–B2</p>
+  </header>
+
+  <!-- FLIP CARD TOOL -->
+  <div class="mb-8">
+    <div class="rounded-2xl p-5 sm:p-6 shadow" style="background:var(--surface);border:1px solid var(--border)">
+      <div id="fcSetup">
+        <p class="text-xs mb-4" style="color:var(--muted)">Pon a prueba tus conocimientos con tarjetas. Elige el nivel, el tema y el número de tarjetas.</p>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Nivel</div>
+          <div class="flex gap-2 flex-wrap">
+            <button class="t-pill on" onclick="setFcPill('level','A1',this)">A1 Beginner</button>
+            <button class="t-pill" onclick="setFcPill('level','A2',this)">A2 Elementary</button>
+            <button class="t-pill" onclick="setFcPill('level','B1',this)">B1 Intermediate</button>
+            <button class="t-pill" onclick="setFcPill('level','B2',this)">B2 Advanced</button>
+          </div>
+        </div>
+        <div class="mb-4">
+          <div class="text-xs font-bold uppercase tracking-widest mb-1.5" style="color:var(--faint)">Tema <span style="font-weight:400;text-transform:none;color:var(--xfaint)">(opcional)</span></div>
+          <input type="text" id="fcTopic" placeholder="ej. food, family, verbs, travel…" class="w-full px-4 py-2.5 rounded-xl text-sm outline-none" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" />
+        </div>
+        <div class="mb-5">
+          <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--faint)">Número de tarjetas</div>
+          <div class="flex gap-2 flex-wrap items-center">
+            <button class="t-pill on" onclick="setFcPill('count',5,this)">5</button>
+            <button class="t-pill" onclick="setFcPill('count',10,this)">10</button>
+            <button class="t-pill" onclick="setFcPill('count',20,this)">20</button>
+            <button class="t-pill" onclick="setFcPill('count',30,this)">30</button>
+            <input type="number" id="fcCountCustom" placeholder="otro…" min="1" max="50" class="px-3 py-2 rounded-xl text-sm outline-none w-24" style="background:var(--bg);border:2px solid var(--border);color:var(--text);font-family:inherit" oninput="fcState.count=Math.min(50,parseInt(this.value)||5);document.querySelectorAll('#fcSetup .t-pill').forEach(b=>b.classList.remove('on'))" />
+          </div>
+        </div>
+        <button onclick="startFlipQuiz()" class="w-full py-3 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">▶ Comenzar Quiz</button>
+      </div>
+      <!-- Quiz area -->
+      <div id="fcQuiz" style="display:none">
+        <div class="flex justify-between items-center mb-2 text-sm font-semibold">
+          <span style="color:var(--faint)">Tarjeta <span id="fcCurr">1</span> / <span id="fcTot">5</span></span>
+          <span style="color:var(--green)">✓ <span id="fcScr">0</span> correctas</span>
+        </div>
+        <div class="rounded-full h-1.5 mb-4" style="background:var(--border)"><div id="fcBar" class="h-1.5 rounded-full transition-all duration-500" style="background:var(--primary);width:0%"></div></div>
+        <div style="perspective:900px;margin-bottom:16px">
+          <div id="fcInner" class="fc-inner" style="position:relative;min-height:120px">
+            <div id="fcFront" class="fc-face" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;background:var(--primary);color:#fff">
+              <div id="fcFrontLbl" style="font-size:.68rem;opacity:.7;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px"></div>
+              <div id="fcFrontTxt" style="font-size:1.45rem;font-weight:900;line-height:1.25"></div>
+            </div>
+            <div id="fcBack" class="fc-face fc-back-face" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;border:2px solid var(--primary);background:var(--surface)">
+              <div id="fcBackLbl" style="font-size:.68rem;color:var(--faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px"></div>
+              <div id="fcBackTxt" style="font-size:1.35rem;font-weight:900;color:var(--primary);line-height:1.25"></div>
+            </div>
+          </div>
+        </div>
+        <div id="fcOpts">
+          <div class="text-xs mb-2 font-bold uppercase tracking-widest" style="color:var(--faint)" id="fcOptsLbl">Elige la traducción correcta:</div>
+          <div id="fcOptGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <div id="fcFb" style="display:none;margin-top:10px;padding:10px 14px;border-radius:12px;font-weight:700;font-size:.9rem;text-align:center"></div>
+      </div>
+      <!-- Results -->
+      <div id="fcEnd" style="display:none;text-align:center;padding:14px 6px">
+        <div style="font-size:56px;margin-bottom:8px" id="fcEndEmoji">🎉</div>
+        <div style="font-size:1.3rem;font-weight:900;color:var(--primary)" id="fcEndTitle"></div>
+        <div style="font-size:.88rem;color:var(--muted);margin-top:6px" id="fcEndSub"></div>
+        <div class="flex gap-2 justify-center mt-4 flex-wrap">
+          <button onclick="startFlipQuiz()" class="px-5 py-2.5 rounded-xl text-white font-bold border-none cursor-pointer text-sm" style="background:var(--primary)">🔄 Intentar de nuevo</button>
+          <button onclick="resetFcSetup()" class="px-5 py-2.5 rounded-xl font-bold border-none cursor-pointer text-sm" style="background:var(--bg);border:2px solid var(--border);color:var(--text)">⚙️ Configuración</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-5 mt-2" style="border-top:1px solid var(--border)">
+    <div class="text-sm font-bold tracking-widest uppercase" style="color:var(--primary)">⚡ Powered by MYTHEON TECHNOLOGIES</div>
+    <div class="text-xs mt-1" style="color:var(--faint)">133/1 Gagarin Avenue, Almaty, Kazakhstan</div>
+    <div class="text-sm mt-3" style="color:var(--muted)">Este proyecto está dedicado a la princesa kazaja que robó mi corazón ❤️</div>
+    <div class="text-sm font-semibold mt-1" style="color:#e53e3e">Zaikа, ¡eres la mejor! ⭐✨</div>
+  </footer>
+
+</div>
+<script>
+let direction = 'ru-en';
+
+function toggleTheme() {
+  const isDark = document.body.dataset.theme === 'dark';
+  document.body.dataset.theme = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', document.body.dataset.theme);
+  document.getElementById('themeBtn').textContent = isDark ? '🌙 Oscuro' : '☀️ Claro';
+}
+function loadTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) document.body.dataset.theme = saved;
+  const isDark = document.body.dataset.theme === 'dark';
+  document.getElementById('themeBtn').textContent = isDark ? '☀️ Claro' : '🌙 Oscuro';
+}
+function navToggleDrop(e, menuId) {
+  e.stopPropagation();
+  const menu = document.getElementById(menuId);
+  const wasOpen = menu.classList.contains('open');
+  document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open'));
+  if (!wasOpen) menu.classList.add('open');
+}
+function navToggleMobile(){document.getElementById('navMobile').classList.toggle('open');}
+document.addEventListener('click', () => document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open')));
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+const FC_VOCAB = {
+  A1:[
+    {en:'water',ru:'вода',t:'food'},{en:'bread',ru:'хлеб',t:'food'},{en:'milk',ru:'молоко',t:'food'},
+    {en:'coffee',ru:'кофе',t:'food'},{en:'tea',ru:'чай',t:'food'},{en:'apple',ru:'яблоко',t:'food'},
+    {en:'house',ru:'дом',t:'home'},{en:'room',ru:'комната',t:'home'},{en:'table',ru:'стол',t:'home'},
+    {en:'chair',ru:'стул',t:'home'},{en:'dog',ru:'собака',t:'animals'},{en:'cat',ru:'кошка',t:'animals'},
+    {en:'book',ru:'книга',t:'school'},{en:'pen',ru:'ручка',t:'school'},{en:'school',ru:'школа',t:'school'},
+    {en:'teacher',ru:'учитель',t:'school'},{en:'family',ru:'семья',t:'family'},{en:'mother',ru:'мама',t:'family'},
+    {en:'father',ru:'папа',t:'family'},{en:'brother',ru:'брат',t:'family'},{en:'sister',ru:'сестра',t:'family'},
+    {en:'city',ru:'город',t:'travel'},{en:'street',ru:'улица',t:'travel'},{en:'shop',ru:'магазин',t:'travel'},
+    {en:'to eat',ru:'есть',t:'verbs'},{en:'to drink',ru:'пить',t:'verbs'},{en:'to go',ru:'идти / ходить',t:'verbs'},
+    {en:'to work',ru:'работать',t:'verbs'},{en:'to sleep',ru:'спать',t:'verbs'},{en:'to read',ru:'читать',t:'verbs'},
+  ],
+  A2:[
+    {en:'weather',ru:'погода',t:'nature'},{en:'sun',ru:'солнце',t:'nature'},{en:'rain',ru:'дождь',t:'nature'},
+    {en:'snow',ru:'снег',t:'nature'},{en:'morning',ru:'утро',t:'time'},{en:'evening',ru:'вечер',t:'time'},
+    {en:'yesterday',ru:'вчера',t:'time'},{en:'tomorrow',ru:'завтра',t:'time'},{en:'meeting',ru:'встреча',t:'work'},
+    {en:'office',ru:'офис',t:'work'},{en:'computer',ru:'компьютер',t:'work'},{en:'phone',ru:'телефон',t:'work'},
+    {en:'restaurant',ru:'ресторан',t:'travel'},{en:'hotel',ru:'гостиница',t:'travel'},{en:'ticket',ru:'билет',t:'travel'},
+    {en:'airport',ru:'аэропорт',t:'travel'},{en:'trip',ru:'поездка',t:'travel'},{en:'to arrive',ru:'приезжать',t:'verbs'},
+    {en:'to forget',ru:'забывать',t:'verbs'},{en:'to buy',ru:'покупать',t:'verbs'},{en:'to think',ru:'думать',t:'verbs'},
+    {en:'interesting',ru:'интересный',t:'adjectives'},{en:'beautiful',ru:'красивый',t:'adjectives'},
+    {en:'difficult',ru:'трудный',t:'adjectives'},{en:'expensive',ru:'дорогой',t:'adjectives'},
+    {en:'to understand',ru:'понимать',t:'verbs'},{en:'to remember',ru:'помнить',t:'verbs'},
+    {en:'to sell',ru:'продавать',t:'verbs'},{en:'easy',ru:'лёгкий',t:'adjectives'},{en:'cheap',ru:'дешёвый',t:'adjectives'},
+    {en:'neighbour',ru:'сосед',t:'home'},
+  ],
+  B1:[
+    {en:'experience',ru:'опыт',t:'work'},{en:'opportunity',ru:'возможность',t:'work'},
+    {en:'challenge',ru:'трудность',t:'work'},{en:'relationship',ru:'отношения',t:'social'},
+    {en:'environment',ru:'окружающая среда',t:'nature'},{en:'opinion',ru:'мнение',t:'communication'},
+    {en:'discussion',ru:'обсуждение',t:'communication'},{en:'advice',ru:'совет',t:'communication'},
+    {en:'decision',ru:'решение',t:'work'},{en:'achievement',ru:'достижение',t:'work'},
+    {en:'to realise',ru:'осознавать',t:'verbs'},{en:'to explain',ru:'объяснять',t:'verbs'},
+    {en:'to develop',ru:'развивать',t:'verbs'},{en:'to improve',ru:'улучшать',t:'verbs'},
+    {en:'to agree',ru:'соглашаться',t:'verbs'},{en:'to suggest',ru:'предлагать',t:'verbs'},
+    {en:'responsible',ru:'ответственный',t:'adjectives'},{en:'successful',ru:'успешный',t:'adjectives'},
+    {en:'confident',ru:'уверенный',t:'adjectives'},{en:'patient',ru:'терпеливый',t:'adjectives'},
+    {en:'in spite of',ru:'несмотря на',t:'phrases'},{en:'furthermore',ru:'кроме того',t:'phrases'},
+    {en:'as a result',ru:'в результате',t:'phrases'},{en:'on the other hand',ru:'с другой стороны',t:'phrases'},
+    {en:'culture',ru:'культура',t:'social'},{en:'tradition',ru:'традиция',t:'social'},
+    {en:'generation',ru:'поколение',t:'social'},{en:'neighbourhood',ru:'район',t:'travel'},
+    {en:'to depend on',ru:'зависеть от',t:'verbs'},{en:'nevertheless',ru:'тем не менее',t:'phrases'},
+  ],
+  B2:[
+    {en:'consequence',ru:'последствие',t:'abstract'},{en:'perspective',ru:'точка зрения',t:'abstract'},
+    {en:'fundamental',ru:'фундаментальный',t:'adjectives'},{en:'sophisticated',ru:'утончённый',t:'adjectives'},
+    {en:'controversial',ru:'спорный',t:'adjectives'},{en:'ambiguous',ru:'двусмысленный',t:'adjectives'},
+    {en:'significant',ru:'значительный',t:'adjectives'},{en:'substantial',ru:'существенный',t:'adjectives'},
+    {en:'to demonstrate',ru:'демонстрировать',t:'verbs'},{en:'to facilitate',ru:'способствовать',t:'verbs'},
+    {en:'to emphasise',ru:'подчёркивать',t:'verbs'},{en:'to acknowledge',ru:'признавать',t:'verbs'},
+    {en:'to anticipate',ru:'предвидеть',t:'verbs'},{en:'to implement',ru:'реализовывать',t:'verbs'},
+    {en:'to assess',ru:'оценивать',t:'verbs'},{en:'regardless of',ru:'вне зависимости от',t:'phrases'},
+    {en:'consequently',ru:'следовательно',t:'phrases'},{en:'to mitigate',ru:'смягчать',t:'verbs'},
+    {en:'paradigm',ru:'парадигма',t:'abstract'},{en:'coherent',ru:'последовательный',t:'adjectives'},
+    {en:'pragmatic',ru:'прагматичный',t:'adjectives'},{en:'resilience',ru:'стойкость',t:'abstract'},
+    {en:'discrepancy',ru:'расхождение',t:'abstract'},{en:'innovative',ru:'инновационный',t:'adjectives'},
+    {en:'to substantiate',ru:'обосновывать',t:'verbs'},{en:'implication',ru:'подtekst',t:'abstract'},
+    {en:'albeit',ru:'хотя',t:'phrases'},{en:'notwithstanding',ru:'несмотря на',t:'phrases'},
+    {en:'to evaluate',ru:'анализировать',t:'verbs'},{en:'comprehensive',ru:'всесторонний',t:'adjectives'},
+  ],
+};
+
+let fcState = {level:'A1',count:5,topic:'',deck:[],idx:0,score:0,flipped:false};
+function setFcPill(grp, val, btn) {
+  btn.closest('.flex').querySelectorAll('.t-pill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  fcState[grp] = val;
+}
+function shuffleArr(a) { return a.slice().sort(()=>Math.random()-.5); }
+function startFlipQuiz() {
+  const topic = document.getElementById('fcTopic').value.trim().toLowerCase();
+  let pool = (FC_VOCAB[fcState.level]||FC_VOCAB.A1).filter(w=>!topic||w.t.includes(topic)||w.en.includes(topic)||w.ru.includes(topic));
+  if (!pool.length) pool = FC_VOCAB[fcState.level]||FC_VOCAB.A1;
+  fcState.deck = shuffleArr(pool).slice(0,Math.min(fcState.count,pool.length));
+  fcState.idx = 0; fcState.score = 0;
+  document.getElementById('fcSetup').style.display='none';
+  document.getElementById('fcEnd').style.display='none';
+  document.getElementById('fcQuiz').style.display='block';
+  renderFcCard();
+}
+function renderFcCard() {
+  const card = fcState.deck[fcState.idx];
+  const isEnRu = direction==='en-ru';
+  document.getElementById('fcCurr').textContent = fcState.idx+1;
+  document.getElementById('fcTot').textContent  = fcState.deck.length;
+  document.getElementById('fcScr').textContent  = fcState.score;
+  const pct = (fcState.idx/fcState.deck.length)*100;
+  document.getElementById('fcBar').style.width  = pct+'%';
+  document.getElementById('fcFrontLbl').textContent = isEnRu ? 'English' : 'Russian';
+  document.getElementById('fcFrontTxt').textContent = isEnRu ? card.en : card.ru;
+  document.getElementById('fcBackLbl').textContent  = isEnRu ? 'Russian' : 'English';
+  document.getElementById('fcBackTxt').textContent  = isEnRu ? card.ru : card.en;
+  document.getElementById('fcOptsLbl').textContent  = isEnRu ? 'Elige la traducción correcta al ruso:' : 'Elige la traducción correcta al inglés:';
+  fcState.flipped = false;
+  const inner = document.getElementById('fcInner');
+  inner.classList.remove('flipped','fc-wrong-shake');
+  const correct = isEnRu ? card.ru : card.en;
+  const pool = (FC_VOCAB[fcState.level]||FC_VOCAB.A1).filter(w=>w!==card);
+  const wrongs = shuffleArr(pool).slice(0,3).map(w=>isEnRu?w.ru:w.en);
+  const opts = shuffleArr([correct,...wrongs]);
+  const grid = document.getElementById('fcOptGrid');
+  grid.innerHTML = '';
+  opts.forEach(opt => {
+    const b = document.createElement('button');
+    b.className='opt-btn'; b.textContent=opt;
+    b.onclick=()=>selectFcAnswer(b,opt,correct);
+    grid.appendChild(b);
+  });
+  document.getElementById('fcFb').style.display='none';
+  document.getElementById('fcOpts').style.display='block';
+}
+function selectFcAnswer(btn, chosen, correct) {
+  document.querySelectorAll('#fcOptGrid .opt-btn').forEach(b=>b.disabled=true);
+  const inner = document.getElementById('fcInner');
+  const fb = document.getElementById('fcFb');
+  inner.classList.add('flipped'); fcState.flipped=true;
+  if (chosen===correct) {
+    fcState.score++;
+    btn.classList.add('correct');
+    fb.style.display='block'; fb.style.background='var(--green-bg)'; fb.style.color='var(--green)';
+    fb.textContent='✓ ¡Correcto! ¡Muy bien!';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('#fcOptGrid .opt-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct');});
+    inner.classList.add('fc-wrong-shake');
+    fb.style.display='block'; fb.style.background='rgba(239,68,68,.08)'; fb.style.color='#ef4444';
+    fb.textContent='✗ Respuesta correcta: '+correct;
+  }
+  document.getElementById('fcScr').textContent=fcState.score;
+  setTimeout(()=>{ fcState.idx++; if(fcState.idx<fcState.deck.length) renderFcCard(); else endFlipQuiz(); },1600);
+}
+function endFlipQuiz() {
+  document.getElementById('fcQuiz').style.display='none';
+  document.getElementById('fcEnd').style.display='block';
+  const n=fcState.deck.length, s=fcState.score, pct=Math.round(s/n*100);
+  document.getElementById('fcBar').style.width='100%';
+  document.getElementById('fcEndEmoji').textContent = pct>=80?'🏆':pct>=60?'🎉':pct>=40?'📚':'💪';
+  document.getElementById('fcEndTitle').textContent = `${s} / ${n} correctas — ${pct}%`;
+  document.getElementById('fcEndSub').textContent = pct>=80?'¡Excelente! ¡Conoces muy bien las palabras!':pct>=60?'¡Buen trabajo! Sigue practicando.':pct>=40?'No está mal. ¡Repasa e inténtalo de nuevo!':'No te rindas — ¡la práctica hace al maestro!';
+}
+function resetFcSetup() {
+  document.getElementById('fcEnd').style.display='none';
+  document.getElementById('fcQuiz').style.display='none';
+  document.getElementById('fcSetup').style.display='block';
+}
+
+window.addEventListener('load', loadTheme);
+</script>
+</body>
+</html>

@@ -22,10 +22,6 @@
       theme: {
         extend: {
           colors: {
-            navy: '#070b14',
-            card: '#0f1629',
-            card2: '#141d35',
-            border: 'rgba(255,255,255,0.08)',
             red: { ru: '#e63946' },
             gold: '#f59e0b'
           },
@@ -37,11 +33,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;
+      --text:#1a1a2e;--muted:#5570a0;--faint:#4b5e84;--xfaint:#6b7ba0;
+      --primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;
+      --red:#e63946;--red-bg:rgba(230,57,70,0.10);--red-border:rgba(230,57,70,0.3);
+      --gold:#f59e0b;
+      --orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;
+      --shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);
+    }
+    [data-theme="dark"] {
+      --bg:#070b14;--surface:#0f1629;--surface2:#141d35;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.05);
+      --text:#e5e7eb;--muted:#9ca3af;--faint:#6b7280;--xfaint:#4b5563;
+      --primary:#5b85f5;--primary-bg:rgba(91,133,245,0.12);--primary-dk:#7599ff;
+      --red:#e63946;--red-bg:rgba(230,57,70,0.12);--red-border:rgba(230,57,70,0.35);
+      --gold:#f59e0b;
+      --orange:#fb923c;--orange-bg:rgba(251,146,60,0.08);--green:#34d399;--green-bg:rgba(52,211,153,0.08);
+      --shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);
+    }
+
     * { box-sizing: border-box; }
-    body { background: #070b14; font-family: 'Inter', system-ui, sans-serif; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; }
 
     /* ── gradient text ── */
     .grad-text {
+      background: linear-gradient(135deg, #e63946 0%, #e63946 60%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    [data-theme="dark"] .grad-text {
       background: linear-gradient(135deg, #ffffff 0%, #e63946 60%, #f59e0b 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -56,6 +77,9 @@
 
     /* ── hero ── */
     .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34,83,203,0.08) 0%, transparent 70%), var(--bg);
+    }
+    [data-theme="dark"] .hero-bg {
       background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,57,70,0.22) 0%, transparent 70%),
                   radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59,130,246,0.12) 0%, transparent 70%),
                   #070b14;
@@ -92,12 +116,11 @@
     /* ── card hover ── */
     .card-hover {
       transition: transform .25s ease, box-shadow .25s ease;
-      border: 1px solid rgba(255,255,255,0.07);
     }
     .card-hover:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-      border-color: rgba(230,57,70,0.3);
+      box-shadow: 0 20px 60px var(--shadow2);
+      border-color: var(--red-border) !important;
     }
 
     /* ── pulse badge ── */
@@ -110,11 +133,8 @@
       background:currentColor; animation: pulse-ring 1.5s ease-out infinite;
     }
 
-    /* ── nav ── */
-    .nav-blur { backdrop-filter: blur(12px); background: rgba(7,11,20,0.85); }
-
     /* ── pricing ── */
-    .popular-ring { border: 2px solid #e63946; box-shadow: 0 0 40px rgba(230,57,70,0.25); }
+    .popular-ring { border: 2px solid #e63946 !important; box-shadow: 0 0 40px rgba(230,57,70,0.25); }
 
     /* ── FAQ ── */
     .faq-answer { display: none; }
@@ -124,22 +144,18 @@
 
     /* ── exercise demo tabs ── */
     .demo-tab { transition: all .2s; }
-    .demo-tab.active { background: #e63946; color: white; }
+    .demo-tab.active { background: #e63946 !important; color: white !important; border-color: #e63946 !important; }
     .demo-panel { display: none; }
     .demo-panel.active { display: block; }
 
     /* ── MC answer ── */
     .mc-opt {
       cursor: pointer; transition: all .2s;
-      border: 1.5px solid rgba(255,255,255,0.1);
+      border: 1.5px solid var(--border);
     }
-    .mc-opt:hover { border-color: rgba(230,57,70,0.5); background: rgba(230,57,70,0.08); }
+    .mc-opt:hover { border-color: rgba(230,57,70,0.5); background: var(--red-bg); }
     .mc-opt.correct { border-color: #10b981; background: rgba(16,185,129,0.12); }
     .mc-opt.wrong   { border-color: #ef4444; background: rgba(239,68,68,0.1); }
-
-    /* ── mobile nav ── */
-    #mobile-menu { display: none; }
-    #mobile-menu.open { display: block; }
 
     /* ── scroll reveal ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
@@ -171,64 +187,85 @@
       50%       { box-shadow: 0 0 0 14px rgba(230,57,70,0); }
     }
     .cta-pulse { animation: ctaPulse 2.5s ease-in-out infinite; }
+
+    /* ═══ SITE NAV ═══ */
+    .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
+    .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
+    .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--text);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
+    .nav-logo:hover{opacity:.85;}
+    .nav-link{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;font-family:inherit;white-space:nowrap;}
+    .nav-link:hover,.nav-link.active{background:var(--primary-bg);color:var(--primary);}
+    .nav-drop-wrap{position:relative;}
+    .nav-drop-menu{position:absolute;top:calc(100% + 4px);left:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 24px var(--shadow2);padding:6px;min-width:185px;display:none;z-index:300;}
+    .nav-drop-menu.open{display:block;}
+    .nav-dd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;white-space:nowrap;}
+    .nav-dd-item:hover{background:var(--primary-bg);color:var(--primary);}
+    .nav-spacer{flex:1;}
+    .nav-theme-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);background:none;border:1px solid var(--border);cursor:pointer;transition:all .15s;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+    .nav-theme-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg);}
+    .nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer;color:var(--muted);font-size:1rem;flex-shrink:0;}
+    .nav-mobile{display:none;border-top:1px solid var(--border);background:var(--surface);padding:8px 16px 12px;}
+    .nav-mobile.open{display:block;}
+    .nav-m-link{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;font-size:.88rem;font-weight:600;color:var(--text);text-decoration:none;transition:all .15s;}
+    .nav-m-link:hover{background:var(--primary-bg);color:var(--primary);}
+    .nav-m-sect{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--faint);padding:8px 12px 2px;}
+    @media(max-width:768px){.nav-desktop-links{display:none!important;}.nav-hamburger{display:inline-flex;}}
   </style>
 </head>
-<body class="text-white overflow-x-hidden">
+<body data-theme="light" class="overflow-x-hidden">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRZ5N9GV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- ═══ NAV ═══ -->
-<header class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
-  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2 font-bold text-lg">
-      <span class="text-2xl">🇷🇺</span>
-      <span class="text-white">Russian<span class="text-red-400">AI</span></span>
-    </a>
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-6 text-sm text-gray-400">
-      <a href="#how-it-works" class="hover:text-white transition">How it works</a>
-      <a href="#exercises" class="hover:text-white transition">Exercises</a>
-      <a href="#pricing" class="hover:text-white transition">Pricing</a>
-      <a href="#reviews" class="hover:text-white transition">Reviews</a>
-      <a href="/translate/" class="hover:text-white transition">Translate</a>
-    </nav>
-    <div class="hidden md:flex items-center gap-3">
-      <a href="/learn/dashboard/" class="text-sm text-gray-300 hover:text-white border border-white/15 hover:border-white/30 px-4 py-2 rounded-lg transition font-medium">Log in</a>
-      <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold px-5 py-2 rounded-lg transition cta-pulse">
-        Start Now →
-      </a>
+<!-- SITE NAV -->
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="/" class="nav-logo">🇷🇺 englishtorussian.ai</a>
+    <div class="nav-desktop-links" style="display:flex;align-items:center;gap:2px;">
+      <a href="/translate/" class="nav-link">🌐 Translate</a>
+      <a href="/pdf/" class="nav-link">📄 PDF Translator</a>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navExercisesBtn" onclick="navToggleDrop(event,'navExercisesMenu')">Exercises <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navExercisesMenu">
+          <a href="/flip-card/" class="nav-dd-item">🃏 Flip Cards</a>
+          <a href="/gap-fill/" class="nav-dd-item">📝 Gap Fill</a>
+          <a href="/listening/" class="nav-dd-item">🎧 Listening</a>
+        </div>
+      </div>
+      <div class="nav-drop-wrap">
+        <button class="nav-link" id="navGrammarBtn" onclick="navToggleDrop(event,'navGrammarMenu')">Grammar <span style="font-size:.7em">▾</span></button>
+        <div class="nav-drop-menu" id="navGrammarMenu">
+          <a href="/verb-conjugator/" class="nav-dd-item">⚡ Verb Conjugator</a>
+          <a href="/case-explainer/" class="nav-dd-item">📚 Case Explainer</a>
+        </div>
+      </div>
     </div>
-    <!-- Mobile hamburger -->
-    <button id="menu-btn" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white" aria-label="Menu">
-      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-    </button>
+    <div class="nav-spacer"></div>
+    <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+    <button class="nav-hamburger" id="navHamBtn" onclick="navToggleMobile()">☰</button>
   </div>
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="md:hidden border-t border-white/5 bg-[#070b14]">
-    <div class="px-4 py-4 flex flex-col gap-3 text-sm">
-      <a href="#how-it-works" class="text-gray-300 hover:text-white py-2">How it works</a>
-      <a href="#exercises" class="text-gray-300 hover:text-white py-2">Exercises</a>
-      <a href="#pricing" class="text-gray-300 hover:text-white py-2">Pricing</a>
-      <a href="#reviews" class="text-gray-300 hover:text-white py-2">Reviews</a>
-      <a href="/translate/" class="text-gray-300 hover:text-white py-2">Translate</a>
-      <a href="/learn/dashboard/" class="text-gray-300 hover:text-white py-2 border-t border-white/5 pt-3">Log in</a>
-      <a href="/learn/quiz/" class="bg-red-500 text-white font-bold px-4 py-3 rounded-lg text-center mt-1 cta-pulse">
-        Start Now →
-      </a>
-    </div>
+  <div class="nav-mobile" id="navMobile">
+    <a href="/translate/" class="nav-m-link">🌐 Translate</a>
+    <a href="/pdf/" class="nav-m-link">📄 PDF Translator</a>
+    <div class="nav-m-sect">Exercises</div>
+    <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
+    <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
+    <a href="/listening/" class="nav-m-link">🎧 Listening</a>
+    <div class="nav-m-sect">Grammar</div>
+    <a href="/verb-conjugator/" class="nav-m-link">⚡ Verb Conjugator</a>
+    <a href="/case-explainer/" class="nav-m-link">📚 Case Explainer</a>
+    <div class="nav-m-sect">Course</div>
+    <a href="/" class="nav-m-link" style="color:#e63946;font-weight:700;">🎓 Learn Russian with AI →</a>
   </div>
-</header>
+</nav>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero-bg min-h-screen flex items-center pt-24 pb-16 px-4">
+<section class="hero-bg min-h-screen flex items-center pt-0 pb-16 px-4">
   <div class="max-w-6xl mx-auto w-full">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Left: copy -->
       <div>
         <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-gray-300 mb-6">
+        <div class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm mb-6" style="background:var(--surface2);border:1px solid var(--border);color:var(--muted);">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
@@ -239,29 +276,29 @@
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] mb-6">
           Learn Russian<br/>
           <span class="grad-text">with AI.</span><br/>
-          <span class="text-gray-200">In days, not years.</span>
+          <span style="color:var(--muted);">In days, not years.</span>
         </h1>
 
-        <p class="text-xl text-gray-400 mb-8 max-w-md leading-relaxed">
+        <p class="text-xl mb-8 max-w-md leading-relaxed" style="color:var(--muted);">
           AI-powered micro-lessons that hack how your brain learns. Go from zero to holding real conversations — 15 minutes a day is all it takes.
         </p>
 
         <!-- Bullet points -->
         <ul class="space-y-3 mb-10">
-          <li class="flex items-center gap-3 text-gray-300">
-            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+          <li class="flex items-center gap-3" style="color:var(--text);">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs" style="background:var(--green-bg);color:var(--green);">✓</span>
             Daily 15-min lessons — flip cards, audio, fill-gaps & quizzes
           </li>
-          <li class="flex items-center gap-3 text-gray-300">
-            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+          <li class="flex items-center gap-3" style="color:var(--text);">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs" style="background:var(--green-bg);color:var(--green);">✓</span>
             Pick your challenge: 7 days, 14 days, or unlimited
           </li>
-          <li class="flex items-center gap-3 text-gray-300">
-            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+          <li class="flex items-center gap-3" style="color:var(--text);">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs" style="background:var(--green-bg);color:var(--green);">✓</span>
             One-time payment from $9.99 — no subscription ever
           </li>
-          <li class="flex items-center gap-3 text-gray-300">
-            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+          <li class="flex items-center gap-3" style="color:var(--text);">
+            <span class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-xs" style="background:var(--green-bg);color:var(--green);">✓</span>
             Native speaker audio for every word & phrase
           </li>
         </ul>
@@ -274,7 +311,7 @@
         </div>
 
         <!-- Trust signals -->
-        <div class="flex flex-wrap gap-4 mt-6 text-xs text-gray-500">
+        <div class="flex flex-wrap gap-4 mt-6 text-xs" style="color:var(--faint);">
           <span>🛡️ 7-day money-back guarantee</span>
           <span>⚡ Start in 60 seconds</span>
           <span>🔒 Secure checkout</span>
@@ -284,47 +321,47 @@
       <!-- Right: animated flip card preview -->
       <div class="flex justify-center">
         <div class="float-anim w-full max-w-xs">
-          <div class="bg-[#0f1629] rounded-2xl p-5 border border-white/10 glow-blue">
+          <div class="rounded-2xl p-5 glow-blue" style="background:var(--surface);border:1px solid var(--border);">
             <!-- Header -->
             <div class="flex items-center justify-between mb-4">
               <div class="flex items-center gap-2">
                 <span class="text-lg">🃏</span>
-                <span class="text-sm text-gray-400 font-medium">Flip Card</span>
+                <span class="text-sm font-medium" style="color:var(--muted);">Flip Card</span>
               </div>
-              <span class="text-xs text-gray-500">Day 4 · Card 3/12</span>
+              <span class="text-xs" style="color:var(--faint);">Day 4 · Card 3/12</span>
             </div>
             <!-- Progress bar -->
-            <div class="h-1.5 bg-white/5 rounded-full mb-5">
+            <div class="h-1.5 rounded-full mb-5" style="background:var(--border2);">
               <div class="h-full bg-gradient-to-r from-red-500 to-orange-400 rounded-full" style="width:25%"></div>
             </div>
             <!-- Flip card demo -->
             <div id="hero-flip" class="flip-wrap h-40 mb-4" onclick="heroFlip()">
               <div class="flip-inner" id="hero-inner">
-                <div class="flip-face" style="background: linear-gradient(135deg, #1a2340, #0f1629); border: 1.5px solid rgba(255,255,255,0.1);">
-                  <div class="text-5xl font-black mb-2">Привет</div>
-                  <div class="text-sm text-gray-500">Click to reveal →</div>
+                <div class="flip-face" style="background:var(--surface2);border:1.5px solid var(--border);">
+                  <div class="text-5xl font-black mb-2" style="color:var(--text);">Привет</div>
+                  <div class="text-sm" style="color:var(--faint);">Click to reveal →</div>
                 </div>
-                <div class="flip-face flip-back" style="background: linear-gradient(135deg, #1a1a35, #0f1a30); border: 1.5px solid rgba(99,102,241,0.3);">
-                  <div class="text-3xl font-bold text-blue-300 mb-1">Hello / Hi</div>
-                  <div class="text-sm text-gray-400 mb-3">Informal greeting</div>
-                  <div class="text-lg text-gray-300 font-mono">prih-VYET</div>
+                <div class="flip-face flip-back" style="background:var(--primary-bg);border:1.5px solid var(--border);">
+                  <div class="text-3xl font-bold mb-1" style="color:var(--primary);">Hello / Hi</div>
+                  <div class="text-sm mb-3" style="color:var(--muted);">Informal greeting</div>
+                  <div class="text-lg font-mono" style="color:var(--text);">prih-VYET</div>
                 </div>
               </div>
             </div>
-            <div class="text-xs text-center text-gray-500 mb-4" id="flip-hint">👆 Tap to flip</div>
+            <div class="text-xs text-center mb-4" style="color:var(--faint);" id="flip-hint">👆 Tap to flip</div>
             <!-- Bottom stats -->
-            <div class="grid grid-cols-3 gap-2 text-center border-t border-white/5 pt-4">
+            <div class="grid grid-cols-3 gap-2 text-center pt-4" style="border-top:1px solid var(--border2);">
               <div>
                 <div class="text-lg font-bold text-orange-400">🔥 4</div>
-                <div class="text-xs text-gray-500">day streak</div>
+                <div class="text-xs" style="color:var(--faint);">day streak</div>
               </div>
               <div>
-                <div class="text-lg font-bold text-green-400">87%</div>
-                <div class="text-xs text-gray-500">accuracy</div>
+                <div class="text-lg font-bold" style="color:var(--green);">87%</div>
+                <div class="text-xs" style="color:var(--faint);">accuracy</div>
               </div>
               <div>
-                <div class="text-lg font-bold text-blue-400">240</div>
-                <div class="text-xs text-gray-500">XP today</div>
+                <div class="text-lg font-bold" style="color:var(--primary);">240</div>
+                <div class="text-xs" style="color:var(--faint);">XP today</div>
               </div>
             </div>
           </div>
@@ -335,23 +372,23 @@
 </section>
 
 <!-- ═══ STATS BAR ═══ -->
-<div class="border-y border-white/5 bg-white/[0.02] py-8 px-4">
+<div class="py-8 px-4" style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface2);">
   <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
     <div>
-      <div class="text-3xl font-black text-white">2,400+</div>
-      <div class="text-sm text-gray-500 mt-1">Students enrolled</div>
+      <div class="text-3xl font-black" style="color:var(--text);">2,400+</div>
+      <div class="text-sm mt-1" style="color:var(--muted);">Students enrolled</div>
     </div>
     <div>
-      <div class="text-3xl font-black text-white">95%</div>
-      <div class="text-sm text-gray-500 mt-1">Completion rate</div>
+      <div class="text-3xl font-black" style="color:var(--text);">95%</div>
+      <div class="text-sm mt-1" style="color:var(--muted);">Completion rate</div>
     </div>
     <div>
-      <div class="text-3xl font-black text-white">150+</div>
-      <div class="text-sm text-gray-500 mt-1">Lessons & exercises</div>
+      <div class="text-3xl font-black" style="color:var(--text);">150+</div>
+      <div class="text-sm mt-1" style="color:var(--muted);">Lessons & exercises</div>
     </div>
     <div>
-      <div class="text-3xl font-black text-white">4.9 ★</div>
-      <div class="text-sm text-gray-500 mt-1">Average rating</div>
+      <div class="text-3xl font-black" style="color:var(--text);">4.9 ★</div>
+      <div class="text-sm mt-1" style="color:var(--muted);">Average rating</div>
     </div>
   </div>
 </div>
@@ -360,54 +397,54 @@
 <section id="how-it-works" class="py-24 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-16 reveal">
-      <div class="text-red-400 text-sm font-semibold uppercase tracking-widest mb-3">How it works</div>
-      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">From zero to Russian in 3 simple steps</h2>
-      <p class="text-gray-400 max-w-xl mx-auto text-lg">No prior knowledge needed. We do all the thinking — you just show up for 15 minutes a day.</p>
+      <div class="text-sm font-semibold uppercase tracking-widest mb-3" style="color:var(--red);">How it works</div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4" style="color:var(--text);">From zero to Russian in 3 simple steps</h2>
+      <p class="max-w-xl mx-auto text-lg" style="color:var(--muted);">No prior knowledge needed. We do all the thinking — you just show up for 15 minutes a day.</p>
     </div>
     <div class="grid sm:grid-cols-3 gap-8">
-      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
-        <div class="w-16 h-16 bg-red-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-red-500/20">📋</div>
-        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">1</div>
-        <h3 class="text-xl font-black text-white mb-3">Take a 2-min Quiz</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Tell us your goal, your level, and how many minutes a day you can commit. We match you to the perfect challenge instantly.</p>
+      <div class="rounded-2xl p-8 card-hover reveal text-center relative" style="background:var(--surface);border:1px solid var(--border);">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto" style="background:var(--red-bg);border:1px solid var(--red-border);">📋</div>
+        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4 text-white">1</div>
+        <h3 class="text-xl font-black mb-3" style="color:var(--text);">Take a 2-min Quiz</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--muted);">Tell us your goal, your level, and how many minutes a day you can commit. We match you to the perfect challenge instantly.</p>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
-        <div class="w-16 h-16 bg-blue-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-blue-500/20">💳</div>
-        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">2</div>
-        <h3 class="text-xl font-black text-white mb-3">Pay Once, Own Forever</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Choose your challenge and pay just once — from $9.99. Secure checkout via Stripe. No subscription, no hidden fees, ever.</p>
+      <div class="rounded-2xl p-8 card-hover reveal text-center relative" style="background:var(--surface);border:1px solid var(--border);">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto" style="background:var(--primary-bg);border:1px solid var(--border);">💳</div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4 text-white" style="background:var(--primary);">2</div>
+        <h3 class="text-xl font-black mb-3" style="color:var(--text);">Pay Once, Own Forever</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--muted);">Choose your challenge and pay just once — from $9.99. Secure checkout via Stripe. No subscription, no hidden fees, ever.</p>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
-        <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-green-500/20">🚀</div>
-        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">3</div>
-        <h3 class="text-xl font-black text-white mb-3">Start Learning Today</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Jump straight into your Learning Hub. Daily lessons, live progress tracking, streak system, and AI-powered exercises — all ready for you.</p>
+      <div class="rounded-2xl p-8 card-hover reveal text-center relative" style="background:var(--surface);border:1px solid var(--border);">
+        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto" style="background:var(--green-bg);border:1px solid var(--border);">🚀</div>
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4 text-white" style="background:var(--green);">3</div>
+        <h3 class="text-xl font-black mb-3" style="color:var(--text);">Start Learning Today</h3>
+        <p class="text-sm leading-relaxed" style="color:var(--muted);">Jump straight into your Learning Hub. Daily lessons, live progress tracking, streak system, and AI-powered exercises — all ready for you.</p>
       </div>
     </div>
     <div class="text-center mt-12 reveal">
       <a href="/learn/quiz/" class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold px-10 py-4 rounded-xl text-lg transition glow">
         Start Now — It's Free to Try →
       </a>
-      <p class="text-gray-600 text-xs mt-3">2-minute quiz · No card required to start</p>
+      <p class="text-xs mt-3" style="color:var(--faint);">2-minute quiz · No card required to start</p>
     </div>
   </div>
 </section>
 
 <!-- ═══ EXERCISE TYPES ═══ -->
-<section id="exercises" class="py-20 px-4 bg-white/[0.015]">
+<section id="exercises" class="py-20 px-4" style="background:var(--surface2);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 reveal">
-      <div class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">4 exercise types</div>
-      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Try a real lesson — right now</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Your lessons mix all four types so you never get bored and your brain retains more. Click the tabs to try each one.</p>
+      <div class="text-sm font-semibold uppercase tracking-widest mb-3" style="color:var(--primary);">4 exercise types</div>
+      <h2 class="text-3xl sm:text-4xl font-black mb-4" style="color:var(--text);">Try a real lesson — right now</h2>
+      <p class="max-w-xl mx-auto" style="color:var(--muted);">Your lessons mix all four types so you never get bored and your brain retains more. Click the tabs to try each one.</p>
     </div>
 
     <!-- Tab switcher -->
     <div class="flex flex-wrap gap-2 mb-8 justify-center">
-      <button class="demo-tab active rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="flip">🃏 Flip Card</button>
-      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="mc">❓ Multiple Choice</button>
-      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="gap">✍️ Fill the Gap</button>
-      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="listen">🎧 Listening</button>
+      <button class="demo-tab active rounded-full px-5 py-2.5 text-sm font-semibold" style="background:var(--surface);border:1px solid var(--border);color:var(--muted);" data-tab="flip">🃏 Flip Card</button>
+      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold" style="background:var(--surface);border:1px solid var(--border);color:var(--muted);" data-tab="mc">❓ Multiple Choice</button>
+      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold" style="background:var(--surface);border:1px solid var(--border);color:var(--muted);" data-tab="gap">✍️ Fill the Gap</button>
+      <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold" style="background:var(--surface);border:1px solid var(--border);color:var(--muted);" data-tab="listen">🎧 Listening</button>
     </div>
 
     <!-- Demo panels -->
@@ -415,35 +452,35 @@
 
       <!-- Flip Card -->
       <div class="demo-panel active" id="panel-flip">
-        <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
-          <p class="text-center text-gray-400 text-sm mb-5">Tap the card to see the translation</p>
+        <div class="rounded-2xl p-6" style="background:var(--surface);border:1px solid var(--border);">
+          <p class="text-center text-sm mb-5" style="color:var(--muted);">Tap the card to see the translation</p>
           <div id="demo-flip" class="flip-wrap h-44 mb-4" onclick="demoFlip()">
             <div class="flip-inner" id="demo-inner">
-              <div class="flip-face" style="background: linear-gradient(135deg, #1a2340 0%, #0f1629 100%); border: 1.5px solid rgba(255,255,255,0.1);">
-                <div class="text-4xl font-black mb-2">Спасибо</div>
-                <div class="text-sm text-gray-500">Russian → English</div>
+              <div class="flip-face" style="background:var(--surface2);border:1.5px solid var(--border);">
+                <div class="text-4xl font-black mb-2" style="color:var(--text);">Спасибо</div>
+                <div class="text-sm" style="color:var(--faint);">Russian → English</div>
               </div>
-              <div class="flip-face flip-back" style="background: linear-gradient(135deg, #1a1a35 0%, #0f1a2e 100%); border: 1.5px solid rgba(99,102,241,0.25);">
-                <div class="text-2xl font-bold text-blue-300 mb-1">Thank you</div>
-                <div class="text-gray-400 text-sm mb-3">Common expression of gratitude</div>
-                <button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition" onclick="speak('Спасибо', event)">🔊 Hear it</button>
+              <div class="flip-face flip-back" style="background:var(--primary-bg);border:1.5px solid var(--border);">
+                <div class="text-2xl font-bold mb-1" style="color:var(--primary);">Thank you</div>
+                <div class="text-sm mb-3" style="color:var(--muted);">Common expression of gratitude</div>
+                <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition" style="background:var(--surface2);color:var(--text);" onclick="speak('Спасибо', event)">🔊 Hear it</button>
               </div>
             </div>
           </div>
-          <p class="text-center text-xs text-gray-500">Click again to flip back</p>
+          <p class="text-center text-xs" style="color:var(--faint);">Click again to flip back</p>
         </div>
       </div>
 
       <!-- Multiple Choice -->
       <div class="demo-panel" id="panel-mc">
-        <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
-          <p class="text-gray-300 font-semibold mb-2">What does <span class="text-yellow-300 font-bold">«Доброе утро»</span> mean?</p>
-          <p class="text-gray-500 text-sm mb-5">Choose the correct answer</p>
+        <div class="rounded-2xl p-6" style="background:var(--surface);border:1px solid var(--border);">
+          <p class="font-semibold mb-2" style="color:var(--text);">What does <span style="color:var(--gold);font-weight:700;">«Доброе утро»</span> mean?</p>
+          <p class="text-sm mb-5" style="color:var(--muted);">Choose the correct answer</p>
           <div class="space-y-3" id="mc-options">
-            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm" onclick="checkMC(this, false)">Good evening</button>
-            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm" onclick="checkMC(this, true)">Good morning ✓</button>
-            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm" onclick="checkMC(this, false)">Good afternoon</button>
-            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm" onclick="checkMC(this, false)">Good night</button>
+            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl text-sm" style="background:var(--surface2);color:var(--text);" onclick="checkMC(this, false)">Good evening</button>
+            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl text-sm" style="background:var(--surface2);color:var(--text);" onclick="checkMC(this, true)">Good morning ✓</button>
+            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl text-sm" style="background:var(--surface2);color:var(--text);" onclick="checkMC(this, false)">Good afternoon</button>
+            <button class="mc-opt w-full text-left px-4 py-3 rounded-xl text-sm" style="background:var(--surface2);color:var(--text);" onclick="checkMC(this, false)">Good night</button>
           </div>
           <p id="mc-feedback" class="mt-4 text-sm text-center hidden"></p>
         </div>
@@ -451,15 +488,15 @@
 
       <!-- Fill the Gap -->
       <div class="demo-panel" id="panel-gap">
-        <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
-          <p class="text-gray-300 font-semibold mb-2">Fill in the missing word:</p>
-          <p class="text-gray-500 text-sm mb-6">Complete the Russian sentence</p>
-          <div class="text-xl text-white mb-6 leading-relaxed text-center">
-            Меня <span class="text-gray-500">зовут</span> _____. Я из Лондона.
+        <div class="rounded-2xl p-6" style="background:var(--surface);border:1px solid var(--border);">
+          <p class="font-semibold mb-2" style="color:var(--text);">Fill in the missing word:</p>
+          <p class="text-sm mb-6" style="color:var(--muted);">Complete the Russian sentence</p>
+          <div class="text-xl mb-6 leading-relaxed text-center" style="color:var(--text);">
+            Меня <span style="color:var(--muted);">зовут</span> _____. Я из Лондона.
           </div>
-          <p class="text-gray-500 text-sm mb-3 text-center">Translation: My name <span class="text-gray-400">is</span> _____. I'm from London.</p>
+          <p class="text-sm mb-3 text-center" style="color:var(--muted);">Translation: My name <span style="color:var(--text);">is</span> _____. I'm from London.</p>
           <div class="flex gap-2">
-            <input id="gap-input" type="text" placeholder="Type a name..." class="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-red-400" />
+            <input id="gap-input" type="text" placeholder="Type a name..." class="flex-1 rounded-xl px-4 py-3 text-sm focus:outline-none" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);" />
             <button onclick="checkGap()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-3 rounded-xl font-semibold text-sm transition">Check</button>
           </div>
           <p id="gap-feedback" class="mt-3 text-sm text-center hidden"></p>
@@ -468,20 +505,20 @@
 
       <!-- Listening -->
       <div class="demo-panel" id="panel-listen">
-        <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
-          <p class="text-gray-300 font-semibold mb-2">🎧 Listen and choose what you heard:</p>
-          <p class="text-gray-500 text-sm mb-6">Press play, then pick the Russian word</p>
+        <div class="rounded-2xl p-6" style="background:var(--surface);border:1px solid var(--border);">
+          <p class="font-semibold mb-2" style="color:var(--text);">🎧 Listen and choose what you heard:</p>
+          <p class="text-sm mb-6" style="color:var(--muted);">Press play, then pick the Russian word</p>
           <div class="text-center mb-6">
             <button id="listen-btn" onclick="playListening()" class="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 transition flex items-center justify-center text-3xl mx-auto glow">
               ▶️
             </button>
-            <p class="text-gray-500 text-sm mt-3" id="listen-status">Press to hear the word</p>
+            <p class="text-sm mt-3" style="color:var(--muted);" id="listen-status">Press to hear the word</p>
           </div>
           <div class="grid grid-cols-2 gap-3" id="listen-options">
-            <button class="mc-opt px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm text-center" onclick="checkListen(this, false)">Пожалуйста</button>
-            <button class="mc-opt px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm text-center" onclick="checkListen(this, true)">До свидания</button>
-            <button class="mc-opt px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm text-center" onclick="checkListen(this, false)">Извините</button>
-            <button class="mc-opt px-4 py-3 rounded-xl bg-white/[0.03] text-gray-300 text-sm text-center" onclick="checkListen(this, false)">Как дела?</button>
+            <button class="mc-opt px-4 py-3 rounded-xl text-sm text-center" style="background:var(--surface2);color:var(--text);" onclick="checkListen(this, false)">Пожалуйста</button>
+            <button class="mc-opt px-4 py-3 rounded-xl text-sm text-center" style="background:var(--surface2);color:var(--text);" onclick="checkListen(this, true)">До свидания</button>
+            <button class="mc-opt px-4 py-3 rounded-xl text-sm text-center" style="background:var(--surface2);color:var(--text);" onclick="checkListen(this, false)">Извините</button>
+            <button class="mc-opt px-4 py-3 rounded-xl text-sm text-center" style="background:var(--surface2);color:var(--text);" onclick="checkListen(this, false)">Как дела?</button>
           </div>
           <p id="listen-feedback" class="mt-4 text-sm text-center hidden"></p>
         </div>
