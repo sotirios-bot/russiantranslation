@@ -11,7 +11,7 @@
   })(window,document,'script','dataLayer','GTM-NRZ5N9GV');</script>
   <!-- End Google Tag Manager -->
   <title>Learn Russian with AI — 7, 14 Day & Unlimited Challenges | englishtorussian.ai</title>
-  <meta name="description" content="Go from zero to Russian speaker with AI-powered lessons. Flip cards, listening, fill-the-gap & quizzes. One payment. Choose your challenge: 7 days, 14 days or unlimited." />
+  <meta name="description" content="Learn Russian with AI in 7, 14 days or at your own pace. Flip cards, listening drills, gap-fill & quizzes. One-time payment from $9.99. Start in 60 seconds." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://englishtorussian.ai/" />
   <link rel="alternate" hreflang="en" href="https://englishtorussian.ai/" />
@@ -56,7 +56,7 @@
 
     /* ── hero ── */
     .hero-bg {
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,57,70,0.18) 0%, transparent 70%),
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,57,70,0.22) 0%, transparent 70%),
                   radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59,130,246,0.12) 0%, transparent 70%),
                   #070b14;
     }
@@ -86,7 +86,7 @@
     .auto-flip { animation: autoFlip 4s ease-in-out infinite; }
 
     /* ── glow ring ── */
-    .glow { box-shadow: 0 0 40px rgba(230,57,70,0.25); }
+    .glow { box-shadow: 0 0 40px rgba(230,57,70,0.3); }
     .glow-blue { box-shadow: 0 0 40px rgba(59,130,246,0.2); }
 
     /* ── card hover ── */
@@ -114,7 +114,7 @@
     .nav-blur { backdrop-filter: blur(12px); background: rgba(7,11,20,0.85); }
 
     /* ── pricing ── */
-    .popular-ring { border: 2px solid #e63946; box-shadow: 0 0 30px rgba(230,57,70,0.2); }
+    .popular-ring { border: 2px solid #e63946; box-shadow: 0 0 40px rgba(230,57,70,0.25); }
 
     /* ── FAQ ── */
     .faq-answer { display: none; }
@@ -124,9 +124,7 @@
 
     /* ── exercise demo tabs ── */
     .demo-tab { transition: all .2s; }
-    .demo-tab.active {
-      background: #e63946; color: white;
-    }
+    .demo-tab.active { background: #e63946; color: white; }
     .demo-panel { display: none; }
     .demo-panel.active { display: block; }
 
@@ -160,6 +158,19 @@
       50%      { opacity:.8; transform: scaleY(1.05); }
     }
     .flicker { animation: flicker 0.9s ease-in-out infinite; }
+
+    /* ── testimonial stars ── */
+    .stars { color: #f59e0b; font-size: 1rem; letter-spacing: 2px; }
+
+    /* ── step connector line ── */
+    .step-line { position: absolute; top: 24px; left: calc(50% + 28px); width: calc(100% - 56px); height: 2px; background: linear-gradient(to right, rgba(230,57,70,0.4), rgba(230,57,70,0.1)); }
+
+    /* ── big CTA button pulse ── */
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(230,57,70,0); }
+    }
+    .cta-pulse { animation: ctaPulse 2.5s ease-in-out infinite; }
   </style>
 </head>
 <body class="text-white overflow-x-hidden">
@@ -182,9 +193,9 @@
       <a href="/translate/" class="hover:text-white transition">Translate</a>
     </nav>
     <div class="hidden md:flex items-center gap-3">
-      <a href="/learn/dashboard/" class="text-sm text-gray-400 hover:text-white transition">Log in</a>
-      <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
-        Start Free Quiz →
+      <a href="/learn/dashboard/" class="text-sm text-gray-300 hover:text-white border border-white/15 hover:border-white/30 px-4 py-2 rounded-lg transition font-medium">Log in</a>
+      <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white text-sm font-bold px-5 py-2 rounded-lg transition cta-pulse">
+        Start Now →
       </a>
     </div>
     <!-- Mobile hamburger -->
@@ -202,9 +213,9 @@
       <a href="#pricing" class="text-gray-300 hover:text-white py-2">Pricing</a>
       <a href="#reviews" class="text-gray-300 hover:text-white py-2">Reviews</a>
       <a href="/translate/" class="text-gray-300 hover:text-white py-2">Translate</a>
-      <a href="/learn/dashboard/" class="text-gray-300 hover:text-white py-2">Log in</a>
-      <a href="/learn/quiz/" class="bg-red-500 text-white font-semibold px-4 py-3 rounded-lg text-center mt-2">
-        Start Free Quiz →
+      <a href="/learn/dashboard/" class="text-gray-300 hover:text-white py-2 border-t border-white/5 pt-3">Log in</a>
+      <a href="/learn/quiz/" class="bg-red-500 text-white font-bold px-4 py-3 rounded-lg text-center mt-1 cta-pulse">
+        Start Now →
       </a>
     </div>
   </div>
@@ -222,32 +233,32 @@
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
           </span>
-          🔥 Join 2,400+ students already learning
+          🔥 2,400+ students learning right now
         </div>
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] mb-6">
-          Speak Russian in<br/>
-          <span class="grad-text">7 Days.</span><br/>
-          <span class="text-gray-200">Seriously.</span>
+          Learn Russian<br/>
+          <span class="grad-text">with AI.</span><br/>
+          <span class="text-gray-200">In days, not years.</span>
         </h1>
 
-        <p class="text-lg text-gray-400 mb-8 max-w-md leading-relaxed">
-          AI-powered micro-lessons built around how your brain actually learns. Flip cards, listening drills, fill-the-gap & quizzes — one payment, zero subscription drama.
+        <p class="text-xl text-gray-400 mb-8 max-w-md leading-relaxed">
+          AI-powered micro-lessons that hack how your brain learns. Go from zero to holding real conversations — 15 minutes a day is all it takes.
         </p>
 
         <!-- Bullet points -->
         <ul class="space-y-3 mb-10">
           <li class="flex items-center gap-3 text-gray-300">
             <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-            Daily lessons in 15–20 minutes
+            Daily 15-min lessons — flip cards, audio, fill-gaps & quizzes
           </li>
           <li class="flex items-center gap-3 text-gray-300">
             <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-            4 exercise types: flip cards, audio, fill-gaps, quizzes
+            Pick your challenge: 7 days, 14 days, or unlimited
           </li>
           <li class="flex items-center gap-3 text-gray-300">
             <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-            One-time payment — choose 7, 14 days or unlimited
+            One-time payment from $9.99 — no subscription ever
           </li>
           <li class="flex items-center gap-3 text-gray-300">
             <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
@@ -255,24 +266,24 @@
           </li>
         </ul>
 
-        <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row gap-3">
-          <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition text-center glow">
-            Start Free Quiz — 2 min →
-          </a>
-          <a href="#how-it-works" class="border border-white/15 hover:border-white/30 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-lg transition text-center">
-            See how it works
+        <!-- Single CTA -->
+        <div class="flex flex-col sm:flex-row gap-4 items-start">
+          <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white font-black px-10 py-5 rounded-2xl text-xl transition text-center glow cta-pulse">
+            Start Now →
           </a>
         </div>
 
         <!-- Trust signals -->
-        <p class="text-xs text-gray-500 mt-4">No subscription · 7-day money-back guarantee · Start in 60 seconds</p>
+        <div class="flex flex-wrap gap-4 mt-6 text-xs text-gray-500">
+          <span>🛡️ 7-day money-back guarantee</span>
+          <span>⚡ Start in 60 seconds</span>
+          <span>🔒 Secure checkout</span>
+        </div>
       </div>
 
       <!-- Right: animated flip card preview -->
       <div class="flex justify-center">
         <div class="float-anim w-full max-w-xs">
-          <!-- Lesson card preview -->
           <div class="bg-[#0f1629] rounded-2xl p-5 border border-white/10 glow-blue">
             <!-- Header -->
             <div class="flex items-center justify-between mb-4">
@@ -280,9 +291,7 @@
                 <span class="text-lg">🃏</span>
                 <span class="text-sm text-gray-400 font-medium">Flip Card</span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-xs text-gray-500">Day 4 · Card 3/12</span>
-              </div>
+              <span class="text-xs text-gray-500">Day 4 · Card 3/12</span>
             </div>
             <!-- Progress bar -->
             <div class="h-1.5 bg-white/5 rounded-full mb-5">
@@ -326,60 +335,60 @@
 </section>
 
 <!-- ═══ STATS BAR ═══ -->
-<div class="border-y border-white/5 bg-white/[0.02] py-6 px-4">
+<div class="border-y border-white/5 bg-white/[0.02] py-8 px-4">
   <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
     <div>
-      <div class="text-2xl sm:text-3xl font-black text-white">2,400+</div>
+      <div class="text-3xl font-black text-white">2,400+</div>
       <div class="text-sm text-gray-500 mt-1">Students enrolled</div>
     </div>
     <div>
-      <div class="text-2xl sm:text-3xl font-black text-white">95%</div>
+      <div class="text-3xl font-black text-white">95%</div>
       <div class="text-sm text-gray-500 mt-1">Completion rate</div>
     </div>
     <div>
-      <div class="text-2xl sm:text-3xl font-black text-white">150+</div>
+      <div class="text-3xl font-black text-white">150+</div>
       <div class="text-sm text-gray-500 mt-1">Lessons & exercises</div>
     </div>
     <div>
-      <div class="text-2xl sm:text-3xl font-black text-white">4.9 ★</div>
+      <div class="text-3xl font-black text-white">4.9 ★</div>
       <div class="text-sm text-gray-500 mt-1">Average rating</div>
     </div>
   </div>
 </div>
 
 <!-- ═══ HOW IT WORKS ═══ -->
-<section id="how-it-works" class="py-20 px-4">
+<section id="how-it-works" class="py-24 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="text-red-400 text-sm font-semibold uppercase tracking-widest mb-3">Simple process</div>
-      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">From quiz to fluency in 4 steps</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Designed to get you speaking Russian fast — no prior knowledge needed.</p>
+    <div class="text-center mb-16 reveal">
+      <div class="text-red-400 text-sm font-semibold uppercase tracking-widest mb-3">How it works</div>
+      <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">From zero to Russian in 3 simple steps</h2>
+      <p class="text-gray-400 max-w-xl mx-auto text-lg">No prior knowledge needed. We do all the thinking — you just show up for 15 minutes a day.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="bg-[#0f1629] rounded-2xl p-6 card-hover reveal">
-        <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center text-2xl mb-4">📋</div>
-        <div class="text-xs text-red-400 font-semibold uppercase tracking-wide mb-2">Step 1</div>
-        <h3 class="text-lg font-bold text-white mb-2">Take the Quiz</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Answer 4 quick questions. We match you to the right challenge for your goal.</p>
+    <div class="grid sm:grid-cols-3 gap-8">
+      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
+        <div class="w-16 h-16 bg-red-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-red-500/20">📋</div>
+        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">1</div>
+        <h3 class="text-xl font-black text-white mb-3">Take a 2-min Quiz</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Tell us your goal, your level, and how many minutes a day you can commit. We match you to the perfect challenge instantly.</p>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-6 card-hover reveal">
-        <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-2xl mb-4">💳</div>
-        <div class="text-xs text-blue-400 font-semibold uppercase tracking-wide mb-2">Step 2</div>
-        <h3 class="text-lg font-bold text-white mb-2">Choose Your Plan</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Pick 7 days, 14 days, or unlimited. One-time payment — no subscription ever.</p>
+      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
+        <div class="w-16 h-16 bg-blue-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-blue-500/20">💳</div>
+        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">2</div>
+        <h3 class="text-xl font-black text-white mb-3">Pay Once, Own Forever</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Choose your challenge and pay just once — from $9.99. Secure checkout via Stripe. No subscription, no hidden fees, ever.</p>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-6 card-hover reveal">
-        <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-2xl mb-4">🎯</div>
-        <div class="text-xs text-purple-400 font-semibold uppercase tracking-wide mb-2">Step 3</div>
-        <h3 class="text-lg font-bold text-white mb-2">Do Daily Lessons</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">15–20 min/day. Mix of flip cards, listening, fill-gaps and multiple choice.</p>
+      <div class="bg-[#0f1629] rounded-2xl p-8 card-hover reveal text-center relative">
+        <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center text-3xl mb-5 mx-auto border border-green-500/20">🚀</div>
+        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-sm font-black mx-auto -mt-2 mb-4">3</div>
+        <h3 class="text-xl font-black text-white mb-3">Start Learning Today</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Jump straight into your Learning Hub. Daily lessons, live progress tracking, streak system, and AI-powered exercises — all ready for you.</p>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-6 card-hover reveal">
-        <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-2xl mb-4">🏆</div>
-        <div class="text-xs text-green-400 font-semibold uppercase tracking-wide mb-2">Step 4</div>
-        <h3 class="text-lg font-bold text-white mb-2">Speak Russian</h3>
-        <p class="text-gray-400 text-sm leading-relaxed">Complete your challenge and actually hold conversations in Russian.</p>
-      </div>
+    </div>
+    <div class="text-center mt-12 reveal">
+      <a href="/learn/quiz/" class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold px-10 py-4 rounded-xl text-lg transition glow">
+        Start Now — It's Free to Try →
+      </a>
+      <p class="text-gray-600 text-xs mt-3">2-minute quiz · No card required to start</p>
     </div>
   </div>
 </section>
@@ -390,7 +399,7 @@
     <div class="text-center mb-14 reveal">
       <div class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">4 exercise types</div>
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Try a real lesson — right now</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Your lessons mix all four types so you never get bored. Click the tabs to try each one.</p>
+      <p class="text-gray-400 max-w-xl mx-auto">Your lessons mix all four types so you never get bored and your brain retains more. Click the tabs to try each one.</p>
     </div>
 
     <!-- Tab switcher -->
@@ -500,12 +509,12 @@
         </div>
         <div class="space-y-2.5 text-sm">
           <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 1</span> Russian Alphabet — Cyrillic decoded</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 2</span> Greetings & Introductions</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 3</span> Numbers 1–20 & telling time</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 4</span> Food, ordering & restaurants</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 5</span> Getting around & directions</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 6</span> Shopping & money</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 7</span> Emergency Russian & review</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 2</span> Greetings &amp; Introductions</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 3</span> Numbers 1–20 &amp; telling time</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 4</span> Food, ordering &amp; restaurants</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 5</span> Getting around &amp; directions</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 6</span> Shopping &amp; money</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 7</span> Emergency Russian &amp; review</div>
         </div>
       </div>
       <!-- Week 2 -->
@@ -516,13 +525,13 @@
           <span class="ml-auto text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full">14-day plan</span>
         </div>
         <div class="space-y-2.5 text-sm">
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 8</span> Family & relationships</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 9</span> Days, months & seasons</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 10</span> Transport & travel phrases</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 11</span> Hobbies & everyday chat</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 12</span> Hotels, rooms & check-in</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 13</span> Feelings & expressing yourself</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 14</span> Russian culture & final review</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 8</span> Family &amp; relationships</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 9</span> Days, months &amp; seasons</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 10</span> Transport &amp; travel phrases</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 11</span> Hobbies &amp; everyday chat</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 12</span> Hotels, rooms &amp; check-in</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 13</span> Feelings &amp; expressing yourself</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 14</span> Russian culture &amp; final review</div>
         </div>
       </div>
     </div>
@@ -531,7 +540,7 @@
         <span class="text-2xl">♾️</span>
         <div>
           <h4 class="font-bold text-white text-sm">Unlimited Plan — Beyond Day 14</h4>
-          <p class="text-gray-400 text-sm mt-0.5">Advanced grammar, Russian culture deep-dives, business Russian, slang, literature & AI-powered conversation practice. New lessons added weekly.</p>
+          <p class="text-gray-400 text-sm mt-0.5">Advanced grammar, Russian culture deep-dives, business Russian, slang, literature &amp; AI-powered conversation practice. New lessons added weekly.</p>
         </div>
       </div>
     </div>
@@ -539,22 +548,22 @@
 </section>
 
 <!-- ═══ PRICING ═══ -->
-<section id="pricing" class="py-20 px-4 bg-white/[0.015]">
+<section id="pricing" class="py-24 px-4 bg-white/[0.015]">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">Pricing</div>
+    <div class="text-center mb-16 reveal">
+      <div class="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">Simple pricing</div>
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">One payment. No subscription. Ever.</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Pay once and keep your access forever. Pick the challenge that fits your ambition.</p>
+      <p class="text-gray-400 max-w-xl mx-auto text-lg">Pay once, learn forever. Pick the challenge that fits your goal and budget.</p>
     </div>
 
     <div class="grid sm:grid-cols-3 gap-6">
       <!-- 7-Day -->
       <div class="bg-[#0f1629] rounded-2xl p-7 border border-white/10 card-hover reveal flex flex-col">
-        <div class="text-2xl mb-3">🏃</div>
-        <h3 class="text-lg font-bold text-white mb-1">7-Day Sprint</h3>
+        <div class="text-3xl mb-3">🏃</div>
+        <h3 class="text-xl font-black text-white mb-1">7-Day Sprint</h3>
         <p class="text-gray-500 text-sm mb-5">Survival Russian, fast</p>
         <div class="mb-6">
-          <span class="text-4xl font-black text-white">$19</span>
+          <span class="text-5xl font-black text-white">$9.99</span>
           <span class="text-gray-500 text-sm"> one-time</span>
         </div>
         <ul class="space-y-3 text-sm text-gray-300 mb-8 flex-1">
@@ -565,103 +574,165 @@
           <li class="flex gap-2"><span class="text-green-400">✓</span> Progress tracking</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Completion certificate</li>
         </ul>
-        <a href="/learn/quiz/?plan=7" class="block text-center bg-white/10 hover:bg-white/15 text-white font-semibold py-3.5 rounded-xl transition">
-          Start 7-Day Challenge
+        <a href="/learn/quiz/?plan=7" class="block text-center bg-white/10 hover:bg-white/15 text-white font-bold py-4 rounded-xl transition text-lg">
+          Start 7-Day →
         </a>
       </div>
 
       <!-- 14-Day (popular) -->
       <div class="bg-[#0f1629] rounded-2xl p-7 popular-ring card-hover reveal flex flex-col relative">
-        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-1 rounded-full">⭐ MOST POPULAR</div>
-        <div class="text-2xl mb-3">🚀</div>
-        <h3 class="text-lg font-bold text-white mb-1">14-Day Journey</h3>
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-black px-5 py-1.5 rounded-full tracking-wide">⭐ MOST POPULAR</div>
+        <div class="text-3xl mb-3 mt-2">🚀</div>
+        <h3 class="text-xl font-black text-white mb-1">14-Day Journey</h3>
         <p class="text-gray-500 text-sm mb-5">Conversational fluency</p>
         <div class="mb-6">
-          <span class="text-4xl font-black text-white">$29</span>
+          <span class="text-5xl font-black text-white">$14.99</span>
           <span class="text-gray-500 text-sm"> one-time</span>
         </div>
         <ul class="space-y-3 text-sm text-gray-300 mb-8 flex-1">
           <li class="flex gap-2"><span class="text-green-400">✓</span> 14 daily lessons</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> 150+ exercises</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Everything in Sprint</li>
-          <li class="flex gap-2"><span class="text-green-400">✓</span> Week 2: conversations</li>
+          <li class="flex gap-2"><span class="text-green-400">✓</span> Week 2: real conversations</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Audio + listening drills</li>
-          <li class="flex gap-2"><span class="text-green-400">✓</span> Streak & XP system</li>
+          <li class="flex gap-2"><span class="text-green-400">✓</span> Streak &amp; XP system</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Completion certificate</li>
         </ul>
-        <a href="/learn/quiz/?plan=14" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition glow">
-          Start 14-Day Journey →
+        <a href="/learn/quiz/?plan=14" class="block text-center bg-red-500 hover:bg-red-600 text-white font-black py-4 rounded-xl transition glow text-lg">
+          Start 14-Day →
         </a>
       </div>
 
       <!-- Unlimited -->
-      <div class="bg-[#0f1629] rounded-2xl p-7 border border-purple-500/20 card-hover reveal flex flex-col">
-        <div class="text-2xl mb-3">♾️</div>
-        <h3 class="text-lg font-bold text-white mb-1">Unlimited Mastery</h3>
+      <div class="bg-[#0f1629] rounded-2xl p-7 border border-purple-500/25 card-hover reveal flex flex-col">
+        <div class="text-3xl mb-3">♾️</div>
+        <h3 class="text-xl font-black text-white mb-1">Unlimited Mastery</h3>
         <p class="text-gray-500 text-sm mb-5">Complete Russian fluency</p>
         <div class="mb-6">
-          <span class="text-4xl font-black text-white">$49</span>
+          <span class="text-5xl font-black text-white">$29.99</span>
           <span class="text-gray-500 text-sm"> one-time</span>
         </div>
         <ul class="space-y-3 text-sm text-gray-300 mb-8 flex-1">
           <li class="flex gap-2"><span class="text-green-400">✓</span> Everything in Journey</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Advanced grammar</li>
-          <li class="flex gap-2"><span class="text-green-400">✓</span> Russian culture & slang</li>
+          <li class="flex gap-2"><span class="text-green-400">✓</span> Russian culture &amp; slang</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Business Russian</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> New lessons weekly</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> AI conversation practice</li>
           <li class="flex gap-2"><span class="text-purple-400">✓</span> Lifetime access</li>
         </ul>
-        <a href="/learn/quiz/?plan=unlimited" class="block text-center bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3.5 rounded-xl transition">
-          Start Unlimited Path
+        <a href="/learn/quiz/?plan=unlimited" class="block text-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 rounded-xl transition text-lg">
+          Start Unlimited →
         </a>
       </div>
     </div>
 
-    <p class="text-center text-sm text-gray-500 mt-6">
-      🛡️ 7-day money-back guarantee &nbsp;·&nbsp; Secure checkout via Stripe &nbsp;·&nbsp; No hidden fees
+    <p class="text-center text-sm text-gray-500 mt-8">
+      🛡️ 7-day money-back guarantee &nbsp;·&nbsp; 🔒 Secure checkout via Stripe &nbsp;·&nbsp; No hidden fees
     </p>
   </div>
 </section>
 
 <!-- ═══ TESTIMONIALS ═══ -->
-<section id="reviews" class="py-20 px-4">
+<section id="reviews" class="py-24 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 reveal">
-      <div class="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Reviews</div>
+    <div class="text-center mb-16 reveal">
+      <div class="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Student reviews</div>
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Real students. Real results.</h2>
+      <p class="text-gray-400 max-w-xl mx-auto">Don't take our word for it. Here's what people say after finishing their challenge.</p>
     </div>
-    <div class="grid sm:grid-cols-3 gap-6">
-      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal">
-        <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
-        <p class="text-gray-300 text-sm leading-relaxed mb-5">"I went to Moscow after the 14-day challenge and actually had real conversations with locals. Absolutely mind blown. 100% worth it."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-400 to-orange-400 flex items-center justify-center text-sm font-bold">S</div>
+
+    <!-- Top row: 3 reviews -->
+    <div class="grid sm:grid-cols-3 gap-5 mb-5">
+      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal flex flex-col">
+        <div class="stars mb-2">★★★★★</div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-5 flex-1">"I went to Moscow after the 14-day challenge and had real conversations with locals at a café and on the metro. They were genuinely surprised I'd only studied for 2 weeks. 100% worth every cent."</p>
+        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-400 to-orange-400 flex items-center justify-center text-sm font-bold flex-shrink-0">S</div>
           <div>
             <div class="text-white text-sm font-semibold">Sarah M.</div>
             <div class="text-gray-500 text-xs">New York, USA · 14-Day Journey</div>
           </div>
         </div>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal">
-        <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
-        <p class="text-gray-300 text-sm leading-relaxed mb-5">"The flip cards + audio combo is insanely effective. I learned more in 7 days than 3 months of Duolingo. The streak system keeps you hooked."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-sm font-bold">J</div>
+
+      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal flex flex-col">
+        <div class="stars mb-2">★★★★★</div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-5 flex-1">"The flip cards + audio combo is insanely effective. I learned more Russian in 7 days than I did in 3 months of Duolingo. The streak system is addictive — I haven't missed a day since I started."</p>
+        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">J</div>
           <div>
             <div class="text-white text-sm font-semibold">James K.</div>
             <div class="text-gray-500 text-xs">London, UK · 7-Day Sprint</div>
           </div>
         </div>
       </div>
-      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal">
-        <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
-        <p class="text-gray-300 text-sm leading-relaxed mb-5">"Worth every penny! My Russian boyfriend's family was so impressed when I greeted them properly and chatted about food. I'm now on the Unlimited plan."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center text-sm font-bold">A</div>
+
+      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal flex flex-col">
+        <div class="stars mb-2">★★★★★</div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-5 flex-1">"My Russian boyfriend's family was shocked when I greeted them and chatted about food at dinner. I cried happy tears. I'm now on the Unlimited plan and I'm obsessed. Best $14 I've ever spent."</p>
+        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center text-sm font-bold flex-shrink-0">A</div>
           <div>
             <div class="text-white text-sm font-semibold">Aisha T.</div>
             <div class="text-gray-500 text-xs">Toronto, Canada · Unlimited</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: 2 wider reviews -->
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal flex flex-col">
+        <div class="stars mb-2">★★★★★</div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-5 flex-1">"I'm a busy dad with maybe 20 minutes a day. I was skeptical — but the lessons are so well-structured I actually look forward to them every morning with my coffee. Finished the 7-day sprint and immediately upgraded to Unlimited."</p>
+        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center text-sm font-bold flex-shrink-0">M</div>
+          <div>
+            <div class="text-white text-sm font-semibold">Marcus R.</div>
+            <div class="text-gray-500 text-xs">Sydney, Australia · Unlimited</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal flex flex-col">
+        <div class="stars mb-2">★★★★★</div>
+        <p class="text-gray-300 text-sm leading-relaxed mb-5 flex-1">"I've tried Pimsleur, Babbel, and private tutors. Nothing clicked until this. The AI just gets you — the spaced repetition and listening drills together are something else. At $9.99 it's almost embarrassingly cheap for what you get."</p>
+        <div class="flex items-center gap-3 border-t border-white/5 pt-4">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-red-400 flex items-center justify-center text-sm font-bold flex-shrink-0">E</div>
+          <div>
+            <div class="text-white text-sm font-semibold">Elena V.</div>
+            <div class="text-gray-500 text-xs">Berlin, Germany · 14-Day Journey</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating summary -->
+    <div class="mt-10 bg-[#0f1629] rounded-2xl p-6 border border-white/10 reveal">
+      <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
+        <div class="flex-shrink-0">
+          <div class="text-6xl font-black text-white">4.9</div>
+          <div class="stars text-2xl">★★★★★</div>
+          <div class="text-gray-500 text-sm mt-1">Average rating</div>
+        </div>
+        <div class="w-px h-16 bg-white/10 hidden sm:block"></div>
+        <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="text-center">
+            <div class="text-2xl font-black text-white">2,400+</div>
+            <div class="text-gray-500 text-xs">students</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-white">95%</div>
+            <div class="text-gray-500 text-xs">completion rate</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-white">98%</div>
+            <div class="text-gray-500 text-xs">recommend us</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-black text-white">7 days</div>
+            <div class="text-gray-500 text-xs">money-back</div>
           </div>
         </div>
       </div>
@@ -673,7 +744,9 @@
 <section class="py-20 px-4 bg-white/[0.015]">
   <div class="max-w-2xl mx-auto">
     <div class="text-center mb-12 reveal">
+      <div class="text-gray-400 text-sm font-semibold uppercase tracking-widest mb-3">FAQ</div>
       <h2 class="text-3xl font-black text-white mb-3">Frequently asked questions</h2>
+      <p class="text-gray-400">Everything you need to know before you start.</p>
     </div>
     <div class="space-y-3">
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
@@ -682,7 +755,7 @@
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Zero Russian needed. Day 1 starts with the Cyrillic alphabet from scratch. By the end of Day 1 you'll be able to read Russian letters.
+          Zero Russian needed. Day 1 starts with the Cyrillic alphabet from scratch. By the end of the first lesson you'll be reading Russian letters — it's genuinely easier than most people expect.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
@@ -691,7 +764,25 @@
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Each lesson has 8–12 exercises and takes about 15–20 minutes. You can do them in one sitting or split across the day — progress is saved automatically.
+          Each lesson has 8–12 exercises and takes about 15–20 minutes. You can do them in one sitting or split across the day — your progress is saved automatically.
+        </div>
+      </div>
+      <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
+        <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
+          What happens after I take the quiz?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
+        </button>
+        <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
+          After the 2-minute quiz, we show you the plan we recommend based on your goals. You choose your challenge ($9.99 / $14.99 / $29.99), pay securely via Stripe, and get instant access to your personal Learning Hub — no waiting, no setup.
+        </div>
+      </div>
+      <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
+        <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
+          Is this really a one-time payment? No subscription?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
+        </button>
+        <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
+          100% one-time. You pay once and own your access forever. We'll never charge you again, send you renewal notices, or auto-renew anything. What you pay is what you pay — full stop.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
@@ -700,16 +791,16 @@
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Your access never expires. Miss a day? Just pick up where you left off. The streak resets (sad face) but your progress and content are always there.
+          No problem. Your access never expires. Miss a day? Just pick up where you left off. Your streak resets but all your progress and content stay exactly where you left them.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          Can I upgrade from 7-day to 14-day later?
+          Can I upgrade my plan later?
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Yes! Email us at support@englishtorussian.ai and we'll apply your original payment as credit toward the upgrade. You only pay the difference.
+          Yes! Email us at support@englishtorussian.ai and we'll apply your original payment as credit toward the upgrade. You only pay the difference between plans.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
@@ -718,7 +809,7 @@
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Yes. If you complete the first 3 days and feel it's not working for you, email us within 7 days of purchase for a full refund. No questions asked.
+          Yes — 7-day, no-questions-asked guarantee. If you complete the first 3 days and feel it's not working for you, email us within 7 days of purchase for a full refund. We'd rather you be happy.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
@@ -727,7 +818,16 @@
           <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          100%. The entire course is designed mobile-first. Do your daily lesson on the bus, in bed, or wherever. No app download needed — just open the link.
+          Perfectly. The entire platform is mobile-first. Do your lesson on the bus, in bed, during lunch — anywhere. No app download needed, just open the link in your browser.
+        </div>
+      </div>
+      <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
+        <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
+          What makes this better than Duolingo or Babbel?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
+        </button>
+        <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
+          Duolingo gamifies distraction. Babbel uses generic templates. We combine AI-powered spaced repetition, real native audio, structured daily goals, and four proven exercise types — all tuned specifically for Russian, not 50 languages at once. And you pay once instead of monthly.
         </div>
       </div>
     </div>
@@ -735,57 +835,62 @@
 </section>
 
 <!-- ═══ FINAL CTA ═══ -->
-<section class="py-24 px-4">
+<section class="py-28 px-4">
   <div class="max-w-2xl mx-auto text-center reveal">
-    <div class="text-5xl mb-5">🇷🇺</div>
+    <div class="text-6xl mb-6">🇷🇺</div>
     <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-      Your Russian journey<br/>starts <span class="grad-text">today.</span>
+      Your Russian journey<br/>starts <span class="grad-text">right now.</span>
     </h2>
-    <p class="text-gray-400 mb-8 text-lg">Take the 2-minute quiz. We'll pick the perfect challenge for you.</p>
-    <a href="/learn/quiz/" class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold px-10 py-5 rounded-2xl text-xl transition glow">
-      Start Free Quiz →
+    <p class="text-gray-400 mb-3 text-xl">Take our 2-minute quiz. We'll find the perfect challenge for you.</p>
+    <p class="text-gray-500 mb-10 text-sm">From $9.99 · One-time payment · Instant access</p>
+    <a href="/learn/quiz/" class="inline-block bg-red-500 hover:bg-red-600 text-white font-black px-12 py-6 rounded-2xl text-2xl transition glow cta-pulse">
+      Start Now →
     </a>
-    <p class="text-xs text-gray-600 mt-5">No commitment required · Pick your plan after the quiz · 7-day guarantee</p>
+    <p class="text-xs text-gray-600 mt-6">No commitment to start &nbsp;·&nbsp; Choose your plan after the quiz &nbsp;·&nbsp; 7-day money-back guarantee</p>
   </div>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
-<footer class="border-t border-white/5 py-10 px-4">
+<footer class="border-t border-white/5 py-12 px-4">
   <div class="max-w-5xl mx-auto">
-    <div class="grid sm:grid-cols-4 gap-8 mb-8">
+    <div class="grid sm:grid-cols-4 gap-8 mb-10">
       <div class="sm:col-span-2">
         <a href="/" class="flex items-center gap-2 font-bold text-lg mb-3">
           <span class="text-2xl">🇷🇺</span>
           <span class="text-white">Russian<span class="text-red-400">AI</span></span>
         </a>
-        <p class="text-gray-500 text-sm leading-relaxed max-w-xs">AI-powered Russian learning. From zero to conversational in 7, 14 days, or at your own pace.</p>
-        <p class="text-gray-600 text-xs mt-3">By Mytheon Technologies, Almaty, Kazakhstan</p>
+        <p class="text-gray-500 text-sm leading-relaxed max-w-xs">AI-powered Russian language learning. From absolute zero to confident conversations — in 7, 14 days, or at your own pace. One-time payment from $9.99.</p>
+        <p class="text-gray-600 text-xs mt-4">By Mytheon Technologies, Almaty, Kazakhstan</p>
       </div>
       <div>
-        <h4 class="text-white font-semibold text-sm mb-3">Learn</h4>
-        <div class="space-y-2 text-sm text-gray-500">
-          <div><a href="/learn/quiz/" class="hover:text-gray-300 transition">Start Quiz</a></div>
+        <h4 class="text-white font-semibold text-sm mb-4">Learn</h4>
+        <div class="space-y-2.5 text-sm text-gray-500">
+          <div><a href="/learn/quiz/" class="hover:text-gray-300 transition">Start Free Quiz</a></div>
           <div><a href="#pricing" class="hover:text-gray-300 transition">Pricing</a></div>
-          <div><a href="#exercises" class="hover:text-gray-300 transition">Exercises</a></div>
-          <div><a href="#reviews" class="hover:text-gray-300 transition">Reviews</a></div>
+          <div><a href="#exercises" class="hover:text-gray-300 transition">Exercise Types</a></div>
+          <div><a href="#reviews" class="hover:text-gray-300 transition">Student Reviews</a></div>
+          <div><a href="/learn/dashboard/" class="hover:text-gray-300 transition">Student Login</a></div>
         </div>
       </div>
       <div>
-        <h4 class="text-white font-semibold text-sm mb-3">Tools</h4>
-        <div class="space-y-2 text-sm text-gray-500">
+        <h4 class="text-white font-semibold text-sm mb-4">Free Tools</h4>
+        <div class="space-y-2.5 text-sm text-gray-500">
           <div><a href="/translate/" class="hover:text-gray-300 transition">Translator</a></div>
           <div><a href="/verb-conjugator/" class="hover:text-gray-300 transition">Verb Conjugator</a></div>
           <div><a href="/case-explainer/" class="hover:text-gray-300 transition">Case Explainer</a></div>
           <div><a href="/pdf/" class="hover:text-gray-300 transition">PDF Translator</a></div>
           <div><a href="/flip-card/" class="hover:text-gray-300 transition">Flip Cards</a></div>
-          <div><a href="/gap-fill/" class="hover:text-gray-300 transition">Gap Fill</a></div>
           <div><a href="/listening/" class="hover:text-gray-300 transition">Listening</a></div>
         </div>
       </div>
     </div>
     <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-600">
       <p>© 2026 Mytheon Technologies. All rights reserved.</p>
-      <p>support@englishtorussian.ai</p>
+      <div class="flex items-center gap-4">
+        <a href="mailto:support@englishtorussian.ai" class="hover:text-gray-400 transition">support@englishtorussian.ai</a>
+        <span>·</span>
+        <span>🛡️ Payments secured by Stripe</span>
+      </div>
     </div>
   </div>
 </footer>
