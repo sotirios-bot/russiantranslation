@@ -893,8 +893,7 @@
     <div class="grid sm:grid-cols-4 gap-8 mb-10">
       <div class="sm:col-span-2">
         <a href="/" class="flex items-center gap-2 font-bold text-lg mb-3">
-          <span class="text-2xl">🇷🇺</span>
-          <span class="text-white">Russian<span class="text-red-400">AI</span></span>
+          <span class="text-white">EnglishToRussian<span class="text-red-400">AI</span></span>
         </a>
         <p class="text-gray-500 text-sm leading-relaxed max-w-xs">AI-powered Russian language learning. From absolute zero to confident conversations — in 7, 14 days, or at your own pace. One-time payment from $9.99.</p>
         <p class="text-gray-600 text-xs mt-4">By Mytheon Technologies, Almaty, Kazakhstan</p>
@@ -929,15 +928,43 @@
         <span>🛡️ Payments secured by Stripe</span>
       </div>
     </div>
+    <div class="border-t border-white/5 pt-5 mt-5 text-center">
+      <div class="text-sm" style="color:var(--muted)">Этот проект посвящён казахской принцессе, которая украла моё сердце ❤️</div>
+      <div class="text-sm font-semibold mt-1" style="color:#e63946">Зайка, ты лучшая! ⭐✨</div>
+    </div>
   </div>
 </footer>
 
 <script>
+  // ── Nav dropdowns ──
+  function navToggleDrop(e, menuId) {
+    e.stopPropagation();
+    const menu = document.getElementById(menuId);
+    const wasOpen = menu.classList.contains('open');
+    document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open'));
+    if (!wasOpen) menu.classList.add('open');
+  }
+  document.addEventListener('click', () => document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open')));
+
   // ── Mobile nav ──
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  document.querySelectorAll('#mobile-menu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+  function navToggleMobile() {
+    document.getElementById('navMobile').classList.toggle('open');
+  }
+
+  // ── Theme toggle ──
+  function toggleTheme() {
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    const next = isDark ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️ Light' : '🌙 Dark';
+    localStorage.setItem('theme', next);
+  }
+  (function() {
+    const t = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', t);
+    const btn = document.getElementById('themeBtn');
+    if (btn) btn.textContent = t === 'dark' ? '☀️ Light' : '🌙 Dark';
+  })();
 
   // ── Smooth scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
