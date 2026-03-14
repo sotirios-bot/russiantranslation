@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
   })(window,document,'script','dataLayer','GTM-NRZ5N9GV');</script>
   <!-- End Google Tag Manager -->
   <title>Learn Russian with AI — 7, 14 Day & Unlimited Challenges | englishtorussian.ai</title>
-  <meta name="description" content="Go from zero to Russian speaker with AI-powered lessons. Flip cards, listening, fill-the-gap & quizzes. Free tools: translator, verb conjugator, case explainer and more." />
+  <meta name="description" content="Go from zero to Russian speaker with AI-powered lessons. Flip cards, listening, fill-the-gap & quizzes. One payment. Choose your challenge: 7 days, 14 days or unlimited." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://englishtorussian.ai/" />
   <link rel="alternate" hreflang="en" href="https://englishtorussian.ai/" />
@@ -38,322 +38,294 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; }
-    body { font-family: 'Inter', system-ui, sans-serif; transition: background .3s, color .3s; }
+    body { background: #070b14; font-family: 'Inter', system-ui, sans-serif; }
 
-    /* ═══ DARK THEME (default) ═══ */
-    [data-theme="dark"] body { background: #070b14; color: #fff; }
-    [data-theme="dark"] .hero-bg {
+    /* ── gradient text ── */
+    .grad-text {
+      background: linear-gradient(135deg, #ffffff 0%, #e63946 60%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-blue {
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── hero ── */
+    .hero-bg {
       background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,57,70,0.18) 0%, transparent 70%),
                   radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59,130,246,0.12) 0%, transparent 70%),
                   #070b14;
     }
 
-    /* ═══ LIGHT THEME ═══ */
-    [data-theme="light"] body { background: #f5f7ff; color: #1a1a2e; }
-    [data-theme="light"] .hero-bg {
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(230,57,70,0.08) 0%, transparent 70%),
-                  radial-gradient(ellipse 60% 40% at 80% 60%, rgba(59,130,246,0.06) 0%, transparent 70%),
-                  #f5f7ff;
-    }
-    [data-theme="light"] .bg-\[#070b14\] { background: #f5f7ff !important; }
-    [data-theme="light"] .bg-\[#0f1629\] { background: #ffffff !important; box-shadow: 0 2px 12px rgba(0,0,80,0.07); }
-    [data-theme="light"] .bg-white\/\[0\.015\] { background: rgba(0,0,40,0.03) !important; }
-    [data-theme="light"] .bg-white\/\[0\.02\] { background: rgba(0,0,40,0.04) !important; }
-    [data-theme="light"] .bg-white\/5 { background: rgba(0,0,40,0.04) !important; }
-    [data-theme="light"] .bg-white\/\[0\.03\] { background: rgba(0,0,40,0.04) !important; }
-    [data-theme="light"] .bg-white\/10 { background: rgba(0,0,40,0.06) !important; }
-    [data-theme="light"] .bg-white\/15 { background: rgba(0,0,40,0.08) !important; }
-    [data-theme="light"] .text-white { color: #1a1a2e !important; }
-    [data-theme="light"] .text-gray-300 { color: #1f2937 !important; }
-    [data-theme="light"] .text-gray-400 { color: #374151 !important; }
-    [data-theme="light"] .text-gray-500 { color: #4b5563 !important; }
-    [data-theme="light"] .text-gray-600 { color: #6b7280 !important; }
-    [data-theme="light"] .border-white\/5 { border-color: rgba(0,0,60,0.07) !important; }
-    [data-theme="light"] .border-white\/10 { border-color: rgba(0,0,60,0.08) !important; }
-    [data-theme="light"] .border-white\/15 { border-color: rgba(0,0,60,0.1) !important; }
-    [data-theme="light"] .nav-blur { background: rgba(245,247,255,0.92) !important; border-bottom-color: rgba(0,0,60,0.08) !important; }
-    [data-theme="light"] .popular-ring { border-color: #e63946; }
-    [data-theme="light"] .card-hover { border-color: rgba(0,0,60,0.08) !important; }
-    [data-theme="light"] .card-hover:hover { border-color: rgba(230,57,70,0.3) !important; }
-    [data-theme="light"] .mc-opt { border-color: rgba(0,0,60,0.1) !important; background: rgba(0,0,40,0.03) !important; color: #374151 !important; }
-    [data-theme="light"] .mc-opt:hover { border-color: rgba(230,57,70,0.4) !important; background: rgba(230,57,70,0.05) !important; }
-    [data-theme="light"] .faq-item { background: #ffffff !important; border-color: rgba(0,0,60,0.08) !important; }
-    [data-theme="light"] .faq-btn { color: #1a1a2e !important; }
-    [data-theme="light"] #mobile-menu { background: #f5f7ff !important; border-color: rgba(0,0,60,0.08) !important; }
-
-    /* ═══ NAV ═══ */
-    .nav-blur { backdrop-filter: blur(12px); background: rgba(7,11,20,0.88); border-bottom: 1px solid rgba(255,255,255,0.05); }
-    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; }
-    .site-nav-inner { max-width: 1152px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 4px; height: 58px; }
-    .nav-logo { display: flex; align-items: center; gap: 7px; font-weight: 900; font-size: .92rem; color: #fff; text-decoration: none; flex-shrink: 0; margin-right: 10px; letter-spacing: -.3px; }
-    [data-theme="light"] .nav-logo { color: #1a1a2e; }
-    .nav-logo:hover { opacity: .85; }
-    .nav-link { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; font-size: .84rem; font-weight: 600; color: rgba(255,255,255,0.55); text-decoration: none; transition: all .15s; cursor: pointer; background: none; border: none; font-family: inherit; white-space: nowrap; }
-    [data-theme="light"] .nav-link { color: #6b7280; }
-    .nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
-    [data-theme="light"] .nav-link:hover { background: rgba(34,83,203,0.08); color: #2253cb; }
-    .nav-drop-wrap { position: relative; }
-    .nav-drop-menu { position: absolute; top: calc(100% + 6px); left: 0; background: #0f1629; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); padding: 6px; min-width: 190px; display: none; z-index: 300; }
-    [data-theme="light"] .nav-drop-menu { background: #ffffff; border-color: rgba(0,0,60,0.1); box-shadow: 0 8px 32px rgba(0,0,80,0.12); }
-    .nav-drop-menu.open { display: block; }
-    .nav-dd-item { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 8px; font-size: .84rem; font-weight: 600; color: rgba(255,255,255,0.75); text-decoration: none; transition: all .15s; white-space: nowrap; }
-    [data-theme="light"] .nav-dd-item { color: #374151; }
-    .nav-dd-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
-    [data-theme="light"] .nav-dd-item:hover { background: rgba(34,83,203,0.07); color: #2253cb; }
-    .nav-spacer { flex: 1; }
-    .nav-theme-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 8px; font-size: .84rem; font-weight: 600; color: rgba(255,255,255,0.5); background: none; border: 1px solid rgba(255,255,255,0.12); cursor: pointer; transition: all .15s; font-family: inherit; white-space: nowrap; flex-shrink: 0; }
-    [data-theme="light"] .nav-theme-btn { color: #6b7280; border-color: rgba(0,0,60,0.15); }
-    .nav-theme-btn:hover { border-color: rgba(255,255,255,0.3); color: #fff; }
-    [data-theme="light"] .nav-theme-btn:hover { border-color: #2253cb; color: #2253cb; background: rgba(34,83,203,0.06); }
-    .nav-hamburger { display: none; background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 10px; cursor: pointer; color: rgba(255,255,255,0.5); font-size: 1rem; flex-shrink: 0; }
-    [data-theme="light"] .nav-hamburger { border-color: rgba(0,0,60,0.15); color: #6b7280; }
-    .nav-mobile { display: none; border-top: 1px solid rgba(255,255,255,0.05); background: #0a0d1a; padding: 8px 16px 12px; }
-    [data-theme="light"] .nav-mobile { background: #f5f7ff; border-top-color: rgba(0,0,60,0.08); }
-    .nav-mobile.open { display: block; }
-    .nav-m-link { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 8px; font-size: .88rem; font-weight: 600; color: rgba(255,255,255,0.7); text-decoration: none; transition: all .15s; }
-    [data-theme="light"] .nav-m-link { color: #374151; }
-    .nav-m-link:hover { background: rgba(255,255,255,0.06); color: #fff; }
-    [data-theme="light"] .nav-m-link:hover { background: rgba(34,83,203,0.07); color: #2253cb; }
-    .nav-m-sect { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.25); padding: 8px 12px 2px; }
-    [data-theme="light"] .nav-m-sect { color: #9ca3af; }
-    @media(max-width:768px) { .nav-desktop-links { display: none !important; } .nav-hamburger { display: inline-flex; } }
-
-    /* ═══ GRADIENT TEXT ═══ */
-    .grad-text {
-      background: linear-gradient(135deg, #ffffff 0%, #e63946 60%, #f59e0b 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    [data-theme="light"] .grad-text {
-      background: linear-gradient(135deg, #e63946 0%, #c62b37 60%, #d97706 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-
-    /* ═══ FLIP CARD ═══ */
+    /* ── flip card ── */
     .flip-wrap { perspective: 800px; cursor: pointer; }
-    .flip-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(.4,0,.2,1); transform-style: preserve-3d; }
+    .flip-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform 0.6s cubic-bezier(.4,0,.2,1);
+      transform-style: preserve-3d;
+    }
     .flip-wrap.flipped .flip-inner { transform: rotateY(180deg); }
-    .flip-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+    .flip-face {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden; border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 20px;
+    }
     .flip-back { transform: rotateY(180deg); }
 
-    /* ═══ CARD HOVER ═══ */
-    .card-hover { transition: transform .25s ease, box-shadow .25s ease; border: 1px solid rgba(255,255,255,0.07); }
-    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); border-color: rgba(230,57,70,0.3); }
+    /* ── auto flip anim ── */
+    @keyframes autoFlip {
+      0%,40%   { transform: rotateY(0deg); }
+      50%,90%  { transform: rotateY(180deg); }
+      100%     { transform: rotateY(0deg); }
+    }
+    .auto-flip { animation: autoFlip 4s ease-in-out infinite; }
 
-    /* ═══ GLOW ═══ */
+    /* ── glow ring ── */
     .glow { box-shadow: 0 0 40px rgba(230,57,70,0.25); }
     .glow-blue { box-shadow: 0 0 40px rgba(59,130,246,0.2); }
 
-    /* ═══ POPULAR RING ═══ */
+    /* ── card hover ── */
+    .card-hover {
+      transition: transform .25s ease, box-shadow .25s ease;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      border-color: rgba(230,57,70,0.3);
+    }
+
+    /* ── pulse badge ── */
+    @keyframes pulse-ring {
+      0%   { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    .pulse-dot::before {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      background:currentColor; animation: pulse-ring 1.5s ease-out infinite;
+    }
+
+    /* ── nav ── */
+    .nav-blur { backdrop-filter: blur(12px); background: rgba(7,11,20,0.85); }
+
+    /* ── pricing ── */
     .popular-ring { border: 2px solid #e63946; box-shadow: 0 0 30px rgba(230,57,70,0.2); }
 
-    /* ═══ FAQ ═══ */
+    /* ── FAQ ── */
     .faq-answer { display: none; }
     .faq-item.open .faq-answer { display: block; }
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-icon { transition: transform .25s; display: inline-block; }
 
-    /* ═══ DEMO TABS ═══ */
+    /* ── exercise demo tabs ── */
     .demo-tab { transition: all .2s; }
-    .demo-tab.active { background: #e63946; color: white; }
+    .demo-tab.active {
+      background: #e63946; color: white;
+    }
     .demo-panel { display: none; }
     .demo-panel.active { display: block; }
 
-    /* ═══ MC ═══ */
-    .mc-opt { cursor: pointer; transition: all .2s; border: 1.5px solid rgba(255,255,255,0.1); }
+    /* ── MC answer ── */
+    .mc-opt {
+      cursor: pointer; transition: all .2s;
+      border: 1.5px solid rgba(255,255,255,0.1);
+    }
     .mc-opt:hover { border-color: rgba(230,57,70,0.5); background: rgba(230,57,70,0.08); }
-    .mc-opt.correct { border-color: #10b981 !important; background: rgba(16,185,129,0.12) !important; }
-    .mc-opt.wrong { border-color: #ef4444 !important; background: rgba(239,68,68,0.1) !important; }
+    .mc-opt.correct { border-color: #10b981; background: rgba(16,185,129,0.12); }
+    .mc-opt.wrong   { border-color: #ef4444; background: rgba(239,68,68,0.1); }
 
-    /* ═══ MOBILE NAV ═══ */
+    /* ── mobile nav ── */
     #mobile-menu { display: none; }
     #mobile-menu.open { display: block; }
 
-    /* ═══ SCROLL REVEAL ═══ */
+    /* ── scroll reveal ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ═══ FLOAT ═══ */
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    /* ── hero float ── */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
     .float-anim { animation: float 4s ease-in-out infinite; }
 
-    /* ═══ LEARN / LIGHT MODE VISIBILITY ═══ */
-    .learn-only { }
-    [data-theme="light"] .learn-only { display: none !important; }
-    .light-only { display: none !important; }
-    [data-theme="light"] .light-only { display: block !important; }
-    .light-only-flex { display: none !important; }
-    [data-theme="light"] .light-only-flex { display: flex !important; }
-
-    /* ═══ LIGHT MODE TOOL CARDS ═══ */
-    [data-theme="light"] .tool-card { background:#ffffff; border:1px solid #d0dcf5; border-radius:18px; padding:24px; text-decoration:none; display:flex; flex-direction:column; gap:10px; transition:all .2s; box-shadow:0 2px 10px rgba(34,83,203,0.06); }
-    [data-theme="light"] .tool-card:hover { border-color:#2253cb; box-shadow:0 6px 24px rgba(34,83,203,0.14); transform:translateY(-3px); }
-    [data-theme="light"] .tool-card h3 { color:#1a1a2e; font-size:1.05rem; font-weight:700; margin:0; }
-    [data-theme="light"] .tool-card p { color:#4b5563; font-size:.88rem; margin:0; line-height:1.5; }
-    [data-theme="light"] .tool-card .tool-icon { font-size:2rem; }
-    [data-theme="light"] .tool-card .tool-arrow { color:#2253cb; font-size:.85rem; font-weight:700; margin-top:auto; }
-    [data-theme="light"] .light-hero-title { color:#1a1a2e; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; line-height:1.1; }
-    [data-theme="light"] .light-hero-sub { color:#4b5563; font-size:1.1rem; }
-    [data-theme="light"] .light-badge { background:#eaf0ff; border:1px solid #d0dcf5; color:#2253cb; display:inline-flex; align-items:center; gap:8px; padding:6px 16px; border-radius:999px; font-size:.85rem; font-weight:600; margin-bottom:20px; }
+    /* ── streak fire ── */
+    @keyframes flicker {
+      0%,100% { opacity:1; transform: scaleY(1); }
+      50%      { opacity:.8; transform: scaleY(1.05); }
+    }
+    .flicker { animation: flicker 0.9s ease-in-out infinite; }
   </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="text-white overflow-x-hidden">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRZ5N9GV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ═══ NAV ═══ -->
-<nav class="site-nav nav-blur">
-  <div class="site-nav-inner">
-    <a href="/" class="nav-logo">🇷🇺 englishtorussian.ai</a>
-    <div class="nav-desktop-links" style="display:flex;align-items:center;gap:2px;">
-      <a href="/translate/" class="nav-link">🌐 Translate</a>
-      <a href="/pdf/" class="nav-link">📄 PDF Translator</a>
-      <div class="nav-drop-wrap">
-        <button class="nav-link" id="navExercisesBtn" onclick="navToggleDrop(event,'navExercisesMenu')">Exercises <span style="font-size:.7em">▾</span></button>
-        <div class="nav-drop-menu" id="navExercisesMenu">
-          <a href="/flip-card/" class="nav-dd-item">🃏 Flip Cards</a>
-          <a href="/gap-fill/" class="nav-dd-item">📝 Gap Fill</a>
-          <a href="/listening/" class="nav-dd-item">🎧 Listening</a>
-        </div>
-      </div>
-      <div class="nav-drop-wrap learn-only">
-        <button class="nav-link" id="navLearnBtn" onclick="navToggleDrop(event,'navLearnMenu')">Learn Russian <span style="font-size:.7em">▾</span></button>
-        <div class="nav-drop-menu" id="navLearnMenu">
-          <a href="/learn/" class="nav-dd-item">📚 Russian Course</a>
-          <a href="/verb-conjugator/" class="nav-dd-item">⚡ Verb Conjugator</a>
-          <a href="/case-explainer/" class="nav-dd-item">📚 Case Explainer</a>
-        </div>
-      </div>
+<header class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-bold text-lg">
+      <span class="text-2xl">🇷🇺</span>
+      <span class="text-white">Russian<span class="text-red-400">AI</span></span>
+    </a>
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-6 text-sm text-gray-400">
+      <a href="#how-it-works" class="hover:text-white transition">How it works</a>
+      <a href="#exercises" class="hover:text-white transition">Exercises</a>
+      <a href="#pricing" class="hover:text-white transition">Pricing</a>
+      <a href="#reviews" class="hover:text-white transition">Reviews</a>
+      <a href="/translate/" class="hover:text-white transition">Translate</a>
+    </nav>
+    <div class="hidden md:flex items-center gap-3">
+      <a href="/learn/dashboard/" class="text-sm text-gray-400 hover:text-white transition">Log in</a>
+      <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+        Start Free Quiz →
+      </a>
     </div>
-    <div class="nav-spacer"></div>
-    <button class="nav-theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ Light</button>
-    <button class="nav-hamburger" id="navHamBtn" onclick="navToggleMobile()">☰</button>
+    <!-- Mobile hamburger -->
+    <button id="menu-btn" class="md:hidden p-2 rounded-lg text-gray-400 hover:text-white" aria-label="Menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
   </div>
-  <div class="nav-mobile" id="navMobile">
-    <a href="/translate/" class="nav-m-link">🌐 Translate</a>
-    <a href="/pdf/" class="nav-m-link">📄 PDF Translator</a>
-    <div class="nav-m-sect">Exercises</div>
-    <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
-    <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
-    <a href="/listening/" class="nav-m-link">🎧 Listening</a>
-    <div class="nav-m-sect learn-only">Learn Russian</div>
-    <a href="/learn/" class="nav-m-link learn-only">📚 Russian Course</a>
-    <a href="/verb-conjugator/" class="nav-m-link learn-only">⚡ Verb Conjugator</a>
-    <a href="/case-explainer/" class="nav-m-link learn-only">📚 Case Explainer</a>
-  </div>
-</nav>
-
-<!-- ═══ LIGHT MODE TOOLS HUB ═══ -->
-<section class="light-only" style="padding:80px 16px 60px;background:var(--light-bg,#f5f7ff)">
-  <div style="max-width:960px;margin:0 auto;text-align:center">
-    <div class="light-badge">🇷🇺 englishtorussian.ai — Free Russian Learning Tools</div>
-    <h1 class="light-hero-title" style="margin-bottom:16px">Learn &amp; Translate Russian — Free</h1>
-    <p class="light-hero-sub" style="margin-bottom:48px;max-width:540px;margin-left:auto;margin-right:auto">Translate English to Russian, practice with exercises, and master grammar — all free. No signup needed.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;text-align:left">
-      <a href="/translate/" class="tool-card">
-        <span class="tool-icon">🌐</span>
-        <h3>AI Translator</h3>
-        <p>Formal &amp; casual modes, gender-aware, pronunciation, phrasebook &amp; word breakdown.</p>
-        <span class="tool-arrow">Open Translator →</span>
-      </a>
-      <a href="/pdf/" class="tool-card">
-        <span class="tool-icon">📄</span>
-        <h3>PDF Translator</h3>
-        <p>Upload any PDF and get a full English-to-Russian translation instantly.</p>
-        <span class="tool-arrow">Translate PDF →</span>
-      </a>
-      <a href="/flip-card/" class="tool-card">
-        <span class="tool-icon">🃏</span>
-        <h3>Flip Cards</h3>
-        <p>Memorise Russian vocabulary with spaced-repetition flashcards. Tap to reveal.</p>
-        <span class="tool-arrow">Practice Vocab →</span>
-      </a>
-      <a href="/gap-fill/" class="tool-card">
-        <span class="tool-icon">✍️</span>
-        <h3>Gap Fill</h3>
-        <p>Fill in missing Russian words to practise sentence structure and grammar.</p>
-        <span class="tool-arrow">Try Gap Fill →</span>
-      </a>
-      <a href="/listening/" class="tool-card">
-        <span class="tool-icon">🎧</span>
-        <h3>Listening Exercise</h3>
-        <p>Hear native Russian words and pick the right answer. Train your ear.</p>
-        <span class="tool-arrow">Start Listening →</span>
-      </a>
-      <a href="/verb-conjugator/" class="tool-card">
-        <span class="tool-icon">⚡</span>
-        <h3>Verb Conjugator</h3>
-        <p>Instantly conjugate any Russian verb across all tenses, aspects and persons.</p>
-        <span class="tool-arrow">Conjugate Verbs →</span>
-      </a>
-      <a href="/case-explainer/" class="tool-card">
-        <span class="tool-icon">📚</span>
-        <h3>Case Explainer</h3>
-        <p>Understand Russian cases with examples. Nominative, genitive, dative and more.</p>
-        <span class="tool-arrow">Explain Cases →</span>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden border-t border-white/5 bg-[#070b14]">
+    <div class="px-4 py-4 flex flex-col gap-3 text-sm">
+      <a href="#how-it-works" class="text-gray-300 hover:text-white py-2">How it works</a>
+      <a href="#exercises" class="text-gray-300 hover:text-white py-2">Exercises</a>
+      <a href="#pricing" class="text-gray-300 hover:text-white py-2">Pricing</a>
+      <a href="#reviews" class="text-gray-300 hover:text-white py-2">Reviews</a>
+      <a href="/learn/dashboard/" class="text-gray-300 hover:text-white py-2">Log in</a>
+      <a href="/learn/quiz/" class="bg-red-500 text-white font-semibold px-4 py-3 rounded-lg text-center mt-2">
+        Start Free Quiz →
       </a>
     </div>
   </div>
-</section>
+</header>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero-bg learn-only min-h-screen flex items-center justify-center pt-24 pb-16 px-4 text-center">
-  <div class="max-w-3xl mx-auto w-full">
-    <!-- Badge -->
-    <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-gray-300 mb-6">
-      <span class="relative flex h-2 w-2">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
-      </span>
-      🔥 Join 2,400+ students already learning
+<section class="hero-bg min-h-screen flex items-center pt-24 pb-16 px-4">
+  <div class="max-w-6xl mx-auto w-full">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left: copy -->
+      <div>
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-gray-300 mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+          </span>
+          🔥 Join 2,400+ students already learning
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] mb-6">
+          Speak Russian in<br/>
+          <span class="grad-text">7 Days.</span><br/>
+          <span class="text-gray-200">Seriously.</span>
+        </h1>
+
+        <p class="text-lg text-gray-400 mb-8 max-w-md leading-relaxed">
+          AI-powered micro-lessons built around how your brain actually learns. Flip cards, listening drills, fill-the-gap & quizzes — one payment, zero subscription drama.
+        </p>
+
+        <!-- Bullet points -->
+        <ul class="space-y-3 mb-10">
+          <li class="flex items-center gap-3 text-gray-300">
+            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+            Daily lessons in 15–20 minutes
+          </li>
+          <li class="flex items-center gap-3 text-gray-300">
+            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+            4 exercise types: flip cards, audio, fill-gaps, quizzes
+          </li>
+          <li class="flex items-center gap-3 text-gray-300">
+            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+            One-time payment — choose 7, 14 days or unlimited
+          </li>
+          <li class="flex items-center gap-3 text-gray-300">
+            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
+            Native speaker audio for every word & phrase
+          </li>
+        </ul>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition text-center glow">
+            Start Free Quiz — 2 min →
+          </a>
+          <a href="#how-it-works" class="border border-white/15 hover:border-white/30 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-lg transition text-center">
+            See how it works
+          </a>
+        </div>
+
+        <!-- Trust signals -->
+        <p class="text-xs text-gray-500 mt-4">No subscription · 7-day money-back guarantee · Start in 60 seconds</p>
+      </div>
+
+      <!-- Right: animated flip card preview -->
+      <div class="flex justify-center">
+        <div class="float-anim w-full max-w-xs">
+          <!-- Lesson card preview -->
+          <div class="bg-[#0f1629] rounded-2xl p-5 border border-white/10 glow-blue">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <span class="text-lg">🃏</span>
+                <span class="text-sm text-gray-400 font-medium">Flip Card</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs text-gray-500">Day 4 · Card 3/12</span>
+              </div>
+            </div>
+            <!-- Progress bar -->
+            <div class="h-1.5 bg-white/5 rounded-full mb-5">
+              <div class="h-full bg-gradient-to-r from-red-500 to-orange-400 rounded-full" style="width:25%"></div>
+            </div>
+            <!-- Flip card demo -->
+            <div id="hero-flip" class="flip-wrap h-40 mb-4" onclick="heroFlip()">
+              <div class="flip-inner" id="hero-inner">
+                <div class="flip-face" style="background: linear-gradient(135deg, #1a2340, #0f1629); border: 1.5px solid rgba(255,255,255,0.1);">
+                  <div class="text-5xl font-black mb-2">Привет</div>
+                  <div class="text-sm text-gray-500">Click to reveal →</div>
+                </div>
+                <div class="flip-face flip-back" style="background: linear-gradient(135deg, #1a1a35, #0f1a30); border: 1.5px solid rgba(99,102,241,0.3);">
+                  <div class="text-3xl font-bold text-blue-300 mb-1">Hello / Hi</div>
+                  <div class="text-sm text-gray-400 mb-3">Informal greeting</div>
+                  <div class="text-lg text-gray-300 font-mono">prih-VYET</div>
+                </div>
+              </div>
+            </div>
+            <div class="text-xs text-center text-gray-500 mb-4" id="flip-hint">👆 Tap to flip</div>
+            <!-- Bottom stats -->
+            <div class="grid grid-cols-3 gap-2 text-center border-t border-white/5 pt-4">
+              <div>
+                <div class="text-lg font-bold text-orange-400">🔥 4</div>
+                <div class="text-xs text-gray-500">day streak</div>
+              </div>
+              <div>
+                <div class="text-lg font-bold text-green-400">87%</div>
+                <div class="text-xs text-gray-500">accuracy</div>
+              </div>
+              <div>
+                <div class="text-lg font-bold text-blue-400">240</div>
+                <div class="text-xs text-gray-500">XP today</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] mb-6 text-white">
-      Speak Russian in<br/>
-      <span class="grad-text">7 Days.</span><br/>
-      <span class="text-gray-200">Seriously.</span>
-    </h1>
-
-    <p class="text-lg text-gray-400 mb-8 max-w-xl mx-auto leading-relaxed">
-      AI-powered micro-lessons built around how your brain actually learns. Flip cards, listening drills, fill-the-gap &amp; quizzes — one payment, zero subscription drama.
-    </p>
-
-    <!-- Bullet points -->
-    <ul class="space-y-3 mb-10 text-left inline-block">
-      <li class="flex items-center gap-3 text-gray-300">
-        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-        Daily lessons in 15–20 minutes
-      </li>
-      <li class="flex items-center gap-3 text-gray-300">
-        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-        4 exercise types: flip cards, audio, fill-gaps, quizzes
-      </li>
-      <li class="flex items-center gap-3 text-gray-300">
-        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-        One-time payment — choose 7, 14 days or unlimited
-      </li>
-      <li class="flex items-center gap-3 text-gray-300">
-        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 text-green-400 text-xs">✓</span>
-        Native speaker audio for every word &amp; phrase
-      </li>
-    </ul>
-
-    <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="/learn/quiz/" class="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl text-lg transition text-center glow">
-        Start Free Quiz — 2 min →
-      </a>
-      <a href="#how-it-works" class="border border-white/15 hover:border-white/30 text-gray-300 hover:text-white font-semibold px-8 py-4 rounded-xl text-lg transition text-center">
-        See how it works
-      </a>
-    </div>
-
-    <!-- Trust signals -->
-    <p class="text-xs text-gray-500 mt-6">No subscription · 7-day money-back guarantee · Start in 60 seconds</p>
   </div>
 </section>
 
 <!-- ═══ STATS BAR ═══ -->
-<div class="learn-only border-y border-white/5 bg-white/[0.02] py-6 px-4">
+<div class="border-y border-white/5 bg-white/[0.02] py-6 px-4">
   <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
     <div>
       <div class="text-2xl sm:text-3xl font-black text-white">2,400+</div>
@@ -365,7 +337,7 @@
     </div>
     <div>
       <div class="text-2xl sm:text-3xl font-black text-white">150+</div>
-      <div class="text-sm text-gray-500 mt-1">Lessons &amp; exercises</div>
+      <div class="text-sm text-gray-500 mt-1">Lessons & exercises</div>
     </div>
     <div>
       <div class="text-2xl sm:text-3xl font-black text-white">4.9 ★</div>
@@ -375,7 +347,7 @@
 </div>
 
 <!-- ═══ HOW IT WORKS ═══ -->
-<section id="how-it-works" class="learn-only py-20 px-4">
+<section id="how-it-works" class="py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-red-400 text-sm font-semibold uppercase tracking-widest mb-3">Simple process</div>
@@ -412,20 +384,25 @@
 </section>
 
 <!-- ═══ EXERCISE TYPES ═══ -->
-<section id="exercises" class="learn-only py-20 px-4 bg-white/[0.015]">
+<section id="exercises" class="py-20 px-4 bg-white/[0.015]">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">4 exercise types</div>
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">Try a real lesson — right now</h2>
       <p class="text-gray-400 max-w-xl mx-auto">Your lessons mix all four types so you never get bored. Click the tabs to try each one.</p>
     </div>
+
+    <!-- Tab switcher -->
     <div class="flex flex-wrap gap-2 mb-8 justify-center">
       <button class="demo-tab active rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="flip">🃏 Flip Card</button>
       <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="mc">❓ Multiple Choice</button>
       <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="gap">✍️ Fill the Gap</button>
       <button class="demo-tab rounded-full px-5 py-2.5 text-sm font-semibold bg-white/5 border border-white/10 text-gray-300" data-tab="listen">🎧 Listening</button>
     </div>
+
+    <!-- Demo panels -->
     <div class="max-w-lg mx-auto">
+
       <!-- Flip Card -->
       <div class="demo-panel active" id="panel-flip">
         <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
@@ -433,19 +410,20 @@
           <div id="demo-flip" class="flip-wrap h-44 mb-4" onclick="demoFlip()">
             <div class="flip-inner" id="demo-inner">
               <div class="flip-face" style="background: linear-gradient(135deg, #1a2340 0%, #0f1629 100%); border: 1.5px solid rgba(255,255,255,0.1);">
-                <div class="text-4xl font-black mb-2 text-white">Спасибо</div>
+                <div class="text-4xl font-black mb-2">Спасибо</div>
                 <div class="text-sm text-gray-500">Russian → English</div>
               </div>
               <div class="flip-face flip-back" style="background: linear-gradient(135deg, #1a1a35 0%, #0f1a2e 100%); border: 1.5px solid rgba(99,102,241,0.25);">
                 <div class="text-2xl font-bold text-blue-300 mb-1">Thank you</div>
                 <div class="text-gray-400 text-sm mb-3">Common expression of gratitude</div>
-                <button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm text-gray-300 transition" onclick="speak('Спасибо', event)">🔊 Hear it</button>
+                <button class="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg text-sm transition" onclick="speak('Спасибо', event)">🔊 Hear it</button>
               </div>
             </div>
           </div>
-          <p class="text-center text-xs text-gray-500">Click again to flip back · <a href="/flip-card/" class="text-red-400 font-semibold">Open Flip Cards →</a></p>
+          <p class="text-center text-xs text-gray-500">Click again to flip back</p>
         </div>
       </div>
+
       <!-- Multiple Choice -->
       <div class="demo-panel" id="panel-mc">
         <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
@@ -460,6 +438,7 @@
           <p id="mc-feedback" class="mt-4 text-sm text-center hidden"></p>
         </div>
       </div>
+
       <!-- Fill the Gap -->
       <div class="demo-panel" id="panel-gap">
         <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
@@ -476,13 +455,16 @@
           <p id="gap-feedback" class="mt-3 text-sm text-center hidden"></p>
         </div>
       </div>
+
       <!-- Listening -->
       <div class="demo-panel" id="panel-listen">
         <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10">
           <p class="text-gray-300 font-semibold mb-2">🎧 Listen and choose what you heard:</p>
           <p class="text-gray-500 text-sm mb-6">Press play, then pick the Russian word</p>
           <div class="text-center mb-6">
-            <button id="listen-btn" onclick="playListening()" class="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 transition flex items-center justify-center text-3xl mx-auto glow">▶️</button>
+            <button id="listen-btn" onclick="playListening()" class="w-20 h-20 rounded-full bg-red-500 hover:bg-red-600 transition flex items-center justify-center text-3xl mx-auto glow">
+              ▶️
+            </button>
             <p class="text-gray-500 text-sm mt-3" id="listen-status">Press to hear the word</p>
           </div>
           <div class="grid grid-cols-2 gap-3" id="listen-options">
@@ -494,12 +476,13 @@
           <p id="listen-feedback" class="mt-4 text-sm text-center hidden"></p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ═══ CURRICULUM ═══ -->
-<section class="learn-only py-20 px-4">
+<!-- ═══ CURRICULUM PREVIEW ═══ -->
+<section class="py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-purple-400 text-sm font-semibold uppercase tracking-widest mb-3">Structured curriculum</div>
@@ -507,6 +490,7 @@
       <p class="text-gray-400 max-w-xl mx-auto">Each day is a focused module with 8–12 mixed exercises. Complete in 15–20 minutes.</p>
     </div>
     <div class="grid sm:grid-cols-2 gap-4">
+      <!-- Week 1 -->
       <div class="bg-[#0f1629] rounded-2xl p-6 border border-white/10 card-hover reveal">
         <div class="flex items-center gap-2 mb-5">
           <span class="text-orange-400 text-lg">🏃</span>
@@ -515,14 +499,15 @@
         </div>
         <div class="space-y-2.5 text-sm">
           <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 1</span> Russian Alphabet — Cyrillic decoded</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 2</span> Greetings &amp; Introductions</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 3</span> Numbers 1–20 &amp; telling time</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 4</span> Food, ordering &amp; restaurants</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 5</span> Getting around &amp; directions</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 6</span> Shopping &amp; money</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 7</span> Emergency Russian &amp; review</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 2</span> Greetings & Introductions</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 3</span> Numbers 1–20 & telling time</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 4</span> Food, ordering & restaurants</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 5</span> Getting around & directions</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 6</span> Shopping & money</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 7</span> Emergency Russian & review</div>
         </div>
       </div>
+      <!-- Week 2 -->
       <div class="bg-[#0f1629] rounded-2xl p-6 border border-red-500/20 card-hover reveal">
         <div class="flex items-center gap-2 mb-5">
           <span class="text-red-400 text-lg">🚀</span>
@@ -530,13 +515,13 @@
           <span class="ml-auto text-xs text-red-400 bg-red-500/10 border border-red-500/20 px-2 py-0.5 rounded-full">14-day plan</span>
         </div>
         <div class="space-y-2.5 text-sm">
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 8</span> Family &amp; relationships</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 9</span> Days, months &amp; seasons</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 10</span> Transport &amp; travel phrases</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 11</span> Hobbies &amp; everyday chat</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 12</span> Hotels, rooms &amp; check-in</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 13</span> Feelings &amp; expressing yourself</div>
-          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 14</span> Russian culture &amp; final review</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 8</span> Family & relationships</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 9</span> Days, months & seasons</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 10</span> Transport & travel phrases</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 11</span> Hobbies & everyday chat</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 12</span> Hotels, rooms & check-in</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 13</span> Feelings & expressing yourself</div>
+          <div class="flex items-center gap-3 text-gray-300"><span class="text-gray-600 w-12">Day 14</span> Russian culture & final review</div>
         </div>
       </div>
     </div>
@@ -545,7 +530,7 @@
         <span class="text-2xl">♾️</span>
         <div>
           <h4 class="font-bold text-white text-sm">Unlimited Plan — Beyond Day 14</h4>
-          <p class="text-gray-400 text-sm mt-0.5">Advanced grammar, Russian culture deep-dives, business Russian, slang, literature &amp; AI-powered conversation practice. New lessons added weekly.</p>
+          <p class="text-gray-400 text-sm mt-0.5">Advanced grammar, Russian culture deep-dives, business Russian, slang, literature & AI-powered conversation practice. New lessons added weekly.</p>
         </div>
       </div>
     </div>
@@ -553,14 +538,16 @@
 </section>
 
 <!-- ═══ PRICING ═══ -->
-<section id="pricing" class="learn-only py-20 px-4 bg-white/[0.015]">
+<section id="pricing" class="py-20 px-4 bg-white/[0.015]">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">Pricing</div>
       <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">One payment. No subscription. Ever.</h2>
       <p class="text-gray-400 max-w-xl mx-auto">Pay once and keep your access forever. Pick the challenge that fits your ambition.</p>
     </div>
+
     <div class="grid sm:grid-cols-3 gap-6">
+      <!-- 7-Day -->
       <div class="bg-[#0f1629] rounded-2xl p-7 border border-white/10 card-hover reveal flex flex-col">
         <div class="text-2xl mb-3">🏃</div>
         <h3 class="text-lg font-bold text-white mb-1">7-Day Sprint</h3>
@@ -581,6 +568,8 @@
           Start 7-Day Challenge
         </a>
       </div>
+
+      <!-- 14-Day (popular) -->
       <div class="bg-[#0f1629] rounded-2xl p-7 popular-ring card-hover reveal flex flex-col relative">
         <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs font-bold px-4 py-1 rounded-full">⭐ MOST POPULAR</div>
         <div class="text-2xl mb-3">🚀</div>
@@ -596,13 +585,15 @@
           <li class="flex gap-2"><span class="text-green-400">✓</span> Everything in Sprint</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Week 2: conversations</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Audio + listening drills</li>
-          <li class="flex gap-2"><span class="text-green-400">✓</span> Streak &amp; XP system</li>
+          <li class="flex gap-2"><span class="text-green-400">✓</span> Streak & XP system</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Completion certificate</li>
         </ul>
         <a href="/learn/quiz/?plan=14" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-xl transition glow">
           Start 14-Day Journey →
         </a>
       </div>
+
+      <!-- Unlimited -->
       <div class="bg-[#0f1629] rounded-2xl p-7 border border-purple-500/20 card-hover reveal flex flex-col">
         <div class="text-2xl mb-3">♾️</div>
         <h3 class="text-lg font-bold text-white mb-1">Unlimited Mastery</h3>
@@ -614,7 +605,7 @@
         <ul class="space-y-3 text-sm text-gray-300 mb-8 flex-1">
           <li class="flex gap-2"><span class="text-green-400">✓</span> Everything in Journey</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Advanced grammar</li>
-          <li class="flex gap-2"><span class="text-green-400">✓</span> Russian culture &amp; slang</li>
+          <li class="flex gap-2"><span class="text-green-400">✓</span> Russian culture & slang</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> Business Russian</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> New lessons weekly</li>
           <li class="flex gap-2"><span class="text-green-400">✓</span> AI conversation practice</li>
@@ -625,14 +616,15 @@
         </a>
       </div>
     </div>
+
     <p class="text-center text-sm text-gray-500 mt-6">
       🛡️ 7-day money-back guarantee &nbsp;·&nbsp; Secure checkout via Stripe &nbsp;·&nbsp; No hidden fees
     </p>
   </div>
 </section>
 
-<!-- ═══ REVIEWS ═══ -->
-<section id="reviews" class="learn-only py-20 px-4">
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="reviews" class="py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Reviews</div>
@@ -643,7 +635,7 @@
         <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
         <p class="text-gray-300 text-sm leading-relaxed mb-5">"I went to Moscow after the 14-day challenge and actually had real conversations with locals. Absolutely mind blown. 100% worth it."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-400 to-orange-400 flex items-center justify-center text-sm font-bold text-white">S</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-red-400 to-orange-400 flex items-center justify-center text-sm font-bold">S</div>
           <div>
             <div class="text-white text-sm font-semibold">Sarah M.</div>
             <div class="text-gray-500 text-xs">New York, USA · 14-Day Journey</div>
@@ -654,7 +646,7 @@
         <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
         <p class="text-gray-300 text-sm leading-relaxed mb-5">"The flip cards + audio combo is insanely effective. I learned more in 7 days than 3 months of Duolingo. The streak system keeps you hooked."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-sm font-bold text-white">J</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex items-center justify-center text-sm font-bold">J</div>
           <div>
             <div class="text-white text-sm font-semibold">James K.</div>
             <div class="text-gray-500 text-xs">London, UK · 7-Day Sprint</div>
@@ -665,7 +657,7 @@
         <div class="text-yellow-400 text-sm mb-3">★★★★★</div>
         <p class="text-gray-300 text-sm leading-relaxed mb-5">"Worth every penny! My Russian boyfriend's family was so impressed when I greeted them properly and chatted about food. I'm now on the Unlimited plan."</p>
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center text-sm font-bold text-white">A</div>
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-green-400 to-teal-400 flex items-center justify-center text-sm font-bold">A</div>
           <div>
             <div class="text-white text-sm font-semibold">Aisha T.</div>
             <div class="text-gray-500 text-xs">Toronto, Canada · Unlimited</div>
@@ -677,7 +669,7 @@
 </section>
 
 <!-- ═══ FAQ ═══ -->
-<section class="learn-only py-20 px-4 bg-white/[0.015]">
+<section class="py-20 px-4 bg-white/[0.015]">
   <div class="max-w-2xl mx-auto">
     <div class="text-center mb-12 reveal">
       <h2 class="text-3xl font-black text-white mb-3">Frequently asked questions</h2>
@@ -685,7 +677,8 @@
     <div class="space-y-3">
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          Do I need any Russian knowledge to start? <span class="faq-icon text-gray-400 text-xl">+</span>
+          Do I need any Russian knowledge to start?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
           Zero Russian needed. Day 1 starts with the Cyrillic alphabet from scratch. By the end of Day 1 you'll be able to read Russian letters.
@@ -693,7 +686,8 @@
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          How long are the daily lessons? <span class="faq-icon text-gray-400 text-xl">+</span>
+          How long are the daily lessons?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
           Each lesson has 8–12 exercises and takes about 15–20 minutes. You can do them in one sitting or split across the day — progress is saved automatically.
@@ -701,15 +695,17 @@
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          What if I miss a day? <span class="faq-icon text-gray-400 text-xl">+</span>
+          What if I miss a day?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          Your access never expires. Miss a day? Just pick up where you left off. The streak resets but your progress and content are always there.
+          Your access never expires. Miss a day? Just pick up where you left off. The streak resets (sad face) but your progress and content are always there.
         </div>
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          Can I upgrade from 7-day to 14-day later? <span class="faq-icon text-gray-400 text-xl">+</span>
+          Can I upgrade from 7-day to 14-day later?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
           Yes! Email us at support@englishtorussian.ai and we'll apply your original payment as credit toward the upgrade. You only pay the difference.
@@ -717,7 +713,8 @@
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          Is there a money-back guarantee? <span class="faq-icon text-gray-400 text-xl">+</span>
+          Is there a money-back guarantee?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
           Yes. If you complete the first 3 days and feel it's not working for you, email us within 7 days of purchase for a full refund. No questions asked.
@@ -725,10 +722,11 @@
       </div>
       <div class="faq-item bg-[#0f1629] rounded-xl border border-white/10 overflow-hidden">
         <button class="faq-btn w-full text-left px-5 py-4 flex items-center justify-between text-white font-medium">
-          Does it work on mobile? <span class="faq-icon text-gray-400 text-xl">+</span>
+          Does it work on mobile?
+          <span class="faq-icon text-gray-400 text-xl">+</span>
         </button>
         <div class="faq-answer px-5 pb-4 text-gray-400 text-sm leading-relaxed">
-          100%. The entire course is designed mobile-first. Do your daily lesson on the bus, in bed, or wherever. No app download needed.
+          100%. The entire course is designed mobile-first. Do your daily lesson on the bus, in bed, or wherever. No app download needed — just open the link.
         </div>
       </div>
     </div>
@@ -736,7 +734,7 @@
 </section>
 
 <!-- ═══ FINAL CTA ═══ -->
-<section class="learn-only py-24 px-4">
+<section class="py-24 px-4">
   <div class="max-w-2xl mx-auto text-center reveal">
     <div class="text-5xl mb-5">🇷🇺</div>
     <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
@@ -755,7 +753,7 @@
   <div class="max-w-5xl mx-auto">
     <div class="grid sm:grid-cols-4 gap-8 mb-8">
       <div class="sm:col-span-2">
-        <a href="/" class="flex items-center gap-2 font-bold text-lg mb-3">
+        <a href="/learn/" class="flex items-center gap-2 font-bold text-lg mb-3">
           <span class="text-2xl">🇷🇺</span>
           <span class="text-white">Russian<span class="text-red-400">AI</span></span>
         </a>
@@ -763,20 +761,21 @@
         <p class="text-gray-600 text-xs mt-3">By Mytheon Technologies, Almaty, Kazakhstan</p>
       </div>
       <div>
-        <h4 class="text-white font-semibold text-sm mb-3">Exercises</h4>
+        <h4 class="text-white font-semibold text-sm mb-3">Learn</h4>
         <div class="space-y-2 text-sm text-gray-500">
-          <div><a href="/flip-card/" class="hover:text-gray-300 transition">Flip Cards</a></div>
-          <div><a href="/gap-fill/" class="hover:text-gray-300 transition">Gap Fill</a></div>
-          <div><a href="/listening/" class="hover:text-gray-300 transition">Listening</a></div>
+          <div><a href="/learn/quiz/" class="hover:text-gray-300 transition">Start Quiz</a></div>
+          <div><a href="#pricing" class="hover:text-gray-300 transition">Pricing</a></div>
+          <div><a href="#exercises" class="hover:text-gray-300 transition">Exercises</a></div>
+          <div><a href="#reviews" class="hover:text-gray-300 transition">Reviews</a></div>
         </div>
       </div>
       <div>
         <h4 class="text-white font-semibold text-sm mb-3">Tools</h4>
         <div class="space-y-2 text-sm text-gray-500">
-          <div><a href="/translate/" class="hover:text-gray-300 transition">AI Translator</a></div>
-          <div><a href="/pdf/" class="hover:text-gray-300 transition">PDF Translator</a></div>
+          <div><a href="/" class="hover:text-gray-300 transition">Translator</a></div>
           <div><a href="/verb-conjugator/" class="hover:text-gray-300 transition">Verb Conjugator</a></div>
           <div><a href="/case-explainer/" class="hover:text-gray-300 transition">Case Explainer</a></div>
+          <div><a href="/pdf/" class="hover:text-gray-300 transition">PDF Translator</a></div>
         </div>
       </div>
     </div>
@@ -788,32 +787,13 @@
 </footer>
 
 <script>
-  /* ═══ THEME ═══ */
-  function toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.dataset.theme === 'dark';
-    html.dataset.theme = isDark ? 'light' : 'dark';
-    localStorage.setItem('theme', html.dataset.theme);
-    document.getElementById('themeBtn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
-  }
-  (function() {
-    const saved = localStorage.getItem('theme') || 'dark';
-    document.documentElement.dataset.theme = saved;
-    document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️ Light' : '🌙 Dark';
-  })();
+  // ── Mobile nav ──
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  document.querySelectorAll('#mobile-menu a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
-  /* ═══ NAV ═══ */
-  function navToggleDrop(e, menuId) {
-    e.stopPropagation();
-    const menu = document.getElementById(menuId);
-    const wasOpen = menu.classList.contains('open');
-    document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open'));
-    if (!wasOpen) menu.classList.add('open');
-  }
-  function navToggleMobile() { document.getElementById('navMobile').classList.toggle('open'); }
-  document.addEventListener('click', () => document.querySelectorAll('.nav-drop-menu').forEach(m => m.classList.remove('open')));
-
-  /* ═══ SMOOTH SCROLL ═══ */
+  // ── Smooth scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
@@ -822,14 +802,22 @@
     });
   });
 
-  /* ═══ DEMO FLIP ═══ */
+  // ── Hero flip ──
+  let heroFlipped = false;
+  function heroFlip() {
+    heroFlipped = !heroFlipped;
+    document.getElementById('hero-flip').classList.toggle('flipped', heroFlipped);
+    document.getElementById('flip-hint').textContent = heroFlipped ? '👆 Tap to flip back' : '👆 Tap to flip';
+  }
+
+  // ── Demo flip ──
   let demoFlipped = false;
   function demoFlip() {
     demoFlipped = !demoFlipped;
     document.getElementById('demo-flip').classList.toggle('flipped', demoFlipped);
   }
 
-  /* ═══ DEMO TABS ═══ */
+  // ── Demo tabs ──
   document.querySelectorAll('.demo-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
@@ -839,7 +827,7 @@
     });
   });
 
-  /* ═══ MC ═══ */
+  // ── Multiple choice ──
   function checkMC(btn, correct) {
     const opts = document.querySelectorAll('#mc-options button');
     opts.forEach(o => o.disabled = true);
@@ -857,29 +845,32 @@
     }
   }
 
-  /* ═══ GAP FILL ═══ */
+  // ── Fill the gap ──
   function checkGap() {
     const val = document.getElementById('gap-input').value.trim();
     const fb = document.getElementById('gap-feedback');
     fb.classList.remove('hidden');
     if (val.length > 0) {
-      fb.textContent = `✅ Меня зовут ${val}. — Perfect!`;
+      fb.textContent = `✅ Меня зовут ${val}. — "My name is ${val}." Perfect!`;
       fb.className = 'mt-3 text-sm text-center text-green-400';
     } else {
-      fb.textContent = '⚠️ Type any name — it\'s your own name!';
+      fb.textContent = '⚠️ Type any name — it\'s a fill-in with your own name!';
       fb.className = 'mt-3 text-sm text-center text-yellow-400';
     }
   }
   document.getElementById('gap-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkGap(); });
 
-  /* ═══ LISTENING ═══ */
+  // ── Listening ──
   function playListening() {
     const btn = document.getElementById('listen-btn');
     const status = document.getElementById('listen-status');
     btn.textContent = '⏸️';
     status.textContent = 'Playing: "До свидания"…';
     speak('До свидания', null);
-    setTimeout(() => { btn.textContent = '▶️'; status.textContent = 'Now choose what you heard'; }, 2200);
+    setTimeout(() => {
+      btn.textContent = '▶️';
+      status.textContent = 'Now choose what you heard';
+    }, 2200);
   }
   function checkListen(el, correct) {
     document.querySelectorAll('#listen-options button').forEach(b => b.disabled = true);
@@ -892,32 +883,38 @@
     } else {
       el.classList.add('wrong');
       document.querySelectorAll('#listen-options button')[1].classList.add('correct');
-      fb.textContent = '❌ It was До свидания — Goodbye';
+      fb.textContent = '❌ It was До свидания — which means Goodbye';
       fb.className = 'mt-4 text-sm text-center text-red-400';
     }
   }
 
-  /* ═══ TTS ═══ */
+  // ── Text to speech ──
   function speak(text, e) {
     if (e) e.stopPropagation();
     if ('speechSynthesis' in window) {
       const utt = new SpeechSynthesisUtterance(text);
-      utt.lang = 'ru-RU'; utt.rate = 0.85;
+      utt.lang = 'ru-RU';
+      utt.rate = 0.85;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(utt);
     }
   }
 
-  /* ═══ FAQ ═══ */
+  // ── FAQ accordion ──
   document.querySelectorAll('.faq-btn').forEach(btn => {
-    btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
   });
 
-  /* ═══ SCROLL REVEAL ═══ */
-  const ro = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
