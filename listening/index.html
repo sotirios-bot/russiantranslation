@@ -14,11 +14,13 @@
   <meta property="og:description" content="Listen to Russian passages and answer comprehension questions. A1–B1 levels." />
   <meta property="og:url" content="https://englishtorussian.ai/listening/" />
   <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
   :root {
     --bg:#f0f4ff;--surface:#ffffff;--surface2:#fafcff;--border:#d0dcf5;--border2:#eaf0ff;
-    --text:#1a1a2e;--muted:#5570a0;--faint:#9aadcc;--xfaint:#b0bcd8;
+    --text:#1a1a2e;--muted:#5570a0;--faint:#4b5e84;--xfaint:#6b7ba0;
     --primary:#2253cb;--primary-bg:#eaf0ff;--primary-dk:#1a40a8;
     --orange:#ea7000;--orange-bg:#fff7f0;--green:#1a9e5c;--green-bg:#f0fdf6;
     --shadow:rgba(34,83,203,0.07);--shadow2:rgba(34,83,203,0.18);
@@ -31,7 +33,7 @@
     --shadow:rgba(0,0,0,0.35);--shadow2:rgba(0,0,0,0.55);
   }
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);min-height:100vh;color:var(--text);transition:background .3s,color .3s;}
   a{color:var(--primary);}
   .t-pill{background:var(--bg);border:2px solid var(--border);color:var(--faint);border-radius:10px;padding:6px 14px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
   .t-pill.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary);}
@@ -48,7 +50,7 @@
   /* ═══ SITE NAV ═══ */
   .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
   .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
-  .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--primary);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
+  .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--text);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
   .nav-logo:hover{opacity:.85;}
   .nav-link{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;font-family:inherit;white-space:nowrap;}
   .nav-link:hover,.nav-link.active{background:var(--primary-bg);color:var(--primary);}

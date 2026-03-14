@@ -16,6 +16,8 @@
   <link rel="canonical" href="https://englishtorussian.ai/pdf/"/>
 
   <!-- Tailwind CSS CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -61,7 +63,7 @@
     /* ── site nav ── */
     .site-nav{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 6px var(--shadow);}
     .site-nav-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:4px;height:56px;}
-    .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--primary);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
+    .nav-logo{display:flex;align-items:center;gap:7px;font-weight:900;font-size:.92rem;color:var(--text);text-decoration:none;flex-shrink:0;margin-right:10px;letter-spacing:-.3px;}
     .nav-logo:hover{opacity:.85;}
     .nav-link{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:8px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;transition:all .15s;cursor:pointer;background:none;border:none;font-family:inherit;white-space:nowrap;}
     .nav-link:hover,.nav-link.active{background:var(--primary-bg);color:var(--primary);}

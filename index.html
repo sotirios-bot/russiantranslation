@@ -64,10 +64,10 @@
     [data-theme="light"] .bg-white\/10 { background: rgba(0,0,40,0.06) !important; }
     [data-theme="light"] .bg-white\/15 { background: rgba(0,0,40,0.08) !important; }
     [data-theme="light"] .text-white { color: #1a1a2e !important; }
-    [data-theme="light"] .text-gray-300 { color: #374151 !important; }
-    [data-theme="light"] .text-gray-400 { color: #6b7280 !important; }
-    [data-theme="light"] .text-gray-500 { color: #9ca3af !important; }
-    [data-theme="light"] .text-gray-600 { color: #b0bcd8 !important; }
+    [data-theme="light"] .text-gray-300 { color: #1f2937 !important; }
+    [data-theme="light"] .text-gray-400 { color: #374151 !important; }
+    [data-theme="light"] .text-gray-500 { color: #4b5563 !important; }
+    [data-theme="light"] .text-gray-600 { color: #6b7280 !important; }
     [data-theme="light"] .border-white\/5 { border-color: rgba(0,0,60,0.07) !important; }
     [data-theme="light"] .border-white\/10 { border-color: rgba(0,0,60,0.08) !important; }
     [data-theme="light"] .border-white\/15 { border-color: rgba(0,0,60,0.1) !important; }
@@ -175,6 +175,25 @@
     /* ═══ FLOAT ═══ */
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     .float-anim { animation: float 4s ease-in-out infinite; }
+
+    /* ═══ LEARN / LIGHT MODE VISIBILITY ═══ */
+    .learn-only { }
+    [data-theme="light"] .learn-only { display: none !important; }
+    .light-only { display: none !important; }
+    [data-theme="light"] .light-only { display: block !important; }
+    .light-only-flex { display: none !important; }
+    [data-theme="light"] .light-only-flex { display: flex !important; }
+
+    /* ═══ LIGHT MODE TOOL CARDS ═══ */
+    [data-theme="light"] .tool-card { background:#ffffff; border:1px solid #d0dcf5; border-radius:18px; padding:24px; text-decoration:none; display:flex; flex-direction:column; gap:10px; transition:all .2s; box-shadow:0 2px 10px rgba(34,83,203,0.06); }
+    [data-theme="light"] .tool-card:hover { border-color:#2253cb; box-shadow:0 6px 24px rgba(34,83,203,0.14); transform:translateY(-3px); }
+    [data-theme="light"] .tool-card h3 { color:#1a1a2e; font-size:1.05rem; font-weight:700; margin:0; }
+    [data-theme="light"] .tool-card p { color:#4b5563; font-size:.88rem; margin:0; line-height:1.5; }
+    [data-theme="light"] .tool-card .tool-icon { font-size:2rem; }
+    [data-theme="light"] .tool-card .tool-arrow { color:#2253cb; font-size:.85rem; font-weight:700; margin-top:auto; }
+    [data-theme="light"] .light-hero-title { color:#1a1a2e; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; line-height:1.1; }
+    [data-theme="light"] .light-hero-sub { color:#4b5563; font-size:1.1rem; }
+    [data-theme="light"] .light-badge { background:#eaf0ff; border:1px solid #d0dcf5; color:#2253cb; display:inline-flex; align-items:center; gap:8px; padding:6px 16px; border-radius:999px; font-size:.85rem; font-weight:600; margin-bottom:20px; }
   </style>
 </head>
 <body class="overflow-x-hidden">
@@ -196,9 +215,10 @@
           <a href="/listening/" class="nav-dd-item">🎧 Listening</a>
         </div>
       </div>
-      <div class="nav-drop-wrap">
+      <div class="nav-drop-wrap learn-only">
         <button class="nav-link" id="navLearnBtn" onclick="navToggleDrop(event,'navLearnMenu')">Learn Russian <span style="font-size:.7em">▾</span></button>
         <div class="nav-drop-menu" id="navLearnMenu">
+          <a href="/learn/" class="nav-dd-item">📚 Russian Course</a>
           <a href="/verb-conjugator/" class="nav-dd-item">⚡ Verb Conjugator</a>
           <a href="/case-explainer/" class="nav-dd-item">📚 Case Explainer</a>
         </div>
@@ -215,14 +235,68 @@
     <a href="/flip-card/" class="nav-m-link">🃏 Flip Cards</a>
     <a href="/gap-fill/" class="nav-m-link">📝 Gap Fill</a>
     <a href="/listening/" class="nav-m-link">🎧 Listening</a>
-    <div class="nav-m-sect">Learn Russian</div>
-    <a href="/verb-conjugator/" class="nav-m-link">⚡ Verb Conjugator</a>
-    <a href="/case-explainer/" class="nav-m-link">📚 Case Explainer</a>
+    <div class="nav-m-sect learn-only">Learn Russian</div>
+    <a href="/learn/" class="nav-m-link learn-only">📚 Russian Course</a>
+    <a href="/verb-conjugator/" class="nav-m-link learn-only">⚡ Verb Conjugator</a>
+    <a href="/case-explainer/" class="nav-m-link learn-only">📚 Case Explainer</a>
   </div>
 </nav>
 
+<!-- ═══ LIGHT MODE TOOLS HUB ═══ -->
+<section class="light-only" style="padding:80px 16px 60px;background:var(--light-bg,#f5f7ff)">
+  <div style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="light-badge">🇷🇺 englishtorussian.ai — Free Russian Learning Tools</div>
+    <h1 class="light-hero-title" style="margin-bottom:16px">Learn &amp; Translate Russian — Free</h1>
+    <p class="light-hero-sub" style="margin-bottom:48px;max-width:540px;margin-left:auto;margin-right:auto">Translate English to Russian, practice with exercises, and master grammar — all free. No signup needed.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;text-align:left">
+      <a href="/translate/" class="tool-card">
+        <span class="tool-icon">🌐</span>
+        <h3>AI Translator</h3>
+        <p>Formal &amp; casual modes, gender-aware, pronunciation, phrasebook &amp; word breakdown.</p>
+        <span class="tool-arrow">Open Translator →</span>
+      </a>
+      <a href="/pdf/" class="tool-card">
+        <span class="tool-icon">📄</span>
+        <h3>PDF Translator</h3>
+        <p>Upload any PDF and get a full English-to-Russian translation instantly.</p>
+        <span class="tool-arrow">Translate PDF →</span>
+      </a>
+      <a href="/flip-card/" class="tool-card">
+        <span class="tool-icon">🃏</span>
+        <h3>Flip Cards</h3>
+        <p>Memorise Russian vocabulary with spaced-repetition flashcards. Tap to reveal.</p>
+        <span class="tool-arrow">Practice Vocab →</span>
+      </a>
+      <a href="/gap-fill/" class="tool-card">
+        <span class="tool-icon">✍️</span>
+        <h3>Gap Fill</h3>
+        <p>Fill in missing Russian words to practise sentence structure and grammar.</p>
+        <span class="tool-arrow">Try Gap Fill →</span>
+      </a>
+      <a href="/listening/" class="tool-card">
+        <span class="tool-icon">🎧</span>
+        <h3>Listening Exercise</h3>
+        <p>Hear native Russian words and pick the right answer. Train your ear.</p>
+        <span class="tool-arrow">Start Listening →</span>
+      </a>
+      <a href="/verb-conjugator/" class="tool-card">
+        <span class="tool-icon">⚡</span>
+        <h3>Verb Conjugator</h3>
+        <p>Instantly conjugate any Russian verb across all tenses, aspects and persons.</p>
+        <span class="tool-arrow">Conjugate Verbs →</span>
+      </a>
+      <a href="/case-explainer/" class="tool-card">
+        <span class="tool-icon">📚</span>
+        <h3>Case Explainer</h3>
+        <p>Understand Russian cases with examples. Nominative, genitive, dative and more.</p>
+        <span class="tool-arrow">Explain Cases →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ HERO ═══ -->
-<section class="hero-bg min-h-screen flex items-center justify-center pt-24 pb-16 px-4 text-center">
+<section class="hero-bg learn-only min-h-screen flex items-center justify-center pt-24 pb-16 px-4 text-center">
   <div class="max-w-3xl mx-auto w-full">
     <!-- Badge -->
     <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-sm text-gray-300 mb-6">
@@ -279,7 +353,7 @@
 </section>
 
 <!-- ═══ STATS BAR ═══ -->
-<div class="border-y border-white/5 bg-white/[0.02] py-6 px-4">
+<div class="learn-only border-y border-white/5 bg-white/[0.02] py-6 px-4">
   <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
     <div>
       <div class="text-2xl sm:text-3xl font-black text-white">2,400+</div>
@@ -301,7 +375,7 @@
 </div>
 
 <!-- ═══ HOW IT WORKS ═══ -->
-<section id="how-it-works" class="py-20 px-4">
+<section id="how-it-works" class="learn-only py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-red-400 text-sm font-semibold uppercase tracking-widest mb-3">Simple process</div>
@@ -338,7 +412,7 @@
 </section>
 
 <!-- ═══ EXERCISE TYPES ═══ -->
-<section id="exercises" class="py-20 px-4 bg-white/[0.015]">
+<section id="exercises" class="learn-only py-20 px-4 bg-white/[0.015]">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">4 exercise types</div>
@@ -425,7 +499,7 @@
 </section>
 
 <!-- ═══ CURRICULUM ═══ -->
-<section class="py-20 px-4">
+<section class="learn-only py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-purple-400 text-sm font-semibold uppercase tracking-widest mb-3">Structured curriculum</div>
@@ -479,7 +553,7 @@
 </section>
 
 <!-- ═══ PRICING ═══ -->
-<section id="pricing" class="py-20 px-4 bg-white/[0.015]">
+<section id="pricing" class="learn-only py-20 px-4 bg-white/[0.015]">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-green-400 text-sm font-semibold uppercase tracking-widest mb-3">Pricing</div>
@@ -558,7 +632,7 @@
 </section>
 
 <!-- ═══ REVIEWS ═══ -->
-<section id="reviews" class="py-20 px-4">
+<section id="reviews" class="learn-only py-20 px-4">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-14 reveal">
       <div class="text-yellow-400 text-sm font-semibold uppercase tracking-widest mb-3">Reviews</div>
@@ -603,7 +677,7 @@
 </section>
 
 <!-- ═══ FAQ ═══ -->
-<section class="py-20 px-4 bg-white/[0.015]">
+<section class="learn-only py-20 px-4 bg-white/[0.015]">
   <div class="max-w-2xl mx-auto">
     <div class="text-center mb-12 reveal">
       <h2 class="text-3xl font-black text-white mb-3">Frequently asked questions</h2>
@@ -662,7 +736,7 @@
 </section>
 
 <!-- ═══ FINAL CTA ═══ -->
-<section class="py-24 px-4">
+<section class="learn-only py-24 px-4">
   <div class="max-w-2xl mx-auto text-center reveal">
     <div class="text-5xl mb-5">🇷🇺</div>
     <h2 class="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">

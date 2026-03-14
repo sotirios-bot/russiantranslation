@@ -466,18 +466,124 @@ const CURRICULUM = {
   }
 };
 
-// Default days 15-21 with generic exercises
-for (let d = 15; d <= 21; d++) {
-  CURRICULUM[d] = {
-    title: `Advanced Day ${d}`,
-    exercises: [
-      { type:'flip', front:'Продолжайте', back:'Continue', note:'Keep going!', ru:'Продолжайте' },
-      { type:'mc', question:'Advanced lesson coming soon. Which means "I am learning Russian"?', options:['Я учу русский язык','Я знаю русский','Я забыл русский','Русский трудный'], answer:0, xp:20 },
-      { type:'listen', word:'Молодец', translation:'Well done!', distractors:['Плохо','Ничего','Отлично'], xp:20 },
-      { type:'gap', sentence:'Я каждый день ___ русский язык.', translation:'I ___ Russian every day.', answer:'учу', hint:'учу = study/learn (I)', xp:25 },
-    ]
-  };
-}
+// ── Day 15: Shopping & Money ──
+CURRICULUM[15] = {
+  title: 'Shopping & Money',
+  exercises: [
+    { type:'flip', front:'Сколько стоит?', back:'How much does it cost?', note:'Essential shopping phrase', ru:'Сколько стоит' },
+    { type:'flip', front:'Дорого / Дёшево', back:'Expensive / Cheap', note:'Compare prices', ru:'Дорого' },
+    { type:'flip', front:'Рубль / Копейка', back:'Ruble / Kopek', note:'Russian currency', ru:'Рубль' },
+    { type:'mc', question:'You want to bargain. Which phrase fits?', options:['Можно дешевле?','Дайте сдачу','Где касса?','Я куплю это'], answer:0, xp:20 },
+    { type:'mc', question:'"Касса" is…', options:['Window','Cash register / checkout','Price tag','Receipt'], answer:1, xp:15 },
+    { type:'listen', word:'Скидка', translation:'Discount', distractors:['Цена','Налог','Сдача'], xp:20 },
+    { type:'listen', word:'Сдача', translation:'Change (money back)', distractors:['Скидка','Рубль','Чек'], xp:20 },
+    { type:'gap', sentence:'Дайте мне ___, пожалуйста. Вот пятьсот рублей.', translation:'Give me the ___, please. Here is five hundred rubles.', answer:'сдачу', hint:'сдачу = change (accusative case)', xp:25 },
+    { type:'mc', question:'«У вас есть карта?» means…', options:['Do you have a map?','Do you have a menu?','Do you accept cards?','Is there a discount?'], answer:2, xp:15 },
+    { type:'flip', front:'Можно примерить?', back:'Can I try it on?', note:'Fitting room request', ru:'Можно примерить' },
+  ]
+};
+
+// ── Day 16: Russian Verb Aspects ──
+CURRICULUM[16] = {
+  title: 'Perfective vs Imperfective Verbs',
+  exercises: [
+    { type:'flip', front:'Читать / Прочитать', back:'To read (ongoing) / To read (completed)', note:'Imperfective vs Perfective', ru:'Читать' },
+    { type:'flip', front:'Писать / Написать', back:'To write (ongoing) / To write (done)', note:'Add на- prefix for perfective', ru:'Писать' },
+    { type:'flip', front:'Делать / Сделать', back:'To do (ongoing) / To do (completed)', note:'Add с- prefix for perfective', ru:'Делать' },
+    { type:'mc', question:'You finished reading the book. Which verb form do you use?', options:['Я читал книгу','Я прочитал книгу','Я читаю книгу','Я буду читать книгу'], answer:1, xp:20 },
+    { type:'mc', question:'Which sentence means "I was writing a letter" (ongoing, past)?', options:['Я написал письмо','Я пишу письмо','Я писал письмо','Я напишу письмо'], answer:2, xp:20 },
+    { type:'listen', word:'Сделал', translation:'Did / Made (completed, male)', distractors:['Делал','Делаю','Сделаю'], xp:20 },
+    { type:'listen', word:'Прочитала', translation:'Finished reading (female)', distractors:['Читала','Читает','Прочитает'], xp:20 },
+    { type:'gap', sentence:'Я ___ задание и теперь свободен.', translation:'I ___ the assignment and I\'m free now.', answer:'сделал', hint:'сделал = finished doing (male)', xp:25 },
+    { type:'mc', question:'"Я буду читать" expresses…', options:['Past action','Completed action','Future ongoing action','Present action'], answer:2, xp:15 },
+    { type:'flip', front:'Смотреть / Посмотреть', back:'To watch (ongoing) / To watch (completed)', note:'Add по- for perfective', ru:'Смотреть' },
+  ]
+};
+
+// ── Day 17: Russian Cases Deep Dive ──
+CURRICULUM[17] = {
+  title: 'Russian Cases in Action',
+  exercises: [
+    { type:'flip', front:'Именительный (Nominative)', back:'Subject of sentence. Кто? Что?', note:'Я, он, она, мы', ru:'Именительный' },
+    { type:'flip', front:'Родительный (Genitive)', back:'Possession / negation. Кого? Чего?', note:'У меня нет + genitive', ru:'Родительный' },
+    { type:'flip', front:'Дательный (Dative)', back:'To/for whom. Кому? Чему?', note:'Мне, тебе, ему, ей', ru:'Дательный' },
+    { type:'mc', question:'"Я вижу кот____" (I see a cat) — which ending?', options:['а','у','е','ом'], answer:0, xp:20 },
+    { type:'mc', question:'"Мне нравится" uses which case for "мне"?', options:['Nominative','Genitive','Dative','Accusative'], answer:2, xp:20 },
+    { type:'listen', word:'Кому', translation:'To whom (dative)', distractors:['Кого','Кто','Чего'], xp:20 },
+    { type:'listen', word:'Чего', translation:'Of what (genitive)', distractors:['Что','Чему','Чем'], xp:20 },
+    { type:'gap', sentence:'У меня нет ___ . (I don\'t have time)', translation:'Fill in "time" in the genitive case', answer:'времени', hint:'время → времени in genitive', xp:30 },
+    { type:'mc', question:'"Я иду в магазин" — "магазин" is in which case?', options:['Nominative','Genitive','Accusative','Prepositional'], answer:2, xp:15 },
+    { type:'flip', front:'Предложный (Prepositional)', back:'Location / about. О ком? О чём?', note:'Я в Москве. Думаю о тебе.', ru:'Предложный' },
+  ]
+};
+
+// ── Day 18: Describing People & Places ──
+CURRICULUM[18] = {
+  title: 'Adjectives & Descriptions',
+  exercises: [
+    { type:'flip', front:'Большой / Маленький', back:'Big / Small', note:'Adjectives agree with noun gender', ru:'Большой' },
+    { type:'flip', front:'Красивый / Некрасивый', back:'Beautiful / Not beautiful', note:'Add не- to negate', ru:'Красивый' },
+    { type:'flip', front:'Быстрый / Медленный', back:'Fast / Slow', note:'Used for speed', ru:'Быстрый' },
+    { type:'mc', question:'The adjective "good" in Russian is «хороший». The feminine form is…', options:['хорошая','хорошее','хороший','хорошие'], answer:0, xp:20 },
+    { type:'mc', question:'"Новый город" means…', options:['Old city','Big city','New city','Beautiful city'], answer:2, xp:15 },
+    { type:'listen', word:'Умный', translation:'Smart / Clever', distractors:['Глупый','Добрый','Злой'], xp:20 },
+    { type:'listen', word:'Старый', translation:'Old', distractors:['Новый','Молодой','Маленький'], xp:20 },
+    { type:'gap', sentence:'Этот ресторан очень ___ и недорогой.', translation:'This restaurant is very ___ and affordable.', answer:'вкусный', hint:'вкусный = delicious / tasty', xp:25 },
+    { type:'mc', question:'The neuter form of «красивый» is…', options:['красивая','красивое','красивый','красивые'], answer:1, xp:15 },
+    { type:'flip', front:'Интересный / Скучный', back:'Interesting / Boring', note:'Great for describing films, books', ru:'Интересный' },
+  ]
+};
+
+// ── Day 19: Russian Slang & Idioms ──
+CURRICULUM[19] = {
+  title: 'Russian Slang & Idioms',
+  exercises: [
+    { type:'flip', front:'Круто!', back:'Cool! / Awesome!', note:'Very common in casual speech', ru:'Круто' },
+    { type:'flip', front:'Нормально', back:'Fine / OK / Normal', note:'Often means "it\'s decent"', ru:'Нормально' },
+    { type:'flip', front:'Ладно', back:'OK / Alright / Fine', note:'Agreement / reluctant OK', ru:'Ладно' },
+    { type:'mc', question:'"Блин!" is a mild Russian exclamation that means…', options:['Pancake (as a swear substitute)','Delicious!','Hurry up!','I agree'], answer:0, xp:20 },
+    { type:'mc', question:'"Давай!" can mean…', options:['Let\'s go! / Come on! / Bye!','I don\'t understand','No way','Too bad'], answer:0, xp:20 },
+    { type:'listen', word:'Давай', translation:'Come on / Let\'s go / Bye!', distractors:['Нет','Пока','Может'], xp:20 },
+    { type:'listen', word:'Ничего', translation:'Not bad / Nothing', distractors:['Всё','Что-то','Хорошо'], xp:20 },
+    { type:'gap', sentence:'— Как дела? — ___, спасибо. Всё отлично!', translation:'— How are you? — ___, thanks. Everything is great!', answer:'нормально', hint:'нормально = fine / OK', xp:25 },
+    { type:'mc', question:'"Бывает" literally means "it happens" and is used to say…', options:['Never mind / These things happen','That\'s impossible','I don\'t care','Hurry up'], answer:0, xp:15 },
+    { type:'flip', front:'Всё равно', back:'Doesn\'t matter / All the same', note:'Expression of indifference', ru:'Всё равно' },
+  ]
+};
+
+// ── Day 20: Business Russian ──
+CURRICULUM[20] = {
+  title: 'Business Russian',
+  exercises: [
+    { type:'flip', front:'Встреча / Собрание', back:'Meeting (one-on-one / group)', note:'Встреча = one-on-one, Собрание = group', ru:'Встреча' },
+    { type:'flip', front:'Контракт / Договор', back:'Contract / Agreement', note:'Both used in business', ru:'Контракт' },
+    { type:'flip', front:'Я хотел бы обсудить…', back:'I would like to discuss…', note:'Formal opening', ru:'Я хотел бы' },
+    { type:'mc', question:'You want to introduce yourself at a business meeting. Which phrase is best?', options:['Позвольте представиться — меня зовут…','Привет, я…','Ладно, поехали','Как дела у вас?'], answer:0, xp:20 },
+    { type:'mc', question:'"Деловой партнёр" means…', options:['Business partner','Company director','Client','Colleague'], answer:0, xp:15 },
+    { type:'listen', word:'Переговоры', translation:'Negotiations', distractors:['Встреча','Контракт','Собрание'], xp:20 },
+    { type:'listen', word:'Счёт-фактура', translation:'Invoice', distractors:['Контракт','Чек','Бюджет'], xp:20 },
+    { type:'gap', sentence:'Можем ли мы назначить ___ на следующую неделю?', translation:'Can we schedule a ___ for next week?', answer:'встречу', hint:'встречу = meeting (accusative)', xp:25 },
+    { type:'mc', question:'"Прибыль" in business means…', options:['Loss','Profit','Budget','Salary'], answer:1, xp:15 },
+    { type:'flip', front:'С уважением', back:'With respect / Yours sincerely', note:'Standard formal letter closing', ru:'С уважением' },
+  ]
+};
+
+// ── Day 21: Conversation Practice & Review ──
+CURRICULUM[21] = {
+  title: 'Conversation Practice & Final Review',
+  exercises: [
+    { type:'flip', front:'Расскажите о себе', back:'Tell me about yourself', note:'Common opener', ru:'Расскажите о себе' },
+    { type:'flip', front:'Что вы думаете о…?', back:'What do you think about…?', note:'Start a discussion', ru:'Что вы думаете' },
+    { type:'mc', question:'You want to agree with someone\'s opinion. Which phrase works best?', options:['Я не согласен','Я согласен с вами','Вы ошибаетесь','Это неправильно'], answer:1, xp:20 },
+    { type:'mc', question:'«Кстати» is used to mean…', options:['By the way…','Therefore…','However…','Unfortunately…'], answer:0, xp:15 },
+    { type:'listen', word:'Согласен', translation:'I agree (male)', distractors:['Не согласен','Может быть','Сомневаюсь'], xp:20 },
+    { type:'listen', word:'Возможно', translation:'Possibly / Maybe', distractors:['Точно','Никогда','Всегда'], xp:20 },
+    { type:'gap', sentence:'___ говоря, мой русский ещё не идеальный, но я стараюсь!', translation:'___ speaking, my Russian is not perfect yet, but I\'m trying!', answer:'Честно', hint:'Честно = Honestly', xp:30 },
+    { type:'mc', question:'How do you politely disagree in Russian?', options:['Нет, вы не правы!','Я бы не согласился, потому что…','Это глупо','Замолчите'], answer:1, xp:20 },
+    { type:'mc', question:'"Поздравляю!" means…', options:['Good luck!','Thank you!','Congratulations!','Welcome!'], answer:2, xp:15 },
+    { type:'flip', front:'Молодец! Вы говорите по-русски!', back:'Well done! You speak Russian!', note:'You made it! 🎉', ru:'Молодец' },
+  ]
+};
 
 // ══════════════════════════════════════════════════════════
 // STATE
